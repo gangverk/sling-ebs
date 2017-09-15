@@ -6,6 +6,12 @@ const app = express();
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, 'build')));
 
+
+//app.post('/login', (req,res, next) => {
+  // req.body.ophone req.body.pw;
+  //twilio(phone)
+//});
+
 // No matter what url you go to you alwyas get the same file
 // React-Router should handle navigation within the application
 app.get('*', (req, res) => {

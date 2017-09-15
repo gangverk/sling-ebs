@@ -10,21 +10,21 @@ import Button from '../../components/Button';
 const Text = styled.p`
   color: ${props => props.color};
   ${props => {
-  if (props.colorHover) {
-    return css`
+    if (props.colorHover) {
+      return css`
         &:hover {
           color: ${props.colorHover};
         }
       `;
-  }
-}}
+    }
+  }};
 `;
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stateCounter: 0,
+      stateCounter: 0
     };
   }
   setStateCounterToPropsCounter() {
@@ -35,30 +35,48 @@ class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
-        <Text color="blue" colorHover="green">Blue Text</Text>
+        <Text color="blue" colorHover="green">
+          Blue Text
+        </Text>
         <Text color="red">Count: {this.props.count}</Text>
         <Button onClick={() => this.setStateCounterToPropsCounter()}>
           State counter is {this.state.stateCounter}
         </Button>
         <p>
-          <button onClick={this.props.increment} disabled={this.props.isIncrementing}>
+          <button
+            onClick={this.props.increment}
+            disabled={this.props.isIncrementing}
+          >
             Increment
           </button>
-          <button onClick={this.props.incrementAsync} disabled={this.props.isIncrementing}>
+          <button
+            onClick={this.props.incrementAsync}
+            disabled={this.props.isIncrementing}
+          >
             Increment Async
           </button>
         </p>
 
         <p>
-          <button onClick={this.props.decrement} disabled={this.props.isDecrementing}>
+          <button
+            onClick={this.props.decrement}
+            disabled={this.props.isDecrementing}
+          >
             Decrementing
           </button>
-          <button onClick={this.props.decrementAsync} disabled={this.props.isDecrementing}>
+          <button
+            onClick={this.props.decrementAsync}
+            disabled={this.props.isDecrementing}
+          >
             Decrement Async
           </button>
         </p>
 
-        <p><button onClick={() => this.props.changePage()}>Go to about page via redux</button></p>
+        <p>
+          <button onClick={() => this.props.changePage()}>
+            Go to about page via redux
+          </button>
+        </p>
       </div>
     );
   }
@@ -67,14 +85,14 @@ class Home extends Component {
 const mapStateToProps = state => ({
   count: state.HomeReducer.count,
   isIncrementing: state.HomeReducer.isIncrementing,
-  isDecrementing: state.HomeReducer.isDecrementing,
+  isDecrementing: state.HomeReducer.isDecrementing
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       ...actions,
-      changePage: () => push('/about'),
+      changePage: () => push('/about')
     },
     dispatch
   );
