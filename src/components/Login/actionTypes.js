@@ -1,0 +1,1 @@
+export const FACEBOOK_DATA = 'FACEBOOK_DATA';

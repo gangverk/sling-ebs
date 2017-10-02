@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import FacebookLogin from 'react-facebook-login';
-import Main from '../main';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from './actions';
 
 const LoginWrapper = styled.div`
   margin: auto;
@@ -10,22 +12,20 @@ const LoginWrapper = styled.div`
   justify-content: center;
 `;
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      facebook: null
+      facebook: null,
     };
   }
   onFbClick(e) {
-    console.log('got facebook log click', e);
+    console.log('Facebook app id');
     console.log(process.env.REACT_APP_FACEBOOK);
   }
   onFbCallback(data) {
-    console.log('got facebook login callback', data);
-    this.setState({ facebook: data });
-    if (this.state.facebook != null) {
-      console.log('Hello you can go to next site');
+    if (data) {
+      this.props.setUserData(data.name, data.email, data.picture.data.url);
     }
   }
   render() {
@@ -34,7 +34,7 @@ export default class Login extends Component {
         <LoginWrapper>
           <FacebookLogin
             appId={process.env.REACT_APP_FACEBOOK}
-            autoLoad={true}
+            autoLoad={false}
             fields="name,email,picture"
             onClick={e => this.onFbClick(e)}
             callback={response => this.onFbCallback(response)}
@@ -44,3 +44,17 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  userData: state.UserReducer,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 import Home from '../home';
 import About from '../about';
+import Login from '../../components/Login';
 
-export default class Main extends Component {
+class Main extends Component {
   render() {
+    console.log('blablalb', this.props.userData);
+    if (this.props.userData.name === '') {
+      return <Login />;
+    }
     return (
       <div>
         <header>
@@ -21,3 +27,12 @@ export default class Main extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log('the state', state);
+  return {
+    userData: state.UserReducer,
+  };
+};
+
+export default connect(mapStateToProps, null)(Main);
