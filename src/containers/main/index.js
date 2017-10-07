@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Home from '../home';
 import About from '../about';
 import Login from '../../components/Login';
+import WeekMenu from '../../components/WeekMenu';
 
 class Main extends Component {
   render() {
@@ -20,6 +21,7 @@ class Main extends Component {
         </header>
 
         <main>
+          <WeekMenu />
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
         </main>
