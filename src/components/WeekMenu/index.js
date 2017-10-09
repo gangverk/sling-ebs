@@ -18,7 +18,7 @@ export default class WeekMenu extends Component {
       }
       thead {
         background: #395870;
-        background: linear-gradient(#49708f, #293f50);
+        background: linear-gradient(#87b5ff, #5995f7);
         color: #fff;
         font-size: 11px;
         text-transform: uppercase;
