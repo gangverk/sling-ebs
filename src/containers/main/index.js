@@ -6,6 +6,7 @@ import Home from '../home';
 import About from '../about';
 import Login from '../../components/Login';
 import WeekMenu from '../../components/WeekMenu';
+import BookMenu from '../../components/BookMenu';
 
 class Main extends Component {
   render() {
@@ -21,6 +22,7 @@ class Main extends Component {
         </header>
 
         <main>
+          <BookMenu />
           <WeekMenu />
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
