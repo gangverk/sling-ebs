@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components';
 
 import * as actions from './actions';
 import Button from '../../components/Button';
+import * as ApiActions from '../../components/Actions/actions';
 
 const Text = styled.p`
   color: ${props => props.color};
@@ -41,6 +42,11 @@ class Home extends Component {
   }
   setStateCounterToPropsCounter() {
     this.setState({ stateCounter: this.props.count });
+  }
+
+  componentWillMount() {
+    console.log('hello there', this.props);
+    this.props.fetchCar();
   }
 
   render() {
@@ -104,6 +110,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       ...actions,
+      ...ApiActions,
       changePage: () => push('/about'),
     },
     dispatch

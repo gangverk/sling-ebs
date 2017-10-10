@@ -9,6 +9,7 @@ import Login from '../../components/Login';
 import WeekMenu from '../../components/WeekMenu';
 import BookMenu from '../../components/BookMenu';
 import DateMenu from '../../components/DateMenu';
+import Button from '../../components/Actions/index';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
