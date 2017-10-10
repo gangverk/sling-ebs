@@ -24,7 +24,6 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    console.log('blablalb', this.props.userData);
     if (this.props.userData.name === '') {
       return <Login />;
     }
@@ -54,7 +53,6 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('the state', state);
   return {
     userData: state.UserReducer,
   };

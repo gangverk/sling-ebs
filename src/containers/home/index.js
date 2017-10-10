@@ -45,7 +45,6 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    console.log('hello there', this.props);
     this.props.fetchCar();
   }
 

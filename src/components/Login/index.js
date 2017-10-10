@@ -77,10 +77,6 @@ class Login extends Component {
       facebook: null,
     };
   }
-  onFbClick(e) {
-    console.log('Facebook app id');
-    console.log(process.env.REACT_APP_FACEBOOK);
-  }
   onFbCallback(data) {
     if (data) {
       this.props.setUserData(data.name, data.email, data.picture.data.url);
@@ -105,7 +101,6 @@ class Login extends Component {
               appId={process.env.REACT_APP_FACEBOOK}
               autoLoad={false}
               fields="name,email,picture"
-              onClick={e => this.onFbClick(e)}
               callback={response => this.onFbCallback(response)}
             />
           </LoginWrapper>
