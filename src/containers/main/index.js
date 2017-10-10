@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,6 +11,14 @@ import BookMenu from '../../components/BookMenu';
 import DateMenu from '../../components/DateMenu';
 
 class Main extends Component {
+  static propTypes = {
+    userData: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  };
+  static defaultProps = {
+    userData: { name: '' },
+  };
   render() {
     console.log('blablalb', this.props.userData);
     if (this.props.userData.name === '') {
