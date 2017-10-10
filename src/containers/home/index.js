@@ -32,6 +32,7 @@ class Home extends Component {
     isDecrementing: PropTypes.bool.isRequired,
     decrementAsync: PropTypes.func.isRequired,
     changePage: PropTypes.func.isRequired,
+    fetchCar: PropTypes.func.isRequired,
   };
 
   constructor(props) {
