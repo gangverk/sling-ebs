@@ -1,3 +1,14 @@
 {
-  "extends": "react-app"
+  "extends": "react-app",
+  "rules": {
+    "react/prop-types": "error",
+    "react/prefer-es6-class": "error",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-closing-tag-location": "error",
+    "jsx-quotes": "error",
+    "no-multi-spaces": "error",
+    "react/jsx-tag-spacing": "warn",
+    "react/jsx-wrap-multilines": "error",
+    }
 }

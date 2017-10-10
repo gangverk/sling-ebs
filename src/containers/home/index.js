@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -21,10 +22,21 @@ const Text = styled.p`
 `;
 
 class Home extends Component {
+  static propTypes = {
+    count: PropTypes.number.isRequired,
+    increment: PropTypes.func.isRequired,
+    isIncrementing: PropTypes.func.isRequired,
+    incrementAsync: PropTypes.func.isRequired,
+    decrement: PropTypes.func.isRequired,
+    isDecrementing: PropTypes.func.isRequired,
+    decrementAsync: PropTypes.func.isRequired,
+    changePage: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      stateCounter: 0
+      stateCounter: 0,
     };
   }
   setStateCounterToPropsCounter() {
@@ -85,14 +97,14 @@ class Home extends Component {
 const mapStateToProps = state => ({
   count: state.HomeReducer.count,
   isIncrementing: state.HomeReducer.isIncrementing,
-  isDecrementing: state.HomeReducer.isDecrementing
+  isDecrementing: state.HomeReducer.isDecrementing,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       ...actions,
-      changePage: () => push('/about')
+      changePage: () => push('/about'),
     },
     dispatch
   );

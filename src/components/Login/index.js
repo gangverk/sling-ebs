@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import FacebookLogin from 'react-facebook-login';
 import { bindActionCreators } from 'redux';
@@ -57,6 +58,9 @@ const forgotPasswordStyle = {
 };
 
 class Login extends Component {
+  static propTypes = {
+    setUserData: PropTypes.func.isRequired,
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -125,7 +129,7 @@ class Login extends Component {
           <LoginWrapper>
             <p style={forgotPasswordStyle}>
               Forgot your{' '}
-              <a href="#">
+              <a href="/notimplemented">
                 <u>password?</u>
               </a>
             </p>
