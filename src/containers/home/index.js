@@ -25,10 +25,10 @@ class Home extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
     increment: PropTypes.func.isRequired,
-    isIncrementing: PropTypes.func.isRequired,
+    isIncrementing: PropTypes.bool.isRequired,
     incrementAsync: PropTypes.func.isRequired,
     decrement: PropTypes.func.isRequired,
-    isDecrementing: PropTypes.func.isRequired,
+    isDecrementing: PropTypes.bool.isRequired,
     decrementAsync: PropTypes.func.isRequired,
     changePage: PropTypes.func.isRequired,
   };
