@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export default class Footer extends Component {
   render() {
-    const Footer = styled.form`
+    const Footer = styled.div`
       .FooterDistributed {
         background-color: #0085ff;
         box-sizing: border-box;
