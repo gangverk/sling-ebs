@@ -9,6 +9,7 @@ import Login from '../../components/Login';
 import WeekMenu from '../../components/WeekMenu';
 import BookMenu from '../../components/BookMenu';
 import DateMenu from '../../components/DateMenu';
+import Footer from '../../components/Footer';
 
 class Main extends Component {
   static propTypes = {
@@ -35,6 +36,8 @@ class Main extends Component {
         </header>
 
         <main>
+          <Footer />
+
           <Route exact path="/DateMenu" component={DateMenu} />
           <Route exact path="/BookMenu" component={BookMenu} />
           <Route exact path="/WeekMenu" component={WeekMenu} />
