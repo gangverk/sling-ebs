@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import FacebookLogin from 'react-facebook-login';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import SignUp from '.././SignUp';
+import { Route, Link, withRouter } from 'react-router-dom';
 
 import * as actions from './actions';
 
@@ -80,7 +82,9 @@ class Login extends Component {
     return (
       <PageWrapper>
         <div>
-          <button style={signUpStyle}> Sign up </button>
+          <button style={signUpStyle}>
+            <a href="./SignUp">Sign up</a>
+          </button>
           <SlingWrapper>
             <h1>Sling EBS</h1>
           </SlingWrapper>
