@@ -4,11 +4,8 @@ import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
-
 import * as actions from './actions';
 import Button from '../../components/Button';
-import * as ApiActions from '../../components/Actions/actions';
-
 const Text = styled.p`
   color: ${props => props.color};
   ${props => {
@@ -21,7 +18,6 @@ const Text = styled.p`
     }
   }};
 `;
-
 class Home extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
@@ -32,23 +28,16 @@ class Home extends Component {
     isDecrementing: PropTypes.bool.isRequired,
     decrementAsync: PropTypes.func.isRequired,
     changePage: PropTypes.func.isRequired,
-    fetchCar: PropTypes.func.isRequired,
   };
-
+  static defaultProps = {
+    dataCar: null,
+  };
   constructor(props) {
     super(props);
     this.state = {
       stateCounter: 0,
     };
   }
-  setStateCounterToPropsCounter() {
-    this.setState({ stateCounter: this.props.count });
-  }
-
-  componentWillMount() {
-    this.props.fetchCar();
-  }
-
   render() {
     return (
       <div>
@@ -74,7 +63,6 @@ class Home extends Component {
             Increment Async
           </button>
         </p>
-
         <p>
           <button
             onClick={this.props.decrement}
@@ -89,7 +77,6 @@ class Home extends Component {
             Decrement Async
           </button>
         </p>
-
         <p>
           <button onClick={() => this.props.changePage()}>
             Go to about page via redux
@@ -99,21 +86,15 @@ class Home extends Component {
     );
   }
 }
-
 const mapStateToProps = state => ({
   count: state.HomeReducer.count,
-  isIncrementing: state.HomeReducer.isIncrementing,
-  isDecrementing: state.HomeReducer.isDecrementing,
 });
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       ...actions,
-      ...ApiActions,
       changePage: () => push('/about'),
     },
     dispatch
   );
-
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

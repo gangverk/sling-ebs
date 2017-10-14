@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Home from '../home';
 import About from '../about';
+import Api from '../api';
 import Login from '../../components/Login';
 import WeekMenu from '../../components/WeekMenu';
 import BookMenu from '../../components/BookMenu';
@@ -24,11 +25,23 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    if (this.props.userData.name === '') {
-      return <Login />;
-    }
+    // if (this.props.userData.name === '') {
+    //   return <Login />;
+    // }
     return (
       <div>
+<<<<<<< HEAD
+=======
+        <header>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/BookMenu">Book</Link>
+          <Link to="/DateMenu">Date</Link>
+          <Link to="/WeekMenu">Week</Link>
+          <Link to="/Api">Api</Link>
+        </header>
+
+>>>>>>> Trying to make a list
         <main>
           <Header />
           <div>
@@ -46,6 +59,7 @@ class Main extends Component {
           <Route exact path="/WeekMenu" component={WeekMenu} />
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/Api" component={Api} />
         </main>
       </div>
     );
