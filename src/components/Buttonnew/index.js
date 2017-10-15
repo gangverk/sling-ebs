@@ -7,7 +7,7 @@ export default styled.button`
         display: inline-block;
         border-radius: 25px;
         background-color: #0085ff;
-        border: solid white;
+        border: none;
         color: #ffffff;
         text-align: center;
         font-size: 15px;
@@ -16,6 +16,12 @@ export default styled.button`
         transition: all 0.5s;
         cursor: pointer;
         margin: 5px;
+        &:hover {
+          background-color: #eee;
+          color: #0085ff;
+          border-radius: 5px;
+          border-color: #0085ff;
+        }
       `;
     } else if (props.booked) {
       // some other props styles
@@ -23,15 +29,18 @@ export default styled.button`
         display: inline-block;
         border-radius: 45px;
         background-color: #0085ff;
-        border: solid white;
+        border: none;
         color: #ffffff;
         text-align: center;
-        font-size: 20px;
+        font-size: 15px;
         padding: 20px;
-        width: 200px;
+        width: 140px;
         transition: all 0.5s;
         cursor: pointer;
         margin: 5px;
+        &:hover {
+          cursor: default;
+        }
       `;
     } else if (props.timeOff) {
       // default button css
@@ -39,15 +48,18 @@ export default styled.button`
         display: inline-block;
         border-radius: 45px;
         background-color: #999999;
-        border: solid white;
+        border: none;
         color: #ffffff;
         text-align: center;
-        font-size: 20px;
+        font-size: 15px;
         padding: 20px;
-        width: 200px;
+        width: 140px;
         transition: all 0.5s;
         cursor: pointer;
         margin: 5px;
+        &:hover {
+          cursor: default;
+        }
       `;
     }
   }};

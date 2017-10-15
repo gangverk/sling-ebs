@@ -55,6 +55,7 @@ class Home extends Component {
         <Button onClick={() => this.setStateCounterToPropsCounter()}>
           State counter is {this.state.stateCounter}
         </Button>
+
         <Buttonnew bigButton={true}>Previous Day</Buttonnew>
         <Buttonnew bigButton={true}>Next Day</Buttonnew>
         <Buttonnew booked={true}>Booked</Buttonnew>
