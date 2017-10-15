@@ -20,6 +20,10 @@ class Api extends Component {
         name: PropTypes.string,
         id: PropTypes.number,
       }),
+      user: PropTypes.shape({
+        name: PropTypes.string,
+        id: PropTypes.string,
+      }),
     }),
     dataAutentication: PropTypes.shape({
       token: PropTypes.string,
@@ -28,6 +32,8 @@ class Api extends Component {
     dataUsers: PropTypes.array.isRequired,
   };
   static defaultProps = {
+    dataSession: [],
+    dataAutentication: [],
     dataCar: null,
   };
 

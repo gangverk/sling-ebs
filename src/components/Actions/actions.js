@@ -1,4 +1,4 @@
-import { CALL_API, getJSON } from 'redux-api-middleware';
+import { CALL_API } from 'redux-api-middleware';
 import * as actionTypes from './actionTypes';
 
 export const fetchCar = () => ({

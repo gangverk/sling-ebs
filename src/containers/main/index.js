@@ -25,9 +25,9 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    // if (this.props.userData.name === '') {
-    //   return <Login />;
-    // }
+    if (this.props.userData.name === '') {
+      return <Login />;
+    }
     return (
       <div>
 <<<<<<< HEAD
