@@ -41,25 +41,26 @@ class Api extends Component {
     this.props.fetchAuthenticationData();
     this.props.fetchUsers();
   }
+  ListItem(props) {
+    return <li>{props.value}</li>;
+  }
 
-  render() {
-    function ListItem(props) {
-      return <li>{props.name}</li>;
-    }
-    function UsersList(props) {
-      const users = props;
+  userList(userData) {
+    return userData.map(user => {
       return (
-        <ul>
-          {users.map(users => (
-            <ListItem key={users.toString()} value={users} />
-          ))}
-        </ul>
+        <li>
+          {user.name} - {user.lastname}
+        </li>
       );
-    }
-    const users = this.props.dataUsers;
+    });
+  }
+  render() {
     return (
       <div>
-        <UsersList users={users} />
+        {this.props.dataUsers.length && (
+          <ul>{this.userList(this.props.dataUsers)}</ul>
+        )}
+
         {this.props.dataCar !== null && (
           <li>Litur: {this.props.dataCar.color}</li>
         )}

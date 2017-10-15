@@ -4,7 +4,7 @@ const initialState = {
   dataCar: null,
   dataSession: null,
   dataAutentication: null,
-  dataUsers: null,
+  dataUsers: [],
 };
 
 export default (state = initialState, action) => {
