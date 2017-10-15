@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import SignUp from '.././SignUp';
 import { Route, Link, withRouter } from 'react-router-dom';
 
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
 import * as actions from './actions';
 
 const LoginWrapper = styled.div`
@@ -27,6 +30,11 @@ const SlingWrapper = styled.div`
   color: #646464;
 `;
 
+const SignUpWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const buttonStyle = {
   backgroundColor: '#0085ff',
   width: '250px',
@@ -44,14 +52,14 @@ const inputStyle = {
 };
 
 const signUpStyle = {
-  justifyContent: 'right',
+  display: 'flex',
+  justifyContent: 'center',
   margin: '5px',
   padding: '5px',
   width: '100px',
   backgroundColor: '#0085ff',
   color: 'white',
   border: 'none',
-  float: 'right',
 };
 
 const forgotPasswordStyle = {
@@ -81,10 +89,13 @@ class Login extends Component {
   render() {
     return (
       <PageWrapper>
+        <Header />
         <div>
-          <button style={signUpStyle}>
-            <a href="./SignUp">Sign up</a>
-          </button>
+          <SignUpWrapper>
+            <button style={signUpStyle}>
+              <a href="./SignUp">Sign up</a>
+            </button>
+          </SignUpWrapper>
           <SlingWrapper>
             <h1>Sling EBS</h1>
           </SlingWrapper>
@@ -143,6 +154,7 @@ class Login extends Component {
             <button style={buttonStyle}>Skip Login</button>
           </LoginWrapper>
         </div>
+        <Footer />
       </PageWrapper>
     );
   }

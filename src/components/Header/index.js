@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from './logo@2x.png';
 import eblogo from './ebslogo2.png';
 
-const Image = styled.div`
+const EBSImage = styled.div`
   background-image: url(${eblogo});
   background-repeat: no-repeat;
   background-size: 100%;
@@ -16,7 +16,10 @@ const Image = styled.div`
 export default class Header extends Component {
   render() {
     const Header = styled.header`
+      display: flex;
+      justify-content: center;
       padding: 7px;
+      margin-bottom: 0;
       font-family: Helvetica Neue;
       font-size: 10px;
       color: black;
@@ -31,11 +34,13 @@ export default class Header extends Component {
     return (
       <div>
         <Header>
-          {/* <h1>Sling EBS </h1>
+          <header>
+            {/* <h1>Sling EBS </h1>
           <h3>The Greatest Booking Service in the World </h3>
           <h3>We will book it!</h3> */}
-          <img src={logo} alt="The new logo" />
-          <Image />
+            <img src={logo} alt="The new logo" />
+            <EBSImage />
+          </header>
         </Header>
       </div>
     );
