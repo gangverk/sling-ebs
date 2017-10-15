@@ -23,10 +23,10 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    console.log('blablalb', this.props.userData);
-    if (this.props.userData.name === '') {
-      return <Login />;
-    }
+    // console.log('blablalb', this.props.userData);
+    // if (this.props.userData.name === '') {
+    //   return <Login />;
+    // }
     return (
       <div>
         <main>
