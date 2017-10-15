@@ -13,7 +13,6 @@ import DateMenu from '../../components/DateMenu';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-
 class Main extends Component {
   static propTypes = {
     userData: PropTypes.shape({
@@ -30,17 +29,15 @@ class Main extends Component {
     }
     return (
       <div>
-        <header>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/BookMenu">Book</Link>
-          <Link to="/DateMenu">Date</Link>
-          <Link to="/WeekMenu">Week</Link>
-        </header>
-
         <main>
-
           <Header />
+          <div>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/BookMenu">Book</Link>
+            <Link to="/DateMenu">Date</Link>
+            <Link to="/WeekMenu">Week</Link>
+          </div>
 
           <Footer />
 
