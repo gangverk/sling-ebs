@@ -28,7 +28,6 @@ export default (state = initialState, action) => {
       };
 
     case actionTypes.DECREMENT:
-      console.log('went into decrement function');
       return {
         ...state,
         count: state.count - 1,
@@ -42,7 +41,6 @@ export default (state = initialState, action) => {
       };
 
     default:
-      console.log('default state');
       return state;
   }
 };

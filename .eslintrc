@@ -10,5 +10,8 @@
     "no-multi-spaces": "error",
     "react/jsx-tag-spacing": "warn",
     "react/jsx-wrap-multilines": "error",
+    "react/sort-comp": "warn",
+    "react/require-default-props": "error",
+    "no-console": "error",
     }
 }

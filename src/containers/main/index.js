@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Home from '../home';
 import About from '../about';
+import Api from '../api';
 import Login from '../../components/Login';
 import WeekMenu from '../../components/WeekMenu';
 import BookMenu from '../../components/BookMenu';
@@ -23,7 +24,6 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    console.log('blablalb', this.props.userData);
     if (this.props.userData.name === '') {
       return <Login />;
     }
@@ -37,15 +37,15 @@ class Main extends Component {
             <Link to="/BookMenu">Book</Link>
             <Link to="/DateMenu">Date</Link>
             <Link to="/WeekMenu">Week</Link>
+            <Link to="/Api">Api</Link>
           </div>
-
-          <Footer />
-
           <Route exact path="/DateMenu" component={DateMenu} />
           <Route exact path="/BookMenu" component={BookMenu} />
           <Route exact path="/WeekMenu" component={WeekMenu} />
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/Api" component={Api} />
+          <Footer />
         </main>
       </div>
     );
@@ -53,7 +53,6 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('the state', state);
   return {
     userData: state.UserReducer,
   };

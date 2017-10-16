@@ -20,7 +20,6 @@ const Text = styled.p`
     }
   }};
 `;
-
 class Home extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
@@ -32,17 +31,13 @@ class Home extends Component {
     decrementAsync: PropTypes.func.isRequired,
     changePage: PropTypes.func.isRequired,
   };
-
+  static defaultProps = {};
   constructor(props) {
     super(props);
     this.state = {
       stateCounter: 0,
     };
   }
-  setStateCounterToPropsCounter() {
-    this.setState({ stateCounter: this.props.count });
-  }
-
   render() {
     return (
       <div>
@@ -68,7 +63,6 @@ class Home extends Component {
             Increment Async
           </button>
         </p>
-
         <p>
           <button
             onClick={this.props.decrement}
@@ -83,7 +77,6 @@ class Home extends Component {
             Decrement Async
           </button>
         </p>
-
         <p>
           <button onClick={() => this.props.changePage()}>
             Go to about page via redux
@@ -93,13 +86,9 @@ class Home extends Component {
     );
   }
 }
-
 const mapStateToProps = state => ({
   count: state.HomeReducer.count,
-  isIncrementing: state.HomeReducer.isIncrementing,
-  isDecrementing: state.HomeReducer.isDecrementing,
 });
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -108,5 +97,4 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
