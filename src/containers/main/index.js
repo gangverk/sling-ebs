@@ -10,7 +10,6 @@ import Login from '../../components/Login';
 import WeekMenu from '../../components/WeekMenu';
 import BookMenu from '../../components/BookMenu';
 import DateMenu from '../../components/DateMenu';
-import Button from '../../components/Actions/index';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -30,18 +29,6 @@ class Main extends Component {
     }
     return (
       <div>
-<<<<<<< HEAD
-=======
-        <header>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/BookMenu">Book</Link>
-          <Link to="/DateMenu">Date</Link>
-          <Link to="/WeekMenu">Week</Link>
-          <Link to="/Api">Api</Link>
-        </header>
-
->>>>>>> Trying to make a list
         <main>
           <Header />
           <div>
@@ -50,16 +37,15 @@ class Main extends Component {
             <Link to="/BookMenu">Book</Link>
             <Link to="/DateMenu">Date</Link>
             <Link to="/WeekMenu">Week</Link>
+            <Link to="/Api">Api</Link>
           </div>
-
-          <Footer />
-
           <Route exact path="/DateMenu" component={DateMenu} />
           <Route exact path="/BookMenu" component={BookMenu} />
           <Route exact path="/WeekMenu" component={WeekMenu} />
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/Api" component={Api} />
+          <Footer />
         </main>
       </div>
     );

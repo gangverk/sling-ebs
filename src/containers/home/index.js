@@ -4,8 +4,10 @@ import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
+
 import * as actions from './actions';
 import Button from '../../components/Button';
+
 const Text = styled.p`
   color: ${props => props.color};
   ${props => {
@@ -29,9 +31,7 @@ class Home extends Component {
     decrementAsync: PropTypes.func.isRequired,
     changePage: PropTypes.func.isRequired,
   };
-  static defaultProps = {
-    dataCar: null,
-  };
+  static defaultProps = {};
   constructor(props) {
     super(props);
     this.state = {

@@ -14,7 +14,6 @@ export const fetchCar = () => ({
 });
 
 export const fetchAuthenticationData = () => {
-  console.log('fetch auth data');
   return {
     [CALL_API]: {
       types: [
@@ -29,12 +28,12 @@ export const fetchAuthenticationData = () => {
         },
         actionTypes.FETCH_AUTENTICATION_FAILURE,
       ],
-      endpoint: 'https://test-api.sling.is/v1/account/login',
+      endpoint: `${process.env.REACT_APP_API}${'account/login'}`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: 'hreinnrunars@gmail.com',
-        password: 'test1234',
+        email: `${process.env.REACT_APP_USERNAME}`,
+        password: `${process.env.REACT_APP_PW}`,
       }),
     },
   };
@@ -48,9 +47,9 @@ export const fetchUsers = () => {
         actionTypes.FETCH_USERS_SUCCESS,
         actionTypes.FETCH_USERS_FAILURE,
       ],
-      endpoint: 'https://test-api.sling.is/v1/users',
+      endpoint: `${process.env.REACT_APP_API}${'users'}`,
       method: 'GET',
-      headers: { authorization: 'd31af5aed026df02ed8e39428c76769c' },
+      headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
     },
   };
 };
@@ -62,8 +61,8 @@ export const fetchSessionData = () => ({
       actionTypes.FETCH_SESSION_SUCCESS,
       actionTypes.FETCH_SESSION_FAILURE,
     ],
-    endpoint: 'https://test-api.sling.is/v1/account/session',
+    endpoint: `${process.env.REACT_APP_API}${'account/session'}`,
     method: 'GET',
-    headers: { authorization: 'd31af5aed026df02ed8e39428c76769c' },
+    headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
   },
 });

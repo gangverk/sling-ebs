@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import FacebookLogin from 'react-facebook-login';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SignUp from '.././SignUp';
-import { Route, Link, withRouter } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';

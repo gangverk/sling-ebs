@@ -1,5 +1,5 @@
 ### Env file
-``bash
+```bash
 REACT_APP_FACEBOOK=<Insert facebook app id>
 ```
 

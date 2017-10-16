@@ -37,10 +37,6 @@ class Api extends Component {
     dataCar: null,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   componentWillMount() {
     this.props.fetchCar();
     this.props.fetchSessionData();

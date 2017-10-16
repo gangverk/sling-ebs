@@ -36,18 +36,15 @@ export default (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_USERS:
-      console.log('þetta er FETCH_USERS', action);
       return {
         ...state,
       };
     case actionTypes.FETCH_USERS_SUCCESS:
-      console.log('þetta er FETCH_USERS_SUCCESS', action);
       return {
         ...state,
         dataUsers: action.payload,
       };
     case actionTypes.FETCH_USERS_FAILURE:
-      console.log('þetta er FETCH_USERS_FAILURE', action);
       return {
         ...state,
       };
@@ -56,7 +53,6 @@ export default (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_SESSION_SUCCESS:
-      console.log('FETCH_SESSION_SUCCESS', action);
       return {
         ...state,
         dataSession: action.payload,
