@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Route, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -13,6 +14,12 @@ import DateMenu from '../../components/DateMenu';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+
+const LinkWrapper = styled.div`
+  a {
+    margin-left: 10px;
+  }
+`;
 
 class Main extends Component {
   static propTypes = {
@@ -31,14 +38,14 @@ class Main extends Component {
       <div>
         <main>
           <Header />
-          <div>
+          <LinkWrapper>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
             <Link to="/BookMenu">Book</Link>
             <Link to="/DateMenu">Date</Link>
             <Link to="/WeekMenu">Week</Link>
             <Link to="/Api">Api</Link>
-          </div>
+          </LinkWrapper>
           <Route exact path="/DateMenu" component={DateMenu} />
           <Route exact path="/BookMenu" component={BookMenu} />
           <Route exact path="/WeekMenu" component={WeekMenu} />
