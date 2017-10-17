@@ -5,30 +5,23 @@ export default class Footer extends Component {
   render() {
     const Footer = styled.div`
       .FooterDistributed {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        display: flex;
+        justify-content: space-around;
+
         background-color: #0085ff;
         box-sizing: border-box;
         width: 100%;
         padding-top: 10px;
         margin-top: 1%;
         color: white;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
       }
-      .FooterDistributed .FooterLeft p {
+      .FooterDistributed p {
         margin-top: 0px;
-        padding-left: 1%;
-        float: left;
-      }
-      .FooterDistributed .FooterCenter p {
-        text-align: center;
-        margin-top: 0px;
-      }
-      .FooterDistributed .FooterRight p {
-        float: right;
-        margin-top: 0px;
-        padding-right: 1%;
       }
     `;
 
