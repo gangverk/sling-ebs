@@ -16,6 +16,7 @@ export default styled.button`
         transition: all 0.5s;
         cursor: pointer;
         margin: 5px;
+        outline: none !important;
         &:hover {
           background-color: #eee;
           color: #0085ff;
@@ -38,6 +39,7 @@ export default styled.button`
         transition: all 0.5s;
         cursor: pointer;
         margin: 5px;
+        outline: none !important;
         &:hover {
           cursor: default;
         }
@@ -57,6 +59,7 @@ export default styled.button`
         transition: all 0.5s;
         cursor: pointer;
         margin: 5px;
+        outline: none !important;
         &:hover {
           cursor: default;
         }

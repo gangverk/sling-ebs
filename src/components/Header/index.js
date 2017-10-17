@@ -1,48 +1,32 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import logo from './logo@2x.png';
-import eblogo from './ebslogo2.png';
+import slingLogo from './logo@2x.png';
+import ebsLogo from './ebslogo2.png';
 
-const EBSImage = styled.div`
-  background-image: url(${eblogo});
+const HeaderWrapper = styled.header`
+  display: flex;
+  justify-content: center;
+  padding: 7px;
+  background-color: #0085ff;
+`;
+
+const ImageLogo = styled.div`
+  background-image: url(${props => props.src});
   background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: 50% 50%;
+  background-position: center;
+  background-size: contain;
   display: inline-block;
   width: 200px;
-  height: 100px;
+  height: 50px;
 `;
 
 export default class Header extends Component {
   render() {
-    const Header = styled.header`
-      display: flex;
-      justify-content: center;
-      padding: 7px;
-      margin-bottom: 0;
-      font-family: Helvetica Neue;
-      font-size: 10px;
-      color: black;
-      background-color: #0085ff;
-      clear: left;
-      text-align: left;
-      p {
-        color: black;
-      }
-    `;
-
     return (
-      <div>
-        <Header>
-          <header>
-            {/* <h1>Sling EBS </h1>
-          <h3>The Greatest Booking Service in the World </h3>
-          <h3>We will book it!</h3> */}
-            <img src={logo} alt="The new logo" />
-            <EBSImage />
-          </header>
-        </Header>
-      </div>
+      <HeaderWrapper>
+        <ImageLogo src={slingLogo} />
+        <ImageLogo src={ebsLogo} />
+      </HeaderWrapper>
     );
   }
 }

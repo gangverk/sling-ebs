@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components';
 
 import * as actions from './actions';
 import Button from '../../components/Button';
-import Buttonnew from '../../components/Buttonnew';
+import ButtonNew from '../../components/ButtonNew';
 
 const Text = styled.p`
   color: ${props => props.color};
@@ -51,10 +51,10 @@ class Home extends Component {
           State counter is {this.state.stateCounter}
         </Button>
 
-        <Buttonnew bigButton={true}>Previous Day</Buttonnew>
-        <Buttonnew bigButton={true}>Next Day</Buttonnew>
-        <Buttonnew booked={true}>Booked</Buttonnew>
-        <Buttonnew timeOff={true}>Time Off</Buttonnew>
+        <ButtonNew bigButton={true}>Previous Day</ButtonNew>
+        <ButtonNew bigButton={true}>Next Day</ButtonNew>
+        <ButtonNew booked={true}>Booked</ButtonNew>
+        <ButtonNew timeOff={true}>Time Off</ButtonNew>
         <p>
           <button
             onClick={this.props.increment}

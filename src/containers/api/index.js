@@ -1,30 +1,57 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ApiActions from '../../components/Actions/actions';
+
+const DayMenu = styled.table`
+  margin: auto;
+  margin-top: 10px;
+  table,
+  td,
+  th {
+    border: 1px solid #cecfd5;
+    border-collapse: collapse;
+    padding: 10px 15px;
+  }
+  th,
+  td {
+    padding: 10px 15px;
+    vertical-align: middle;
+  }
+  thead {
+    background: #395870;
+    background: linear-gradient(#87b5ff, #5995f7);
+    color: #fff;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  th:first-child {
+    border-top-left-radius: 5px;
+    text-align: left;
+  }
+  th:last-child {
+    border-top-right-radius: 5px;
+  }
+  tfoot tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+  }
+  tfoot tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+  }
+
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #4a4a4d;
+  font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+`;
 
 class Api extends Component {
   static propTypes = {
     fetchCar: PropTypes.func.isRequired,
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
-    dataCar: PropTypes.shape({
-      color: PropTypes.string,
-      type: PropTypes.string,
-      registryNumber: PropTypes.string,
-    }),
-    dataSession: PropTypes.shape({
-      browser: PropTypes.string,
-      org: PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.number,
-      }),
-      user: PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.string,
-      }),
-    }),
     dataAutentication: PropTypes.shape({
       token: PropTypes.string,
     }),
@@ -32,9 +59,7 @@ class Api extends Component {
     dataUsers: PropTypes.array.isRequired,
   };
   static defaultProps = {
-    dataSession: [],
     dataAutentication: [],
-    dataCar: null,
   };
 
   componentWillMount() {
@@ -43,64 +68,66 @@ class Api extends Component {
     this.props.fetchAuthenticationData();
     this.props.fetchUsers();
   }
-  ListItem(props) {
-    return <li>{props.value}</li>;
-  }
 
   userList(userData) {
-    return userData.map(user => {
-      return (
-        <li>
-          {user.name} - {user.lastname}
-        </li>
-      );
-    });
+    let times = [];
+    for (let i = 8; i <= 17; i++) {
+      times.push(i);
+    }
+    const tableHead = (
+      <thead>
+        <tr>
+          <th>Time</th>
+          {userData.map(user => {
+            return <th key={'tableHead' + user.name}>{user.name}</th>;
+          })}
+        </tr>
+      </thead>
+    );
+    const tableBody = (
+      <tbody>
+        {times.map((time, index) => {
+          return (
+            <tr key={'tbody' + time + index}>
+              <td>{time}</td>
+              {userData.map(user => {
+                return (
+                  <td
+                    key={user.name + time}
+                    onClick={() => {
+                      // eslint-disable-next-line
+                      console.log(
+                        'Bóka tíma hjá ' + user.name + ' ,kl: ' + time
+                      );
+                    }}
+                  >
+                    Bóka Tíma
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    );
+    return (
+      <DayMenu>
+        {tableHead}
+        {tableBody}
+      </DayMenu>
+    );
   }
+
   render() {
     return (
       <div>
-        {this.props.dataUsers.length && (
-          <ul>{this.userList(this.props.dataUsers)}</ul>
-        )}
-
-        {this.props.dataCar !== null && (
-          <li>Litur: {this.props.dataCar.color}</li>
-        )}
-        {this.props.dataCar !== null && (
-          <li>Týpa: {this.props.dataCar.type}</li>
-        )}
-        {this.props.dataCar !== null && (
-          <li>Nr: {this.props.dataCar.registryNumber}</li>
-        )}
-        {this.props.dataSession !== null && (
-          <li>Browser {this.props.dataSession.browser}</li>
-        )}
-        {this.props.dataSession !== null && (
-          <li>Company Name: {this.props.dataSession.org.name}</li>
-        )}
-        {this.props.dataSession !== null && (
-          <li>CompanyID: {this.props.dataSession.org.id}</li>
-        )}
-        {this.props.dataSession !== null && (
-          <li>User name: {this.props.dataSession.user.name}</li>
-        )}
-        {this.props.dataSession !== null && (
-          <li>User ID: {this.props.dataSession.user.id}</li>
-        )}
-        {this.props.dataAutentication !== null && (
-          <li>Token: {this.props.dataAutentication.token}</li>
-        )}
+        {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)}
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  count: state.HomeReducer.count,
   dataAutentication: state.ApiReducer.dataAutentication,
-  isIncrementing: state.HomeReducer.isIncrementing,
-  isDecrementing: state.HomeReducer.isDecrementing,
-  dataCar: state.ApiReducer.dataCar,
-  dataSession: state.ApiReducer.dataSession,
   dataUsers: state.ApiReducer.dataUsers,
 });
 const mapDispatchToProps = dispatch =>
