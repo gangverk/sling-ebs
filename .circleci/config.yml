@@ -33,4 +33,4 @@ jobs:
       staging:
         branch: master
         commands:
-          chmod +x .bla.sh
+          - ./bla.sh
