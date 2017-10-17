@@ -1,18 +1,6 @@
 import { CALL_API } from 'redux-api-middleware';
 import * as actionTypes from './actionTypes';
 
-export const fetchCar = () => ({
-  [CALL_API]: {
-    types: [
-      actionTypes.FETCH_CAR,
-      actionTypes.FETCH_CAR_SUCCESS,
-      actionTypes.FETCH_CAR_FAILURE,
-    ],
-    endpoint: 'http://apis.is/car?number=fma08',
-    method: 'GET',
-  },
-});
-
 export const fetchAuthenticationData = () => {
   return {
     [CALL_API]: {
@@ -66,3 +54,60 @@ export const fetchSessionData = () => ({
     headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
   },
 });
+
+export const fetchUserShift = () => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.FETCH_USER_SHIFT,
+      actionTypes.FETCH_USER_SHIFT_SUCCESS,
+      actionTypes.FETCH_USER_SHIFT_FAILURE,
+    ],
+    endpoint: `${process.env
+      .REACT_APP_API}${'shifts/current?referenceDate=2017-10-18'}`,
+    method: 'GET',
+    headers: {
+      authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+    },
+  },
+});
+
+export const postShift = () => {
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.POST_SHIFT,
+        actionTypes.POST_SHIFT_SUCCESS,
+        actionTypes.POST_SHIFT_FAILURE,
+      ],
+      endpoint: `${process.env.REACT_APP_API}${'shifts'}`,
+      method: 'POST',
+      headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
+      // Breytur sem þarf að senda inn
+      fields: '',
+      dates: '2017-10-18',
+      body: {
+        available: true,
+        breakDuration: 0,
+        dtend: '2017-10-18T17:01:02.968Z',
+        dtstart: '2017-10-18T17:01:02.968Z',
+        location: {
+          id: 0,
+        },
+        position: {
+          id: 0,
+        },
+        rrule: {},
+        summary: 'string',
+        user: {
+          id: 0,
+        },
+        users: [
+          {
+            id: 0,
+          },
+        ],
+      },
+      //
+    },
+  };
+};

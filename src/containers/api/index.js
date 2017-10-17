@@ -49,7 +49,6 @@ const DayMenu = styled.table`
 
 class Api extends Component {
   static propTypes = {
-    fetchCar: PropTypes.func.isRequired,
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
     dataAutentication: PropTypes.shape({
@@ -57,16 +56,17 @@ class Api extends Component {
     }),
     fetchUsers: PropTypes.func.isRequired,
     dataUsers: PropTypes.array.isRequired,
+    fetchUserShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
   };
 
   componentWillMount() {
-    this.props.fetchCar();
     this.props.fetchSessionData();
     this.props.fetchAuthenticationData();
     this.props.fetchUsers();
+    this.props.fetchUserShift();
   }
 
   userList(userData) {
@@ -129,6 +129,7 @@ class Api extends Component {
 const mapStateToProps = state => ({
   dataAutentication: state.ApiReducer.dataAutentication,
   dataUsers: state.ApiReducer.dataUsers,
+  dataShift: state.ApiReducer.dataShift,
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
