@@ -52,22 +52,6 @@ class Api extends Component {
     fetchCar: PropTypes.func.isRequired,
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
-    dataCar: PropTypes.shape({
-      color: PropTypes.string,
-      type: PropTypes.string,
-      registryNumber: PropTypes.string,
-    }),
-    dataSession: PropTypes.shape({
-      browser: PropTypes.string,
-      org: PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.number,
-      }),
-      user: PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.string,
-      }),
-    }),
     dataAutentication: PropTypes.shape({
       token: PropTypes.string,
     }),
@@ -75,9 +59,7 @@ class Api extends Component {
     dataUsers: PropTypes.array.isRequired,
   };
   static defaultProps = {
-    dataSession: [],
     dataAutentication: [],
-    dataCar: null,
   };
 
   componentWillMount() {
@@ -145,12 +127,7 @@ class Api extends Component {
   }
 }
 const mapStateToProps = state => ({
-  count: state.HomeReducer.count,
   dataAutentication: state.ApiReducer.dataAutentication,
-  isIncrementing: state.HomeReducer.isIncrementing,
-  isDecrementing: state.HomeReducer.isDecrementing,
-  dataCar: state.ApiReducer.dataCar,
-  dataSession: state.ApiReducer.dataSession,
   dataUsers: state.ApiReducer.dataUsers,
 });
 const mapDispatchToProps = dispatch =>
