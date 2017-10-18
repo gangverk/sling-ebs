@@ -1,17 +1,7 @@
 import { CALL_API } from 'redux-api-middleware';
-import * as actionTypes from './actionTypes';
+import moment from 'moment';
 
-export const fetchCar = () => ({
-  [CALL_API]: {
-    types: [
-      actionTypes.FETCH_CAR,
-      actionTypes.FETCH_CAR_SUCCESS,
-      actionTypes.FETCH_CAR_FAILURE,
-    ],
-    endpoint: 'http://apis.is/car?number=fma08',
-    method: 'GET',
-  },
-});
+import * as actionTypes from './actionTypes';
 
 export const fetchAuthenticationData = () => {
   return {
@@ -66,3 +56,60 @@ export const fetchSessionData = () => ({
     headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
   },
 });
+
+export const fetchUserShift = () => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.FETCH_USER_SHIFT,
+      actionTypes.FETCH_USER_SHIFT_SUCCESS,
+      actionTypes.FETCH_USER_SHIFT_FAILURE,
+    ],
+    endpoint: `${process.env
+      .REACT_APP_API}${'shifts/current?referenceDate=2017-10-18'}`,
+    method: 'GET',
+    headers: {
+      authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+    },
+  },
+});
+
+export const postShift = (time, user, userInfo) => {
+  const endTime = moment(time)
+    .add(1, 'hour')
+    .toISOString();
+  const summary = `
+    Klipping fyrir ${userInfo.name} - ${userInfo.email}
+    Bóka tíma hjá: ${user}
+  `;
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.POST_SHIFT,
+        actionTypes.POST_SHIFT_SUCCESS,
+        actionTypes.POST_SHIFT_FAILURE,
+      ],
+      endpoint: `${process.env.REACT_APP_API}${'shifts'}`,
+      method: 'POST',
+      headers: {
+        authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        available: false,
+        breakDuration: 0,
+        dtend: endTime,
+        dtstart: time,
+        location: {
+          id: 37130,
+        },
+        position: {
+          id: 36722,
+        },
+        summary,
+        user: {
+          id: 37239,
+        },
+      }),
+    },
+  };
+};

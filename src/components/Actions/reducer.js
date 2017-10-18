@@ -9,19 +9,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_CAR:
-      return {
-        ...state,
-      };
-    case actionTypes.FETCH_CAR_SUCCESS:
-      return {
-        ...state,
-        dataCar: action.payload.results[0],
-      };
-    case actionTypes.FETCH_CAR_FAILURE:
-      return {
-        ...state,
-      };
     case actionTypes.FETCH_AUTENTICATION:
       return {
         ...state,
@@ -58,6 +45,31 @@ export default (state = initialState, action) => {
         dataSession: action.payload,
       };
     case actionTypes.FETCH_SESSION_FAILURE:
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_USER_SHIFT:
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_USER_SHIFT_SUCCESS:
+      return {
+        ...state,
+        dataShift: action.payload,
+      };
+    case actionTypes.FETCH_USER_SHIFT_FAILURE:
+      return {
+        ...state,
+      };
+    case actionTypes.POST_SHIFT:
+      return {
+        ...state,
+      };
+    case actionTypes.POST_SHIFT_SUCCESS:
+      return {
+        ...state,
+      };
+    case actionTypes.POST_SHIFT_FAILURE:
       return {
         ...state,
       };
