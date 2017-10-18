@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
+
 import * as ApiActions from '../../components/Actions/actions';
 
 const DayMenu = styled.table`
@@ -57,10 +59,33 @@ class Api extends Component {
     fetchUsers: PropTypes.func.isRequired,
     dataUsers: PropTypes.array.isRequired,
     fetchUserShift: PropTypes.func.isRequired,
+    userInfo: PropTypes.shape({}).isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
   };
+
+  constructor(props) {
+    super(props);
+    //TODO: fix, initalize the day tomorrow
+    let tomorrow = moment().add(1, 'day');
+    tomorrow.millisecond(0);
+    tomorrow.second(0);
+    tomorrow.minute(0);
+    tomorrow.hour(8);
+    const time = [];
+    for (let i = 8; i <= 17; i++) {
+      const newTime = { time: tomorrow.toISOString() };
+      let display = tomorrow.hour() + ' - ';
+      tomorrow.add(1, 'hour');
+      display += tomorrow.hour();
+      newTime.display = display;
+      time.push(newTime);
+    }
+    this.state = {
+      time,
+    };
+  }
 
   componentWillMount() {
     this.props.fetchSessionData();
@@ -70,15 +95,10 @@ class Api extends Component {
   }
 
   bookTime(time, user) {
-    console.log('bókatímma function ', time, user);
-    this.props.postShift(time, user);
+    this.props.postShift(time, user, this.props.userInfo);
   }
 
   userList(userData) {
-    let times = [];
-    for (let i = 8; i <= 17; i++) {
-      times.push(i);
-    }
     const tableHead = (
       <thead>
         <tr>
@@ -91,20 +111,16 @@ class Api extends Component {
     );
     const tableBody = (
       <tbody>
-        {times.map((time, index) => {
+        {this.state.time.map((time, index) => {
           return (
-            <tr key={'tbody' + time + index}>
-              <td>{time}</td>
+            <tr key={'tbody' + time.display + index}>
+              <td>{time.display}</td>
               {userData.map(user => {
                 return (
                   <td
-                    key={user.name + time}
+                    key={user.name + time.display}
                     onClick={() => {
-                      this.bookTime(time, user.name);
-                      // eslint-disable-next-line
-                      console.log(
-                        'Bóka tíma hjá ' + user.name + ' ,kl: ' + time
-                      );
+                      this.bookTime(time.time, user.name);
                     }}
                   >
                     Bóka Tíma
@@ -136,6 +152,7 @@ const mapStateToProps = state => ({
   dataAutentication: state.ApiReducer.dataAutentication,
   dataUsers: state.ApiReducer.dataUsers,
   dataShift: state.ApiReducer.dataShift,
+  userInfo: state.UserReducer,
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

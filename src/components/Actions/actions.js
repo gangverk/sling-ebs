@@ -1,4 +1,6 @@
 import { CALL_API } from 'redux-api-middleware';
+import moment from 'moment';
+
 import * as actionTypes from './actionTypes';
 
 export const fetchAuthenticationData = () => {
@@ -71,8 +73,17 @@ export const fetchUserShift = () => ({
   },
 });
 
-export const postShift = (user, time) => {
-  console.log(user, time, ' helllllloooo herer is time and name');
+export const postShift = (time, user, userInfo) => {
+  console.log(user, time, userInfo, ' helllllloooo herer is time and name');
+  const endTime = moment(time)
+    .add(1, 'hour')
+    .toISOString();
+  console.log('start time', time);
+  console.log('endtime', endTime);
+  const summary = `
+    Klipping fyrir ${userInfo.name} - ${userInfo.email}
+    Bóka tíma hjá: ${user}
+  `;
   return {
     [CALL_API]: {
       types: [
@@ -89,15 +100,15 @@ export const postShift = (user, time) => {
       body: JSON.stringify({
         available: false,
         breakDuration: 0,
-        dtend: `2017-10-22T15:00:00.000Z`,
-        dtstart: `2017-10-22T14:00:00.000Z`,
+        dtend: endTime,
+        dtstart: time,
         location: {
           id: 37130,
         },
         position: {
           id: 36722,
         },
-        summary: 'Klipping á kjellinn',
+        summary,
         user: {
           id: 37239,
         },
