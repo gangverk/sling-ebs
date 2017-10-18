@@ -15,7 +15,7 @@ echo REACT_APP_USERNAME=$REACT_APP_USERNAME >> .env
 
 source ~/.bashrc && yarn build && aws s3 ls
 
-aws s3 sync build s3://slignebs --region us-east-2
+aws s3 sync build s3://slingebs --region us-east-2
 
 # aws s3 sync ./build s3://slignebs --region us-east-2
 
