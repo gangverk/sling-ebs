@@ -60,6 +60,7 @@ class Api extends Component {
     dataUsers: PropTypes.array.isRequired,
     fetchUserShift: PropTypes.func.isRequired,
     userInfo: PropTypes.shape({}).isRequired,
+    postShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
