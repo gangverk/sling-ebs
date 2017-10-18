@@ -69,6 +69,11 @@ class Api extends Component {
     this.props.fetchUserShift();
   }
 
+  bookTime(time, user) {
+    console.log('bókatímma function ', time, user);
+    this.props.postShift(time, user);
+  }
+
   userList(userData) {
     let times = [];
     for (let i = 8; i <= 17; i++) {
@@ -95,6 +100,7 @@ class Api extends Component {
                   <td
                     key={user.name + time}
                     onClick={() => {
+                      this.bookTime(time, user.name);
                       // eslint-disable-next-line
                       console.log(
                         'Bóka tíma hjá ' + user.name + ' ,kl: ' + time

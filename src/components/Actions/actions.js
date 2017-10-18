@@ -71,7 +71,8 @@ export const fetchUserShift = () => ({
   },
 });
 
-export const postShift = () => {
+export const postShift = (user, time) => {
+  console.log(user, time, ' helllllloooo herer is time and name');
   return {
     [CALL_API]: {
       types: [
@@ -81,33 +82,26 @@ export const postShift = () => {
       ],
       endpoint: `${process.env.REACT_APP_API}${'shifts'}`,
       method: 'POST',
-      headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
-      // Breytur sem þarf að senda inn
-      fields: '',
-      dates: '2017-10-18',
-      body: {
-        available: true,
+      headers: {
+        authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        available: false,
         breakDuration: 0,
-        dtend: '2017-10-18T17:01:02.968Z',
-        dtstart: '2017-10-18T17:01:02.968Z',
+        dtend: `2017-10-22T15:00:00.000Z`,
+        dtstart: `2017-10-22T14:00:00.000Z`,
         location: {
-          id: 0,
+          id: 37130,
         },
         position: {
-          id: 0,
+          id: 36722,
         },
-        rrule: {},
-        summary: 'string',
+        summary: 'Klipping á kjellinn',
         user: {
-          id: 0,
+          id: 37239,
         },
-        users: [
-          {
-            id: 0,
-          },
-        ],
-      },
-      //
+      }),
     },
   };
 };
