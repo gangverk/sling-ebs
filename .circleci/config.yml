@@ -20,6 +20,6 @@ jobs:
           command: source ~/.bashrc && yarn test
       - deploy:
           command: |
-            if [ "${CIRCLE_BRANCH}" == "awstesting" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ./deploy.sh
             fi
