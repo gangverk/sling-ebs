@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Route, Link, withRouter } from 'react-router-dom';
+// import styled from 'styled-components';
+import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Home from '../home';
-import About from '../about';
+// import Home from '../home';
+// import About from '../about';
 import Api from '../api';
 import Login from '../../components/Login';
-import WeekMenu from '../../components/WeekMenu';
-import BookMenu from '../../components/BookMenu';
-import DateMenu from '../../components/DateMenu';
+// import WeekMenu from '../../components/WeekMenu';
+// import BookMenu from '../../components/BookMenu';
+// import DateMenu from '../../components/DateMenu';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-const LinkWrapper = styled.div`
-  a {
-    margin-left: 10px;
-  }
-`;
+// const LinkWrapper = styled.div`
+//   a {
+//     margin-left: 10px;
+//   }
+// `;
 
 class Main extends Component {
   static propTypes = {

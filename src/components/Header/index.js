@@ -38,21 +38,20 @@ export default class Header extends Component {
   static propTypes = {
     userData: PropTypes.shape({
       name: PropTypes.string,
-      image: PropTypes.string,
+      picture: PropTypes.string,
     }),
   };
   static defaultProps = {
     userData: null,
   };
   render() {
-    console.log(this.props);
     return (
       <HeaderWrapper>
         <ImageLogo src={slingLogo} />
         <ImageLogo src={ebsLogo} />
         {this.props.userData != null && (
           <UserInfo>
-            <img src={this.props.userData.picture} />
+            <img alt="/" src={this.props.userData.picture} />
             <p>{this.props.userData.name}</p>
           </UserInfo>
         )}
