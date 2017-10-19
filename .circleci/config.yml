@@ -20,6 +20,6 @@ jobs:
           command: source ~/.bashrc && yarn test
       - deploy:
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "clear_cloudfront_cache" ]; then
               ./deploy.sh
             fi
