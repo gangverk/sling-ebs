@@ -37,21 +37,21 @@ class Main extends Component {
     return (
       <div>
         <main>
-          <Header />
-          <LinkWrapper>
+          <Header userData={this.props.userData} />
+          {/* <LinkWrapper>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
             <Link to="/BookMenu">Book</Link>
             <Link to="/DateMenu">Date</Link>
             <Link to="/WeekMenu">Week</Link>
             <Link to="/Api">Api</Link>
-          </LinkWrapper>
-          <Route exact path="/DateMenu" component={DateMenu} />
+          </LinkWrapper> */}
+          {/* <Route exact path="/DateMenu" component={DateMenu} />
           <Route exact path="/BookMenu" component={BookMenu} />
           <Route exact path="/WeekMenu" component={WeekMenu} />
           <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/Api" component={Api} />
+          <Route exact path="/about" component={About} /> */}
+          <Route exact path="/" component={Api} />
           <Footer />
         </main>
       </div>
