@@ -8,7 +8,7 @@ const HeaderWrapper = styled.header`
   display: flex;
   justify-content: center;
   padding: 7px;
-  background-color: #0085ff;
+  background-color: red;
 `;
 
 const ImageLogo = styled.div`
