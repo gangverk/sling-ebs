@@ -10,10 +10,15 @@ import * as ApiActions from '../../components/Actions/actions';
 const DayMenu = styled.table`
   margin: auto;
   margin-top: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 80%;
+  color: #4a4a4d;
+  font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
   table,
   td,
   th {
-    border: 1px solid #cecfd5;
+    border-bottom: 1px solid #cecfd5;
     border-collapse: collapse;
     padding: 10px 15px;
   }
@@ -23,10 +28,7 @@ const DayMenu = styled.table`
     vertical-align: middle;
   }
   thead {
-    background: #395870;
-    background: linear-gradient(#87b5ff, #5995f7);
-    color: #fff;
-    font-size: 11px;
+    ${'' /* background: #395870; */} ${'' /* background: linear-gradient(#87b5ff, #5995f7); */} ${'' /* color: #fff; */} font-size: 11px;
     text-transform: uppercase;
   }
   th:first-child {
@@ -42,11 +44,6 @@ const DayMenu = styled.table`
   tfoot tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
   }
-
-  border-collapse: separate;
-  border-spacing: 0;
-  color: #4a4a4d;
-  font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
 `;
 
 const HeaderDiv = styled.div`
@@ -57,6 +54,9 @@ const HeaderDiv = styled.div`
     border-radius: 2px;
     margin-right: 10px;
     margin-left: 10px;
+    background: white;
+    color: #0085ff;
+    font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
   height: 50px;
   width: 800px;
@@ -144,9 +144,7 @@ class Api extends Component {
                     onClick={() => {
                       this.bookTime(time.time, user.name);
                     }}
-                  >
-                    Bóka Tíma
-                  </td>
+                  />
                 );
               })}
             </tr>
