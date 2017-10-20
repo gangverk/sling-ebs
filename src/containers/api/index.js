@@ -49,6 +49,27 @@ const DayMenu = styled.table`
   font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
 `;
 
+const HeaderDiv = styled.div`
+  button {
+    height: 32px;
+    width: 132px;
+    border: 2px solid #dadada;
+    border-radius: 2px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  height: 50px;
+  width: 800px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
+  margin: auto;
+  margin-top: 12px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
 class Api extends Component {
   static propTypes = {
     fetchAuthenticationData: PropTypes.func.isRequired,
@@ -134,10 +155,16 @@ class Api extends Component {
       </tbody>
     );
     return (
-      <DayMenu>
-        {tableHead}
-        {tableBody}
-      </DayMenu>
+      <div>
+        <HeaderDiv>
+          <button>20.10.17</button>
+          <button>Next Day</button>
+        </HeaderDiv>
+        <DayMenu>
+          {tableHead}
+          {tableBody}
+        </DayMenu>
+      </div>
     );
   }
 

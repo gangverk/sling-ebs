@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -14,6 +14,8 @@ import Login from '../../components/Login';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+
+const Div = styled.div`background-color: #f4f5f9;`;
 
 // const LinkWrapper = styled.div`
 //   a {
@@ -31,11 +33,11 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    if (this.props.userData.name === '') {
-      return <Login />;
-    }
+    // if (this.props.userData.name === '') {
+    //   return <Login />;
+    // }
     return (
-      <div>
+      <Div>
         <main>
           <Header userData={this.props.userData} />
           {/* <LinkWrapper>
@@ -54,7 +56,7 @@ class Main extends Component {
           <Route exact path="/" component={Api} />
           <Footer />
         </main>
-      </div>
+      </Div>
     );
   }
 }
