@@ -137,8 +137,8 @@ class Api extends Component {
     this.props.fetchUserShift();
   }
 
-  bookTime(time, user) {
-    this.props.postShift(time, user, this.props.userInfo);
+  bookTime(time, user, id) {
+    this.props.postShift(time, user, id, this.props.userInfo);
   }
 
   userList(userData) {
@@ -168,7 +168,7 @@ class Api extends Component {
                   <td
                     key={user.name + time.display}
                     onClick={() => {
-                      this.bookTime(time.time, user.name);
+                      this.bookTime(time.time, user.name, user.id);
                       alert(
                         'You booked a time with ' +
                           user.name +
