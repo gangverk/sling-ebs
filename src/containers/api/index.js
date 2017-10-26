@@ -7,12 +7,15 @@ import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 
+const DayMenuDiv = styled.div`height: 100%;`;
+
 const DayMenu = styled.table`
   margin: auto;
   margin-top: 10px;
   border-collapse: separate;
   border-spacing: 0;
-  width: 80%;
+  width: 95%;
+  height: 100%
   color: #4a4a4d;
   font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
   table,
@@ -28,7 +31,7 @@ const DayMenu = styled.table`
     vertical-align: middle;
   }
   thead {
-    ${'' /* background: #395870; */} ${'' /* background: linear-gradient(#87b5ff, #5995f7); */} ${'' /* color: #fff; */} font-size: 11px;
+    font-size: 11px;
     text-transform: uppercase;
   }
   th:first-child {
@@ -43,6 +46,16 @@ const DayMenu = styled.table`
   }
   tfoot tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
+  }
+  .TimeEdit {
+    border-style: hidden;
+    width: 2px;
+  }
+  img {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
   }
 `;
 
@@ -59,7 +72,7 @@ const HeaderDiv = styled.div`
     font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
   height: 50px;
-  width: 800px;
+  width: 95%;
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
@@ -78,13 +91,17 @@ class Api extends Component {
       token: PropTypes.string,
     }),
     fetchUsers: PropTypes.func.isRequired,
-    dataUsers: PropTypes.array.isRequired,
+    dataUsers: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+    }),
     fetchUserShift: PropTypes.func.isRequired,
     userInfo: PropTypes.shape({}).isRequired,
     postShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
+    dataUsers: {},
   };
 
   constructor(props) {
@@ -98,9 +115,8 @@ class Api extends Component {
     const time = [];
     for (let i = 8; i <= 17; i++) {
       const newTime = { time: tomorrow.toISOString() };
-      let display = tomorrow.hour() + ' - ';
+      let display = tomorrow.hour();
       tomorrow.add(1, 'hour');
-      display += tomorrow.hour();
       newTime.display = display;
       time.push(newTime);
     }
@@ -124,9 +140,15 @@ class Api extends Component {
     const tableHead = (
       <thead>
         <tr>
-          <th>Time</th>
+          {/* Hægt kannski að koma fyrir booked og onVacation hér í staðinn fyrir time ?*/}
+          <th className="TimeEdit">Time</th>{' '}
           {userData.map(user => {
-            return <th key={'tableHead' + user.name}>{user.name}</th>;
+            return (
+              <th key={'tableHead' + user.name}>
+                {user.name}
+                <img alt="avatar" src={user.avatar} />
+              </th>
+            );
           })}
         </tr>
       </thead>
@@ -136,7 +158,7 @@ class Api extends Component {
         {this.state.time.map((time, index) => {
           return (
             <tr key={'tbody' + time.display + index}>
-              <td>{time.display}</td>
+              <td className="TimeEdit">{time.display}</td>
               {userData.map(user => {
                 return (
                   <td
@@ -153,16 +175,16 @@ class Api extends Component {
       </tbody>
     );
     return (
-      <div>
+      <DayMenuDiv>
         <HeaderDiv>
-          <button>20.10.17</button>
-          <button>Next Day</button>
+          <button>Koma Date hér</button> {/* Hér kemur modal box með mánuð */}
+          <button>Next Day</button> {/*Vantar virkni hér*/}
         </HeaderDiv>
         <DayMenu>
           {tableHead}
           {tableBody}
         </DayMenu>
-      </div>
+      </DayMenuDiv>
     );
   }
 
