@@ -17,7 +17,7 @@ const DayMenu = styled.table`
   width: 95%;
   height: 100%
   color: #4a4a4d;
-  font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 14px/1.4 'Helvetica Neue';
   table,
   td,
   th {
@@ -73,7 +73,7 @@ const HeaderDiv = styled.div`
     margin-left: 10px;
     background: white;
     color: #0085ff;
-    font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font: 14px/1.4 'Helvetica Neue';
   }
   height: 50px;
   width: 95%;
@@ -145,7 +145,6 @@ class Api extends Component {
     const tableHead = (
       <thead>
         <tr>
-          {/* Hægt kannski að koma fyrir booked og onVacation hér í staðinn fyrir time ?*/}
           <th className="TimeEdit">Time</th>{' '}
           {userData.map(user => {
             return (
@@ -182,8 +181,8 @@ class Api extends Component {
     return (
       <DayMenuDiv>
         <HeaderDiv>
-          <button>Koma Date hér</button> {/* Hér kemur modal box með mánuð */}
-          <button>Next Day</button> {/*Vantar virkni hér*/}
+          <button>Koma Date hér</button>
+          <button>Next Day</button>
         </HeaderDiv>
         <DayMenu>
           {tableHead}

@@ -9,7 +9,7 @@ import Login from '../../components/Login';
 
 import Header from '../../components/Header';
 
-const Div = styled.div`background-color: #f4f5f9;`;
+const MainWrapper = styled.div`background-color: #f4f5f9;`;
 
 // const LinkWrapper = styled.div`
 //   a {
@@ -31,12 +31,12 @@ class Main extends Component {
       return <Login />;
     }
     return (
-      <Div>
+      <MainWrapper>
         <main>
           <Header userData={this.props.userData} />
           <Route exact path="/" component={Api} />
         </main>
-      </Div>
+      </MainWrapper>
     );
   }
 }
