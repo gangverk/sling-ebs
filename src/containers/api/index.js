@@ -7,13 +7,21 @@ import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 
+const DayMenuDiv = styled.div`height: 100%;`;
+
 const DayMenu = styled.table`
   margin: auto;
   margin-top: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 95%;
+  height: 100%
+  color: #4a4a4d;
+  font: 14px/1.4 'Helvetica Neue';
   table,
   td,
   th {
-    border: 1px solid #cecfd5;
+    border-bottom: 1px solid #cecfd5;
     border-collapse: collapse;
     padding: 10px 15px;
   }
@@ -23,9 +31,6 @@ const DayMenu = styled.table`
     vertical-align: middle;
   }
   thead {
-    background: #395870;
-    background: linear-gradient(#87b5ff, #5995f7);
-    color: #fff;
     font-size: 11px;
     text-transform: uppercase;
   }
@@ -42,11 +47,44 @@ const DayMenu = styled.table`
   tfoot tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
   }
+  .TimeEdit {
+    border-style: hidden;
+    width: 2px;
+  }
+  img {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  p {
+    display: inline-block;
+    white-space: nowrap;
+  }
+`;
 
-  border-collapse: separate;
-  border-spacing: 0;
-  color: #4a4a4d;
-  font: 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+const HeaderDiv = styled.div`
+  button {
+    height: 32px;
+    width: 132px;
+    border: 2px solid #dadada;
+    border-radius: 2px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: white;
+    color: #0085ff;
+    font: 14px/1.4 'Helvetica Neue';
+  }
+  height: 50px;
+  width: 95%;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
+  margin: auto;
+  margin-top: 12px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 `;
 
 class Api extends Component {
@@ -57,13 +95,18 @@ class Api extends Component {
       token: PropTypes.string,
     }),
     fetchUsers: PropTypes.func.isRequired,
-    dataUsers: PropTypes.array.isRequired,
+    dataUsers: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      length: PropTypes.numb,
+    }),
     fetchUserShift: PropTypes.func.isRequired,
     userInfo: PropTypes.shape({}).isRequired,
     postShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
+    dataUsers: {},
   };
 
   constructor(props) {
@@ -77,9 +120,8 @@ class Api extends Component {
     const time = [];
     for (let i = 8; i <= 17; i++) {
       const newTime = { time: tomorrow.toISOString() };
-      let display = tomorrow.hour() + ' - ';
+      let display = tomorrow.hour();
       tomorrow.add(1, 'hour');
-      display += tomorrow.hour();
       newTime.display = display;
       time.push(newTime);
     }
@@ -103,9 +145,14 @@ class Api extends Component {
     const tableHead = (
       <thead>
         <tr>
-          <th>Time</th>
+          <th className="TimeEdit">Time</th>{' '}
           {userData.map(user => {
-            return <th key={'tableHead' + user.name}>{user.name}</th>;
+            return (
+              <th key={'tableHead' + user.name}>
+                <img alt="avatar" src={user.avatar} />
+                <p>{user.name}</p>
+              </th>
+            );
           })}
         </tr>
       </thead>
@@ -115,7 +162,7 @@ class Api extends Component {
         {this.state.time.map((time, index) => {
           return (
             <tr key={'tbody' + time.display + index}>
-              <td>{time.display}</td>
+              <td className="TimeEdit">{time.display}</td>
               {userData.map(user => {
                 return (
                   <td
@@ -123,9 +170,7 @@ class Api extends Component {
                     onClick={() => {
                       this.bookTime(time.time, user.name);
                     }}
-                  >
-                    Bóka Tíma
-                  </td>
+                  />
                 );
               })}
             </tr>
@@ -134,10 +179,16 @@ class Api extends Component {
       </tbody>
     );
     return (
-      <DayMenu>
-        {tableHead}
-        {tableBody}
-      </DayMenu>
+      <DayMenuDiv>
+        <HeaderDiv>
+          <button>Koma Date hér</button>
+          <button>Next Day</button>
+        </HeaderDiv>
+        <DayMenu>
+          {tableHead}
+          {tableBody}
+        </DayMenu>
+      </DayMenuDiv>
     );
   }
 

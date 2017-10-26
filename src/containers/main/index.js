@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-// import Home from '../home';
-// import About from '../about';
 import Api from '../api';
 import Login from '../../components/Login';
-// import WeekMenu from '../../components/WeekMenu';
-// import BookMenu from '../../components/BookMenu';
-// import DateMenu from '../../components/DateMenu';
 
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+
+const MainWrapper = styled.div`background-color: #f4f5f9;`;
 
 // const LinkWrapper = styled.div`
 //   a {
@@ -35,26 +31,12 @@ class Main extends Component {
       return <Login />;
     }
     return (
-      <div>
+      <MainWrapper>
         <main>
           <Header userData={this.props.userData} />
-          {/* <LinkWrapper>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/BookMenu">Book</Link>
-            <Link to="/DateMenu">Date</Link>
-            <Link to="/WeekMenu">Week</Link>
-            <Link to="/Api">Api</Link>
-          </LinkWrapper> */}
-          {/* <Route exact path="/DateMenu" component={DateMenu} />
-          <Route exact path="/BookMenu" component={BookMenu} />
-          <Route exact path="/WeekMenu" component={WeekMenu} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} /> */}
           <Route exact path="/" component={Api} />
-          <Footer />
         </main>
-      </div>
+      </MainWrapper>
     );
   }
 }
