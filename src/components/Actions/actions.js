@@ -73,7 +73,7 @@ export const fetchUserShift = () => ({
   },
 });
 
-export const postShift = (time, user, userInfo) => {
+export const postShift = (time, user, id, userInfo) => {
   const endTime = moment(time)
     .add(1, 'hour')
     .toISOString();
@@ -107,7 +107,7 @@ export const postShift = (time, user, userInfo) => {
         },
         summary,
         user: {
-          id: 37239,
+          id: id,
         },
       }),
     },
