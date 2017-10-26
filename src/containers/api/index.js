@@ -169,6 +169,12 @@ class Api extends Component {
                     key={user.name + time.display}
                     onClick={() => {
                       this.bookTime(time.time, user.name);
+                      alert(
+                        'You booked a time with ' +
+                          user.name +
+                          ' at ' +
+                          time.time
+                      );
                     }}
                   />
                 );
