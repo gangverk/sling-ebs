@@ -57,6 +57,10 @@ const DayMenu = styled.table`
     border-radius: 50%;
     margin-right: 10px;
   }
+  p {
+    display: inline-block;
+    white-space: nowrap;
+  }
 `;
 
 const HeaderDiv = styled.div`
@@ -94,6 +98,7 @@ class Api extends Component {
     dataUsers: PropTypes.shape({
       name: PropTypes.string.isRequired,
       avatar: PropTypes.string.isRequired,
+      length: PropTypes.numb,
     }),
     fetchUserShift: PropTypes.func.isRequired,
     userInfo: PropTypes.shape({}).isRequired,
@@ -145,8 +150,8 @@ class Api extends Component {
           {userData.map(user => {
             return (
               <th key={'tableHead' + user.name}>
-                {user.name}
                 <img alt="avatar" src={user.avatar} />
+                <p>{user.name}</p>
               </th>
             );
           })}

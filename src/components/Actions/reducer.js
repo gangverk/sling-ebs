@@ -27,7 +27,6 @@ export default (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_USERS_SUCCESS:
-      console.log('Fetch user success', action);
       return {
         ...state,
         dataUsers: action.payload,
