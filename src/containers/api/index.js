@@ -7,6 +7,30 @@ import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 
+const HeaderDiv = styled.div`
+  button {
+    height: 32px;
+    width: 132px;
+    border: 2px solid #dadada;
+    border-radius: 2px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: white;
+    color: #0085ff;
+    font: 14px/1.4 'Helvetica Neue';
+  }
+  height: 50px;
+  width: 95%;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
+  margin: auto;
+  margin-top: 12px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const DayMenuDiv = styled.div`height: 100%;`;
 
 const DayMenu = styled.table`
@@ -63,28 +87,47 @@ const DayMenu = styled.table`
   }
 `;
 
-const HeaderDiv = styled.div`
-  button {
-    height: 32px;
-    width: 132px;
-    border: 2px solid #dadada;
-    border-radius: 2px;
-    margin-right: 10px;
-    margin-left: 10px;
-    background: white;
-    color: #0085ff;
-    font: 14px/1.4 'Helvetica Neue';
-  }
-  height: 50px;
-  width: 95%;
-  border-radius: 4px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
+const ModalBackground = styled.div`
+  background-color: purple;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+`;
+
+const Modal = styled.div`
+  background-color: #fefefe;
   margin: auto;
-  margin-top: 12px;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 8px;
+  background-color: #f4f5f9;
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.5);
+`;
+const ModalHeader = styled.div`
+  margin-top: 0;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+  padding: 10px 0;
+  h3 {
+    margin: 0;
+    margin-left: 20px;
+  }
+`;
+
+const ModalBody = styled.div`padding: 10px;`;
+const ModalFooter = styled.div`
+  padding: 2px 16px;
+  border-radius: 0 0 8px 8px;
+  padding: 10px;
 `;
 
 class Api extends Component {
@@ -107,6 +150,7 @@ class Api extends Component {
   static defaultProps = {
     dataAutentication: [],
     dataUsers: {},
+    modal: false,
   };
 
   constructor(props) {
@@ -127,6 +171,7 @@ class Api extends Component {
     }
     this.state = {
       time,
+      modal: false,
     };
   }
 
@@ -187,7 +232,9 @@ class Api extends Component {
     return (
       <DayMenuDiv>
         <HeaderDiv>
-          <button>Koma Date hér</button>
+          <button onClick={() => this.setState({ modal: true })}>
+            Koma Date hér
+          </button>
           <button>Next Day</button>
         </HeaderDiv>
         <DayMenu>
@@ -202,6 +249,23 @@ class Api extends Component {
     return (
       <div>
         {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)}
+        {this.state.modal === true && (
+          <ModalBackground>
+            <Modal>
+              <ModalHeader>
+                <h3>Modal Header</h3>
+              </ModalHeader>
+              <ModalBody>
+                <p>Pick date biatch</p>
+              </ModalBody>
+              <ModalFooter>
+                <button onClick={() => this.setState({ modal: false })}>
+                  Close Modal
+                </button>
+              </ModalFooter>
+            </Modal>
+          </ModalBackground>
+        )}
       </div>
     );
   }

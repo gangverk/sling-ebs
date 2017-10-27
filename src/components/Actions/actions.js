@@ -73,6 +73,24 @@ export const fetchUserShift = () => ({
   },
 });
 
+//TODO:bæta við það sem þarf sem er org_id og user_id.
+//https://test-api.sling.is/v1/1061/calendar/37239?dates=2017-10-27
+//Hér er org_id = 1061 og user_id = 37239 date = 2017-10-27
+export const fetchAllShifts = () => ({
+  [CALL_API]: {
+    type: [
+      actionTypes.FETCH_ALL_SHIFTS,
+      actionTypes.FETCH_ALL_SHIFTS_SUCCESS,
+      actionTypes.FETCH_ALL_SHIFTS_FAILURE,
+    ],
+    endpoint: `${process.env.REACT_APP_API}${''}`,
+    method: 'GET',
+    headers: {
+      authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+    },
+  },
+});
+
 export const postShift = (time, user, id, userInfo) => {
   const endTime = moment(time)
     .add(1, 'hour')
