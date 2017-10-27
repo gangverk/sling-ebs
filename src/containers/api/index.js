@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import timeblue from './timeblue.svg';
 import * as ApiActions from '../../components/Actions/actions';
 
 const HeaderDiv = styled.div`
@@ -253,7 +254,8 @@ class Api extends Component {
           <ModalBackground>
             <Modal>
               <ModalHeader>
-                <h3>Modal Header</h3>
+                <img src={timeblue} alt="blueLogo" />
+                <p>Book Appointment</p>
               </ModalHeader>
               <ModalBody>
                 <p>Pick date biatch</p>
