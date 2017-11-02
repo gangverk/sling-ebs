@@ -5,8 +5,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import timeblue from './timeblue.svg';
+import Modal from '../../components/Modal';
 import * as ApiActions from '../../components/Actions/actions';
+import timeBlue from './timeblue.svg';
+import timeRed from './timered.svg';
+import noteGray from './notesgray.svg';
 
 const HeaderDiv = styled.div`
   button {
@@ -88,49 +91,6 @@ const DayMenu = styled.table`
   }
 `;
 
-const ModalBackground = styled.div`
-  background-color: purple;
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-`;
-
-const Modal = styled.div`
-  background-color: #fefefe;
-  margin: auto;
-  border: 1px solid #888;
-  width: 50%;
-  border-radius: 8px;
-  background-color: #f4f5f9;
-  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.5);
-`;
-const ModalHeader = styled.div`
-  margin-top: 0;
-  height: 30px;
-  background-color: #ffffff;
-  border-radius: 8px 8px 0 0;
-  width: 100%;
-  padding: 10px 0;
-  h3 {
-    margin: 0;
-    margin-left: 20px;
-  }
-`;
-
-const ModalBody = styled.div`padding: 10px;`;
-const ModalFooter = styled.div`
-  padding: 2px 16px;
-  border-radius: 0 0 8px 8px;
-  padding: 10px;
-`;
-
 class Api extends Component {
   static propTypes = {
     fetchAuthenticationData: PropTypes.func.isRequired,
@@ -172,7 +132,9 @@ class Api extends Component {
     }
     this.state = {
       time,
-      modal: false,
+      showModal: false,
+      showModal2: false,
+      name: '',
     };
   }
 
@@ -233,7 +195,7 @@ class Api extends Component {
     return (
       <DayMenuDiv>
         <HeaderDiv>
-          <button onClick={() => this.setState({ modal: true })}>
+          <button onClick={() => this.setState({ showModal: true })}>
             Koma Date hér
           </button>
           <button>Next Day</button>
@@ -250,24 +212,42 @@ class Api extends Component {
     return (
       <div>
         {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)}
-        {this.state.modal === true && (
-          <ModalBackground>
-            <Modal>
-              <ModalHeader>
-                <img src={timeblue} alt="blueLogo" />
-                <p>Book Appointment</p>
-              </ModalHeader>
-              <ModalBody>
-                <p>Pick date biatch</p>
-              </ModalBody>
-              <ModalFooter>
-                <button onClick={() => this.setState({ modal: false })}>
-                  Close Modal
-                </button>
-              </ModalFooter>
-            </Modal>
-          </ModalBackground>
-        )}
+        <Modal
+          visable={this.state.showModal}
+          modalHeader="Date picking modal"
+          modalFooterSubmit="Pick Date"
+          modalFooterCancel="cancel pick"
+          onSubmit={() => this.setState({ showModal: false })}
+          onCancel={() => console.log('Canceled button pressed')}
+        >
+          <div>
+            <p>here kemur calander</p>
+          </div>
+        </Modal>
+        <Modal
+          visable={this.state.showModal2}
+          modalHeader="Booking modal"
+          modalFooterSubmit="Book time"
+          modalFooterCancel="cancel booking"
+          onSubmit={() => this.setState({ showModal2: false })}
+          onCancel={() => console.log('Cancel booking time button')}
+        >
+          <div>
+            <div>
+              Start <img alt="timeblue" src={timeBlue} />
+            </div>
+            <div>
+              End<img alt="timeblue" src={timeRed} />
+            </div>
+            <div>
+              Note<img alt="timeblue" src={noteGray} />
+              <input type="text" placeholder="optional" />
+            </div>
+          </div>
+        </Modal>
+        <button onClick={() => this.setState({ showModal2: true })}>
+          show bookin modal
+        </button>
       </div>
     );
   }
