@@ -9,17 +9,43 @@ import mountainBackround from './mountain1.png';
 import * as actions from './actions';
 
 const PageWrapperLeft = styled.div`
-  .left {
+  width: 60%;
+  height: 100%;
+  float: left;
+  ${'' /* display: flex;
+  align-items: flex-start;
+  justify-content: flex-start; */} .ImageLeft {
+    background-image: url(${props => props.src});
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
     background-color: red;
   }
 `;
 
-const PageWrapperRight = styled.div`
-  .right {
-    background-color: pink;
-    float: right;
-    padding: 175px;
+const SignUpWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  ${'' /* justify-content: flex-end; */} .signUpStyle {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+    background-color: #0085ff;
+    color: white;
+    border: none;
   }
+`;
+
+const PageWrapperRight = styled.div`
+  height: 100%;
+  ${'' /* display: flex;
+  align-items: flex-start;
+  justify-content: flex-end; */};
 `;
 
 const SlingWrapper = styled.div`
@@ -36,53 +62,25 @@ const LoginWrapper = styled.div`
   justify-content: center;
   font-family: Arial;
   color: #0085ff;
+  .inputStyle {
+    width: 250px;
+    border: none;
+    margin: 5px;
+    padding: 5px;
+  }
+  .forgotPasswordStyle {
+    font-size: 12px;
+    color: grey;
+  }
+  .buttonStyle {
+    background-color: #0085ff;
+    width: 250px;
+    border: none;
+    margin: 5px;
+    padding: 5px;
+    color: white;
+  }
 `;
-
-const SignUpWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const ImageLogo = styled.div`
-  background-image: url(${props => props.src});
-  background-repeat: no-repeat;
-  background-position: left;
-  background-size: contain;
-  width: 900px;
-  height: 900px;
-`;
-
-const buttonStyle = {
-  backgroundColor: '#0085ff',
-  width: '250px',
-  border: 'none',
-  margin: '5px',
-  padding: '5px',
-  color: 'white',
-};
-
-const inputStyle = {
-  width: '250px',
-  border: 'none',
-  margin: '5px',
-  padding: '5px',
-};
-
-const signUpStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  margin: '5px',
-  padding: '5px',
-  width: '100px',
-  backgroundColor: '#0085ff',
-  color: 'white',
-  border: 'none',
-};
-
-const forgotPasswordStyle = {
-  fontSize: '12px',
-  color: 'grey',
-};
 
 class Login extends Component {
   static propTypes = {
@@ -104,15 +102,21 @@ class Login extends Component {
     return (
       <div>
         <PageWrapperLeft>
-          <ImageLogo src={mountainBackround} />
-        </PageWrapperLeft>
-
-        <PageWrapperRight>
           <SignUpWrapper>
-            <button style={signUpStyle}>
+            <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
             </button>
           </SignUpWrapper>
+
+          <img alt="Mountain" className="ImageLeft" src={mountainBackround} />
+        </PageWrapperLeft>
+
+        <PageWrapperRight>
+          {/* <SignUpWrapper>
+            <button className="signUpStyle">
+              <a href="./SignUp">Sign up</a>
+            </button>
+          </SignUpWrapper> */}
           <SlingWrapper>
             <h1>Sling EBS</h1>
           </SlingWrapper>
@@ -131,14 +135,14 @@ class Login extends Component {
           </LoginWrapper>
 
           <LoginWrapper>
-            <p style={forgotPasswordStyle}>
+            <p className="forgotPasswordStyle">
               Enter your <b>email address</b> and <b>password</b>
             </p>
           </LoginWrapper>
 
           <LoginWrapper>
             <input
-              style={inputStyle}
+              className="inputStyle"
               type="email"
               name="email"
               placeholder="Email address"
@@ -146,7 +150,7 @@ class Login extends Component {
           </LoginWrapper>
           <LoginWrapper>
             <input
-              style={inputStyle}
+              className="inputStyle"
               type="password"
               name="password"
               placeholder="Password"
@@ -154,11 +158,11 @@ class Login extends Component {
           </LoginWrapper>
 
           <LoginWrapper>
-            <button style={buttonStyle}>Next</button>
+            <button className="buttonStyle">Next</button>
           </LoginWrapper>
 
           <LoginWrapper>
-            <p style={forgotPasswordStyle}>
+            <p className="forgotPasswordStyle">
               Forgot your{' '}
               <a href="/notimplemented">
                 <u>password?</u>
@@ -167,7 +171,7 @@ class Login extends Component {
           </LoginWrapper>
 
           <LoginWrapper>
-            <button style={buttonStyle}>Skip this step</button>
+            <button className="buttonStyle">Skip this step</button>
           </LoginWrapper>
         </PageWrapperRight>
       </div>
