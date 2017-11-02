@@ -4,21 +4,23 @@ import styled from 'styled-components';
 import FacebookLogin from 'react-facebook-login';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import mountainBackround from './mountain1.png';
 
 import * as actions from './actions';
 
-const LoginWrapper = styled.div`
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  font-family: Arial;
-  color: #0085ff;
+const PageWrapperLeft = styled.div`
+  .left {
+    background-color: red;
+  }
 `;
 
-const PageWrapper = styled.div`background-color: #eee;`;
+const PageWrapperRight = styled.div`
+  .right {
+    background-color: pink;
+    float: right;
+    padding: 175px;
+  }
+`;
 
 const SlingWrapper = styled.div`
   margin: auto;
@@ -28,9 +30,26 @@ const SlingWrapper = styled.div`
   color: #646464;
 `;
 
+const LoginWrapper = styled.div`
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  font-family: Arial;
+  color: #0085ff;
+`;
+
 const SignUpWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+const ImageLogo = styled.div`
+  background-image: url(${props => props.src});
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+  width: 900px;
+  height: 900px;
 `;
 
 const buttonStyle = {
@@ -80,11 +99,15 @@ class Login extends Component {
       this.props.setUserData(data.name, data.email, data.picture.data.url);
     }
   }
+
   render() {
     return (
-      <PageWrapper>
-        <Header />
-        <div>
+      <div>
+        <PageWrapperLeft>
+          <ImageLogo src={mountainBackround} />
+        </PageWrapperLeft>
+
+        <PageWrapperRight>
           <SignUpWrapper>
             <button style={signUpStyle}>
               <a href="./SignUp">Sign up</a>
@@ -131,7 +154,7 @@ class Login extends Component {
           </LoginWrapper>
 
           <LoginWrapper>
-            <button style={buttonStyle}>Log in</button>
+            <button style={buttonStyle}>Next</button>
           </LoginWrapper>
 
           <LoginWrapper>
@@ -144,11 +167,10 @@ class Login extends Component {
           </LoginWrapper>
 
           <LoginWrapper>
-            <button style={buttonStyle}>Skip Login</button>
+            <button style={buttonStyle}>Skip this step</button>
           </LoginWrapper>
-        </div>
-        <Footer />
-      </PageWrapper>
+        </PageWrapperRight>
+      </div>
     );
   }
 }
