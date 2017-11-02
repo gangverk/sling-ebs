@@ -111,7 +111,6 @@ class Api extends Component {
   static defaultProps = {
     dataAutentication: [],
     dataUsers: {},
-    modal: false,
   };
 
   constructor(props) {
@@ -214,31 +213,31 @@ class Api extends Component {
         {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)}
         <Modal
           visable={this.state.showModal}
-          modalHeader="Date picking modal"
+          modalHeader="Date Picking Modal"
           modalFooterSubmit="Pick Date"
-          modalFooterCancel="cancel pick"
+          modalFooterCancel="Cancel Date Pick"
           onSubmit={() => this.setState({ showModal: false })}
         >
           <div>
-            <p>here kemur calander</p>
+            <p>Calender comes here</p>
           </div>
         </Modal>
         <Modal
           visable={this.state.showModal2}
-          modalHeader="Booking modal"
-          modalFooterSubmit="Book time"
-          modalFooterCancel="cancel booking"
+          modalHeader="Booking Modal"
+          modalFooterSubmit="Book Time"
+          modalFooterCancel="Cancel Booking"
           onSubmit={() => this.setState({ showModal2: false })}
         >
           <div>
             <div>
-              Start <img alt="timeblue" src={timeBlue} />
+              Start <img alt="Blue clock icon" src={timeBlue} />
             </div>
             <div>
-              End<img alt="timeblue" src={timeRed} />
+              End<img alt="Red clock icon" src={timeRed} />
             </div>
             <div>
-              Note<img alt="timeblue" src={noteGray} />
+              Note<img alt="Grey note icon" src={noteGray} />
               <input type="text" placeholder="optional" />
             </div>
           </div>

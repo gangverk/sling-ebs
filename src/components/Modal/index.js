@@ -25,7 +25,7 @@ const ModalWrapper = styled.div`
     }
   }};
 `;
-const StyledModal = styled.div`
+const ModalContainer = styled.div`
   background-color: #fefefe;
   margin: auto;
   border: 1px solid #888;
@@ -35,7 +35,7 @@ const StyledModal = styled.div`
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.5);
 `;
 
-const StyledModalHead = styled.div`
+const ModalHead = styled.div`
   margin-top: 0;
   height: 30px;
   background-color: #ffffff;
@@ -43,21 +43,21 @@ const StyledModalHead = styled.div`
   width: 100%;
   padding: 10px 0;
 `;
-const StyledModalFooter = styled.div``;
+const ModalFooter = styled.div``;
 
 export default class Modal extends Component {
   render() {
     return (
       <ModalWrapper visable={this.props.visable}>
-        <StyledModal>
+        <ModalContainer>
           {this.props.modalHeader.length > 0 && (
-            <StyledModalHead>{this.props.modalHeader}</StyledModalHead>
+            <ModalHead>{this.props.modalHeader}</ModalHead>
           )}
           {this.props.children}
-          <StyledModalFooter>
+          <ModalFooter>
             <button onClick={() => this.props.onSubmit()}>Button</button>
-          </StyledModalFooter>
-        </StyledModal>
+          </ModalFooter>
+        </ModalContainer>
       </ModalWrapper>
     );
   }
