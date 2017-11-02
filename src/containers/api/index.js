@@ -218,7 +218,6 @@ class Api extends Component {
           modalFooterSubmit="Pick Date"
           modalFooterCancel="cancel pick"
           onSubmit={() => this.setState({ showModal: false })}
-          onCancel={() => console.log('Canceled button pressed')}
         >
           <div>
             <p>here kemur calander</p>
@@ -230,7 +229,6 @@ class Api extends Component {
           modalFooterSubmit="Book time"
           modalFooterCancel="cancel booking"
           onSubmit={() => this.setState({ showModal2: false })}
-          onCancel={() => console.log('Cancel booking time button')}
         >
           <div>
             <div>
