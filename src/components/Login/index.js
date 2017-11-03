@@ -11,18 +11,16 @@ import * as actions from './actions';
 const PageWrapperLeft = styled.div`
   width: 60%;
   height: 100%;
+  min-height: 100vh;
   float: left;
-  ${'' /* display: flex;
-  align-items: flex-start;
-  justify-content: flex-start; */} .ImageLeft {
-    background-image: url(${props => props.src});
-    background-repeat: no-repeat;
-    background-position: left;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    background-color: red;
-  }
+  background-image: url(${mountainBackround});
+  background-repeat: no-repeat;
+  background-position: left;
+`;
+
+const HeaderWrapper = styled.div`
+  top: 0;
+  width: 100%;
 `;
 
 const SignUpWrapper = styled.div`
@@ -101,13 +99,11 @@ class Login extends Component {
     return (
       <div>
         <PageWrapperLeft>
-          <SignUpWrapper>
+          <HeaderWrapper>
             <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
             </button>
-          </SignUpWrapper>
-
-          <img alt="Mountain" className="ImageLeft" src={mountainBackround} />
+          </HeaderWrapper>
         </PageWrapperLeft>
 
         <PageWrapperRight>
