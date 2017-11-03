@@ -43,7 +43,7 @@ const ModalHead = styled.div`
   width: 100%;
   padding: 10px 0;
 `;
-const ModalFooter = styled.div``;
+const ModalFooter = styled.div`padding: 12px;`;
 
 export default class Modal extends Component {
   render() {
