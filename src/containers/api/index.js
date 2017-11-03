@@ -10,6 +10,7 @@ import * as ApiActions from '../../components/Actions/actions';
 import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
+import DropDown from '../../components/DropDown';
 
 const HeaderDiv = styled.div`
   button {
@@ -231,10 +232,10 @@ class Api extends Component {
         >
           <div>
             <div>
-              Start <img alt="Blue clock icon" src={timeBlue} />
+              Start <img alt="Blue clock icon" src={timeBlue} /> <DropDown />
             </div>
             <div>
-              End<img alt="Red clock icon" src={timeRed} />
+              End<img alt="Red clock icon" src={timeRed} /> <DropDown />
             </div>
             <div>
               Note<img alt="Grey note icon" src={noteGray} />
