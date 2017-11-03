@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 import * as actions from './actions';
+import * as ApiActions from '../Actions/actions';
 
 const LoginWrapper = styled.div`
   margin: auto;
@@ -74,6 +75,10 @@ class Login extends Component {
     this.state = {
       facebook: null,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchAuthenticationData();
   }
   onFbCallback(data) {
     if (data) {
@@ -160,6 +165,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      ...ApiActions,
       ...actions,
     },
     dispatch

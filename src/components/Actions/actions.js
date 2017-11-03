@@ -1,4 +1,5 @@
 import { CALL_API } from 'redux-api-middleware';
+import Cookie from 'js-cookie';
 import moment from 'moment';
 
 import * as actionTypes from './actionTypes';
@@ -29,6 +30,20 @@ export const fetchAuthenticationData = () => {
   };
 };
 
+// get(actionTypes, url) {
+//     return {
+//       [CALL_API]: {
+//         types: [
+//           ...actionTypes
+//         ],
+//         endpoint: `${process.env.REACT_APP_API}${url}`,
+//         method: 'GET',
+//         headers: { authorization: `${Cookie.get('auth')}` },
+//       },
+//     };
+//   };
+// }
+
 export const fetchUsers = () => {
   return {
     [CALL_API]: {
@@ -39,7 +54,7 @@ export const fetchUsers = () => {
       ],
       endpoint: `${process.env.REACT_APP_API}${'users'}`,
       method: 'GET',
-      headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
+      headers: { authorization: `${Cookie.get('auth')}` },
     },
   };
 };
