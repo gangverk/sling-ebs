@@ -43,9 +43,8 @@ const SignUpWrapper = styled.div`
 
 const PageWrapperRight = styled.div`
   height: 100%;
-  ${'' /* display: flex;
-  align-items: flex-start;
-  justify-content: flex-end; */};
+  width: 40%;
+  float: left;
 `;
 
 const SlingWrapper = styled.div`
@@ -112,11 +111,6 @@ class Login extends Component {
         </PageWrapperLeft>
 
         <PageWrapperRight>
-          {/* <SignUpWrapper>
-            <button className="signUpStyle">
-              <a href="./SignUp">Sign up</a>
-            </button>
-          </SignUpWrapper> */}
           <SlingWrapper>
             <h1>Sling EBS</h1>
           </SlingWrapper>
@@ -174,6 +168,7 @@ class Login extends Component {
             <button className="buttonStyle">Skip this step</button>
           </LoginWrapper>
         </PageWrapperRight>
+        {/* </div> */}
       </div>
     );
   }
