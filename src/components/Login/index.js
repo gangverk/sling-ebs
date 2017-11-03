@@ -18,25 +18,18 @@ const PageWrapperLeft = styled.div`
   background-position: left;
 `;
 
-const HeaderWrapper = styled.div`
+const signupHeader = styled.div`
   top: 0;
   width: 100%;
-`;
-
-const SignUpWrapper = styled.div`
   display: flex;
-  flex-direction: row-reverse;
-  ${'' /* justify-content: flex-end; */} .signUpStyle {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 5px;
-    padding: 5px;
-    width: 100px;
-    background-color: #0085ff;
-    color: white;
-    border: none;
-  }
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px;
+  padding: 5px;
+  width: 100px;
+  background-color: #0085ff;
+  color: white;
+  border: none;
 `;
 
 const PageWrapperRight = styled.div`
@@ -57,6 +50,8 @@ const LoginWrapper = styled.div`
   margin: auto;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   font-family: Arial;
   color: #0085ff;
   .inputStyle {
@@ -99,11 +94,11 @@ class Login extends Component {
     return (
       <div>
         <PageWrapperLeft>
-          <HeaderWrapper>
+          <signupHeader>
             <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
             </button>
-          </HeaderWrapper>
+          </signupHeader>
         </PageWrapperLeft>
 
         <PageWrapperRight>
@@ -118,53 +113,41 @@ class Login extends Component {
               fields="name,email,picture"
               callback={response => this.onFbCallback(response)}
             />
-          </LoginWrapper>
 
-          <LoginWrapper>
+            <h1>Sling EBS</h1>
+
             <p>Log in</p>
-          </LoginWrapper>
 
-          <LoginWrapper>
             <p className="forgotPasswordStyle">
               Enter your <b>email address</b> and <b>password</b>
             </p>
-          </LoginWrapper>
 
-          <LoginWrapper>
             <input
               className="inputStyle"
               type="email"
               name="email"
               placeholder="Email address"
             />
-          </LoginWrapper>
-          <LoginWrapper>
+
             <input
               className="inputStyle"
               type="password"
               name="password"
               placeholder="Password"
             />
-          </LoginWrapper>
 
-          <LoginWrapper>
             <button className="buttonStyle">Next</button>
-          </LoginWrapper>
 
-          <LoginWrapper>
             <p className="forgotPasswordStyle">
               Forgot your{' '}
               <a href="/notimplemented">
                 <u>password?</u>
               </a>
             </p>
-          </LoginWrapper>
 
-          <LoginWrapper>
             <button className="buttonStyle">Skip this step</button>
           </LoginWrapper>
         </PageWrapperRight>
-        {/* </div> */}
       </div>
     );
   }
