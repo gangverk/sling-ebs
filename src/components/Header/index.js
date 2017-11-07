@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import slingLogo from './logo.png';
 import PropTypes from 'prop-types';
 
 const HeaderWrapper = styled.header`
@@ -46,7 +45,6 @@ export default class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <ImageLogo src={slingLogo} />
         {this.props.userData != null && (
           <UserInfo>
             <img alt="/" src={this.props.userData.picture} />

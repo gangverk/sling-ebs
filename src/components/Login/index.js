@@ -5,6 +5,7 @@ import FacebookLogin from 'react-facebook-login';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import mountainBackround from './mountain1.png';
+import ebsLogo from './logo.png';
 
 import * as actions from './actions';
 
@@ -18,18 +19,30 @@ const PageWrapperLeft = styled.div`
   background-position: left;
 `;
 
-const signupHeader = styled.div`
-  top: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 5px;
-  padding: 5px;
-  width: 100px;
-  background-color: #0085ff;
-  color: white;
-  border: none;
+const SignupHeader = styled.div`
+  flex-direction: column;
+
+  img {
+    height: 27%;
+    width: 27%;
+  }
+  button {
+    top: 0;
+    width: 25%;
+    display: flex;
+    justify-content: right;
+    align-items: flex-start;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+    background-color: #0085ff;
+    color: white;
+    border: none;
+  }
+  p {
+    font-family: 'Open Sans';
+    width: 25%;
+  }
 `;
 
 const PageWrapperRight = styled.div`
@@ -94,11 +107,15 @@ class Login extends Component {
     return (
       <div>
         <PageWrapperLeft>
-          <signupHeader>
+          <SignupHeader>
+            <img alt="logo of the website" src={ebsLogo} />
+
             <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
             </button>
-          </signupHeader>
+
+            <p>Don´t have an account?</p>
+          </SignupHeader>
         </PageWrapperLeft>
 
         <PageWrapperRight>
