@@ -69,6 +69,7 @@ const forgotPasswordStyle = {
 class Login extends Component {
   static propTypes = {
     setUserData: PropTypes.func.isRequired,
+    fetchAuthenticationData: PropTypes.func.isRequired,
   };
   constructor(props) {
     super(props);
