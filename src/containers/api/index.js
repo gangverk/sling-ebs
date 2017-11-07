@@ -142,6 +142,8 @@ class Api extends Component {
     this.props.fetchAuthenticationData();
     this.props.fetchUsers();
     this.props.fetchUserShift();
+    this.props.fetchAllShifts();
+    console.log(this.props);
   }
 
   bookTime(time, user, id) {
@@ -254,6 +256,7 @@ const mapStateToProps = state => ({
   dataUsers: state.ApiReducer.dataUsers,
   dataShift: state.ApiReducer.dataShift,
   userInfo: state.UserReducer,
+  allShifts: state.ApiReducer.allShifts,
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

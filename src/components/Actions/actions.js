@@ -98,7 +98,8 @@ export const fetchAllShifts = () => ({
       actionTypes.FETCH_ALL_SHIFTS_SUCCESS,
       actionTypes.FETCH_ALL_SHIFTS_FAILURE,
     ],
-    endpoint: `${process.env.REACT_APP_API}${''}`,
+    endpoint: `${process.env
+      .REACT_APP_API}${'1061/calendar/37239?dates=2017-11-08'}`,
     method: 'GET',
     headers: {
       authorization: `${Cookie.get('auth')}`,

@@ -63,6 +63,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+    case actionTypes.FETCH_ALL_SHIFTS:
+      console.log('All shifts called', action.payload);
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_ALL_SHIFTS_SUCCESS:
+      console.log('All shifts success', action);
+      return {
+        ...state,
+        allShifts: action.payload,
+      };
+    case actionTypes.FETCH_ALL_SHIFTS_FAILURE:
+      console.log('All shifts failure', action);
+      return {
+        ...state,
+      };
     case actionTypes.POST_SHIFT:
       return {
         ...state,
