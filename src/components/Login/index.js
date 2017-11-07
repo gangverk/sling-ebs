@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 import * as actions from './actions';
+import * as ApiActions from '../Actions/actions';
 
 const LoginWrapper = styled.div`
   margin: auto;
@@ -68,12 +69,17 @@ const forgotPasswordStyle = {
 class Login extends Component {
   static propTypes = {
     setUserData: PropTypes.func.isRequired,
+    fetchAuthenticationData: PropTypes.func.isRequired,
   };
   constructor(props) {
     super(props);
     this.state = {
       facebook: null,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchAuthenticationData();
   }
   onFbCallback(data) {
     if (data) {
@@ -160,6 +166,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      ...ApiActions,
       ...actions,
     },
     dispatch

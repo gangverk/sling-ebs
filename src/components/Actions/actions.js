@@ -1,4 +1,5 @@
 import { CALL_API } from 'redux-api-middleware';
+import Cookie from 'js-cookie';
 import moment from 'moment';
 
 import * as actionTypes from './actionTypes';
@@ -29,6 +30,20 @@ export const fetchAuthenticationData = () => {
   };
 };
 
+// get(actionTypes, url) {
+//     return {
+//       [CALL_API]: {
+//         types: [
+//           ...actionTypes
+//         ],
+//         endpoint: `${process.env.REACT_APP_API}${url}`,
+//         method: 'GET',
+//         headers: { authorization: `${Cookie.get('auth')}` },
+//       },
+//     };
+//   };
+// }
+
 export const fetchUsers = () => {
   return {
     [CALL_API]: {
@@ -39,7 +54,7 @@ export const fetchUsers = () => {
       ],
       endpoint: `${process.env.REACT_APP_API}${'users'}`,
       method: 'GET',
-      headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
+      headers: { authorization: `${Cookie.get('auth')}` },
     },
   };
 };
@@ -53,7 +68,7 @@ export const fetchSessionData = () => ({
     ],
     endpoint: `${process.env.REACT_APP_API}${'account/session'}`,
     method: 'GET',
-    headers: { authorization: `${process.env.REACT_APP_AUTHORIZATION}` },
+    headers: { authorization: `${Cookie.get('auth')}` },
   },
 });
 
@@ -68,7 +83,7 @@ export const fetchUserShift = () => ({
       .REACT_APP_API}${'shifts/current?referenceDate=2017-10-18'}`,
     method: 'GET',
     headers: {
-      authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+      authorization: `${Cookie.get('auth')}`,
     },
   },
 });
@@ -86,7 +101,7 @@ export const fetchAllShifts = () => ({
     endpoint: `${process.env.REACT_APP_API}${''}`,
     method: 'GET',
     headers: {
-      authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+      authorization: `${Cookie.get('auth')}`,
     },
   },
 });
@@ -109,7 +124,7 @@ export const postShift = (time, user, id, userInfo) => {
       endpoint: `${process.env.REACT_APP_API}${'shifts'}`,
       method: 'POST',
       headers: {
-        authorization: `${process.env.REACT_APP_AUTHORIZATION}`,
+        authorization: `${Cookie.get('auth')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

@@ -1,3 +1,4 @@
+import Cookie from 'js-cookie';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
@@ -14,6 +15,7 @@ export default (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_AUTENTICATION_SUCCESS:
+      Cookie.set('auth', action.payload.token);
       return {
         ...state,
         dataAutentication: action.payload,
