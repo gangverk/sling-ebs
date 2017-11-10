@@ -1,5 +1,5 @@
 import { CALL_API } from 'redux-api-middleware';
-import Cookie from 'js-cookie';
+import * as Cookie from 'js-cookie';
 import moment from 'moment';
 
 import * as actionTypes from './actionTypes';
@@ -91,21 +91,24 @@ export const fetchUserShift = () => ({
 //TODO:bæta við það sem þarf sem er org_id og user_id.
 //https://test-api.sling.is/v1/1061/calendar/37239?dates=2017-10-27
 //Hér er org_id = 1061 og user_id = 37239 date = 2017-10-27
-export const fetchAllShifts = () => ({
-  [CALL_API]: {
-    type: [
-      actionTypes.FETCH_ALL_SHIFTS,
-      actionTypes.FETCH_ALL_SHIFTS_SUCCESS,
-      actionTypes.FETCH_ALL_SHIFTS_FAILURE,
-    ],
-    endpoint: `${process.env
-      .REACT_APP_API}${'1061/calendar/37239?dates=2017-11-08'}`,
-    method: 'GET',
-    headers: {
-      authorization: `${Cookie.get('auth')}`,
+
+export const fetchAllShifts = () => {
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.FETCH_ALL_SHIFTS,
+        actionTypes.FETCH_ALL_SHIFTS_SUCCESS,
+        actionTypes.FETCH_ALL_SHIFTS_FAILURE,
+      ],
+      endpoint: `${process.env
+        .REACT_APP_API}${'1061/calendar/37239?dates=2017-11-10'}`,
+      method: 'GET',
+      headers: {
+        authorization: `${Cookie.get('auth')}`,
+      },
     },
-  },
-});
+  };
+};
 
 export const postShift = (time, user, id, userInfo) => {
   const endTime = moment(time)

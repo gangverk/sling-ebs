@@ -7,37 +7,6 @@ import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 
-import Modal from '../../components/Modal';
-import BookingTable from '../../components/BookingTable';
-
-import timeBlue from './timeblue.svg';
-import timeRed from './timered.svg';
-import noteGray from './notesgray.svg';
-
-const HeaderDiv = styled.div`
-  button {
-    height: 32px;
-    width: 132px;
-    border: 2px solid #dadada;
-    border-radius: 2px;
-    margin-right: 10px;
-    margin-left: 10px;
-    background: white;
-    color: #0085ff;
-    font: 14px/1.4 'Helvetica Neue';
-  }
-  height: 50px;
-  width: 95%;
-  border-radius: 4px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
-  margin: auto;
-  margin-top: 12px;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-`;
-
 const DayMenuDiv = styled.div`height: 100%;`;
 
 const DayMenu = styled.table`
@@ -94,7 +63,7 @@ const DayMenu = styled.table`
   }
 `;
 
-class Api extends Component {
+class BookingTable extends Component {
   static propTypes = {
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
@@ -113,30 +82,18 @@ class Api extends Component {
     userInfo: PropTypes.shape({}).isRequired,
     postShift: PropTypes.func.isRequired,
     fetchAllShifts: PropTypes.func.isRequired,
+    allShifts: PropTypes.arrayOf(PropTypes.shape({})),
   };
   static defaultProps = {
     dataAutentication: [],
     dataUsers: {},
+    allShifts: [],
   };
 
   constructor(props) {
     super(props);
-    //TODO: fix, initalize the day tomorrow
-    let tomorrow = moment().add(1, 'day');
-    tomorrow.millisecond(0);
-    tomorrow.second(0);
-    tomorrow.minute(0);
-    tomorrow.hour(8);
-    const time = [];
-    for (let i = 8; i <= 17; i++) {
-      const newTime = { time: tomorrow.toISOString() };
-      let display = tomorrow.hour();
-      tomorrow.add(1, 'hour');
-      newTime.display = display;
-      time.push(newTime);
-    }
     this.state = {
-      time,
+      tableBody: [],
       showModal: false,
       showModal2: false,
       name: '',
@@ -144,33 +101,16 @@ class Api extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchSessionData();
-    this.props.fetchAuthenticationData();
     this.props.fetchAllShifts();
     this.props.fetchUsers();
-    this.props.fetchUserShift();
   }
 
   bookTime(time, user, id) {
     this.props.postShift(time, user, id, this.props.userInfo);
   }
 
-  userList(userData) {
-    const tableHead = (
-      <thead>
-        <tr>
-          <th className="TimeEdit">Time</th>{' '}
-          {userData.map(user => {
-            return (
-              <th key={'tableHead' + user.name}>
-                <img alt="avatar" src={user.avatar} />
-                <p>{user.name}</p>
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-    );
+  /*OLD STUFF */ userList(userData) {
+    const tableHead = <div />;
     const tableBody = (
       <tbody>
         {this.state.time.map((time, index) => {
@@ -200,12 +140,6 @@ class Api extends Component {
     );
     return (
       <DayMenuDiv>
-        <HeaderDiv>
-          <button onClick={() => this.setState({ showModal: true })}>
-            Koma Date hér
-          </button>
-          <button>Next Day</button>
-        </HeaderDiv>
         <DayMenu>
           {tableHead}
           {tableBody}
@@ -214,51 +148,95 @@ class Api extends Component {
     );
   }
 
-  render() {
+  renderTableBody(shifts, users) {
+    let tomorrow = moment().add(1, 'day');
+    tomorrow.millisecond(0);
+    tomorrow.second(0);
+    tomorrow.minute(0);
+    tomorrow.hour(8);
+    const time = [];
+    for (let i = 8; i <= 17; i++) {
+      const newTime = { time: tomorrow.toISOString() };
+      newTime.time = newTime.time.slice(0, -1);
+      let display = tomorrow.hour();
+      tomorrow.add(1, 'hour');
+      newTime.display = display;
+      time.push(newTime);
+    }
+    const timeArray = [];
+    time.map(time => {
+      const data = {};
+      data.time = time.display;
+      data.timeStamp = time.time;
+      data.shit = users.map(user => {
+        var i = 0;
+        for (i = 0; shifts.length > i; i++) {
+          var boolean = true;
+          if (
+            user.id === shifts[i].user.id &&
+            time.time.slice(0, -4) === shifts[i].dtstart.slice(0, -6)
+          ) {
+            boolean = false;
+          }
+        }
+        return {
+          a: { boolean },
+          id: user.id,
+        };
+      });
+      timeArray.push(data);
+    });
     return (
-      <div>
-        {/* {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)} */}
-        <BookingTable />
-        <Modal
-          visable={this.state.showModal}
-          modalHeader="Date Picking Modal"
-          modalFooterSubmit="Pick Date"
-          modalFooterCancel="Cancel Date Pick"
-          onSubmit={() => this.setState({ showModal: false })}
-        >
-          <div>
-            <p>Calender comes here</p>
-          </div>
-        </Modal>
-        <Modal
-          visable={this.state.showModal2}
-          modalHeader="Booking Modal"
-          modalFooterSubmit="Book Time"
-          modalFooterCancel="Cancel Booking"
-          onSubmit={() => this.setState({ showModal2: false })}
-        >
-          <div>
-            <div>
-              Start <img alt="Blue clock icon" src={timeBlue} />
-            </div>
-            <div>
-              End<img alt="Red clock icon" src={timeRed} />
-            </div>
-            <div>
-              Note<img alt="Grey note icon" src={noteGray} />
-              <input type="text" placeholder="optional" />
-            </div>
-          </div>
-        </Modal>
-        <button onClick={() => this.setState({ showModal2: true })}>
-          show bookin modal
-        </button>
-      </div>
+      <tbody>
+        {timeArray.map(time => {
+          return (
+            <tr key={time.time}>
+              <td>{time.time}</td>
+              {users.map(user => {
+                return (
+                  <td
+                    key={user.id}
+                    onClick={() => {
+                      alert('FUCK OFF ' + user.name + 'shifts ?');
+                    }}
+                  />
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    );
+  }
+
+  render() {
+    // <div>
+    //   {/* {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)} */}
+    //
+    // </div>
+    return (
+      <DayMenuDiv>
+        <DayMenu>
+          <thead>
+            <tr>
+              <th className="TimeEdit">Time</th>
+              {this.props.dataUsers.map(user => {
+                return (
+                  <th key={'tableHead' + user.id}>
+                    <img alt="avatar" src={user.avatar} />
+                    <p>{user.name}</p>
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          {this.renderTableBody(this.props.allShifts, this.props.dataUsers)}
+        </DayMenu>
+      </DayMenuDiv>
     );
   }
 }
 const mapStateToProps = state => ({
-  dataAutentication: state.ApiReducer.dataAutentication,
   dataUsers: state.ApiReducer.dataUsers,
   dataShift: state.ApiReducer.dataShift,
   userInfo: state.UserReducer,
@@ -272,4 +250,4 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-export default connect(mapStateToProps, mapDispatchToProps)(Api);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingTable);

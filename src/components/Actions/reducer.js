@@ -64,7 +64,7 @@ export default (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_ALL_SHIFTS:
-      console.log('All shifts called', action.payload);
+      console.error('All shifts called', action);
       return {
         ...state,
       };
