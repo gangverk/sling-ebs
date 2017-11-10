@@ -145,7 +145,6 @@ class Api extends Component {
 
   componentWillMount() {
     this.props.fetchSessionData();
-    this.props.fetchAuthenticationData();
     this.props.fetchAllShifts();
     this.props.fetchUsers();
     this.props.fetchUserShift();
