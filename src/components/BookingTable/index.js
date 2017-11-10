@@ -61,6 +61,9 @@ const DayMenu = styled.table`
     display: inline-block;
     white-space: nowrap;
   }
+  .unavailable{
+    background-color: blue;
+  }
 `;
 
 class BookingTable extends Component {
@@ -148,12 +151,14 @@ class BookingTable extends Component {
     );
   }
 
+  //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
     let tomorrow = moment().add(1, 'day');
     tomorrow.millisecond(0);
     tomorrow.second(0);
     tomorrow.minute(0);
     tomorrow.hour(8);
+
     const time = [];
     for (let i = 8; i <= 17; i++) {
       const newTime = { time: tomorrow.toISOString() };
@@ -168,21 +173,17 @@ class BookingTable extends Component {
       const data = {};
       data.time = time.display;
       data.timeStamp = time.time;
-      data.shit = users.map(user => {
+      data.unavailable = users.map(user => {
         var i = 0;
         for (i = 0; shifts.length > i; i++) {
-          var boolean = true;
           if (
             user.id === shifts[i].user.id &&
             time.time.slice(0, -4) === shifts[i].dtstart.slice(0, -6)
           ) {
-            boolean = false;
+            return user.id;
           }
         }
-        return {
-          a: { boolean },
-          id: user.id,
-        };
+        return 0;
       });
       timeArray.push(data);
     });
@@ -193,14 +194,17 @@ class BookingTable extends Component {
             <tr key={time.time}>
               <td>{time.time}</td>
               {users.map(user => {
-                return (
-                  <td
-                    key={user.id}
-                    onClick={() => {
-                      alert('FUCK OFF ' + user.name + 'shifts ?');
-                    }}
-                  />
-                );
+                if (time.unavailable.includes(user.id)) {
+                  return <td key={user.id} className="unavailable" />;
+                } else
+                  return (
+                    <td
+                      key={user.id}
+                      onClick={() => {
+                        alert('FUCK OFF ' + user.name + 'shifts ?');
+                      }}
+                    />
+                  );
               })}
             </tr>
           );
