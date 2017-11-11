@@ -92,7 +92,7 @@ export const fetchUserShift = () => ({
 //https://test-api.sling.is/v1/1061/calendar/37239?dates=2017-10-27
 //Hér er org_id = 1061 og user_id = 37239 date = 2017-10-27
 //Hér er vandamál með það að ég sækji bara þær vaktir sem eru planaðar af einum starfsmanni...
-export const fetchAllShifts = () => {
+export const fetchAllShifts = today => {
   return {
     [CALL_API]: {
       types: [
@@ -101,7 +101,7 @@ export const fetchAllShifts = () => {
         actionTypes.FETCH_ALL_SHIFTS_FAILURE,
       ],
       endpoint: `${process.env
-        .REACT_APP_API}${'1061/calendar/37239?dates=2017-11-11'}`,
+        .REACT_APP_API}1061/calendar/37239?dates=${today}`,
       method: 'GET',
       headers: {
         authorization: `${Cookie.get('auth')}`,

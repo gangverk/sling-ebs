@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
+import Modal from '../../components/Modal';
+import timeBlue from './timeblue.svg';
+import timeRed from './timered.svg';
+import noteGray from './notesgray.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -62,7 +66,7 @@ const DayMenu = styled.table`
     white-space: nowrap;
   }
   .unavailable{
-    background-color: blue;
+    background-color: #0085FF;
   }
 `;
 
@@ -100,23 +104,41 @@ class BookingTable extends Component {
     this.state = {
       tableBody: [],
       showModal: false,
-      showModal2: false,
       name: '',
+      timeStamp: '',
+      userId: '',
+      userName: '',
     };
   }
 
   componentWillMount() {
-    this.props.fetchAllShifts();
+    this.props.fetchAllShifts(this.today());
     this.props.fetchUsers();
+  }
+
+  today() {
+    let today = moment();
+    today = today.toISOString();
+    today = today.slice(0, -14);
+    return today;
   }
 
   bookTime(time, user, id) {
     this.props.postShift(time, user, id, this.props.userInfo);
+    this.setState({ showModal: false });
+  }
+  modalInfo(timeStamp, userName, userId) {
+    this.setState({
+      timeStamp: timeStamp,
+      userName: userName,
+      userId: userId,
+      showModal: true,
+    });
   }
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
-    let tomorrow = moment().add(1, 'day');
+    let tomorrow = moment();
     tomorrow.millisecond(0);
     tomorrow.second(0);
     tomorrow.minute(0);
@@ -163,14 +185,8 @@ class BookingTable extends Component {
                     <td
                       key={user.id}
                       onClick={() => {
-                        this.bookTime(time.timeStamp, user.name, user.id);
-                        console.log(
-                          time.timeStamp,
-                          ' ',
-                          user.name,
-                          '',
-                          user.id
-                        );
+                        this.modalInfo(time.timeStamp, user.name, user.id);
+                        this.setState({ showModal: true });
                       }}
                     />
                   );
@@ -188,24 +204,52 @@ class BookingTable extends Component {
     //
     // </div>
     return (
-      <DayMenuDiv>
-        <DayMenu>
-          <thead>
-            <tr>
-              <th className="TimeEdit">Time</th>
-              {this.props.dataUsers.map(user => {
-                return (
-                  <th key={'tableHead' + user.id}>
-                    <img alt="avatar" src={user.avatar} />
-                    <p>{user.name}</p>
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          {this.renderTableBody(this.props.allShifts, this.props.dataUsers)}
-        </DayMenu>
-      </DayMenuDiv>
+      <div>
+        <DayMenuDiv>
+          <DayMenu>
+            <thead>
+              <tr>
+                <th className="TimeEdit">Time</th>
+                {this.props.dataUsers.map(user => {
+                  return (
+                    <th key={'tableHead' + user.id}>
+                      <img alt="avatar" src={user.avatar} />
+                      <p>{user.name}</p>
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            {this.renderTableBody(this.props.allShifts, this.props.dataUsers)}
+          </DayMenu>
+        </DayMenuDiv>
+        <Modal
+          visable={this.state.showModal}
+          modalHeader="Booking Modal"
+          modalFooterSubmit="Book Time"
+          modalFooterCancel="Cancel Booking"
+          onSubmit={() =>
+            this.bookTime(
+              this.state.timeStamp,
+              this.state.userName,
+              this.state.userId
+            )}
+        >
+          <div>
+            <div>
+              Start <img alt="Blue clock icon" src={timeBlue} />
+              {this.state.timeStamp}
+            </div>
+            <div>
+              End<img alt="Red clock icon" src={timeRed} />
+            </div>
+            <div>
+              Note<img alt="Grey note icon" src={noteGray} />
+              <input type="text" placeholder="optional" />
+            </div>
+          </div>
+        </Modal>
+      </div>
     );
   }
 }
