@@ -7,6 +7,7 @@ import * as ApiActions from '../../components/Actions/actions';
 
 import Modal from '../../components/Modal';
 import BookingTable from '../../components/BookingTable';
+import BookingTableHeader from '../../components/BookingTableHeader';
 
 class Api extends Component {
   static propTypes = {
@@ -42,6 +43,7 @@ class Api extends Component {
     return (
       <div>
         {/* {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)} */}
+        <BookingTableHeader />
         <BookingTable />
         <Modal
           visable={this.state.showModal}
