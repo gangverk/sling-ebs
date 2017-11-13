@@ -55,7 +55,12 @@ export default class Modal extends Component {
           )}
           {this.props.children}
           <ModalFooter>
-            <button onClick={() => this.props.onSubmit()}>Button</button>
+            <button onClick={() => this.props.onSubmit()}>
+              {this.props.modalFooterSubmit}
+            </button>
+            <button onClick={() => this.props.onSubmit2()}>
+              {this.props.modalFooterSubmit2}
+            </button>
           </ModalFooter>
         </ModalContainer>
       </ModalWrapper>

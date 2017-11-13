@@ -34,6 +34,9 @@ const DayMenu = styled.table`
     padding: 10px 15px;
     vertical-align: middle;
   }
+  td{
+    cursor: pointer;
+  }
   thead {
     font-size: 11px;
     text-transform: uppercase;
@@ -54,6 +57,7 @@ const DayMenu = styled.table`
   .TimeEdit {
     border-style: hidden;
     width: 2px;
+    cursor: default;
   }
   img {
     height: 25px;
@@ -67,6 +71,7 @@ const DayMenu = styled.table`
   }
   .unavailable{
     background-color: #0085FF;
+    cursor: default;
   }
 `;
 
@@ -122,11 +127,18 @@ class BookingTable extends Component {
     today = today.slice(0, -14);
     return today;
   }
+  nextDay() {
+    let nextDay = moment().add('days', 1);
+    nextDay = nextDay.toISOString();
+    nextDay = nextDay.slice(0, -14);
+    return nextDay;
+  }
 
   bookTime(time, user, id) {
     this.props.postShift(time, user, id, this.props.userInfo);
     this.setState({ showModal: false });
   }
+
   modalInfo(timeStamp, userName, userId) {
     this.setState({
       timeStamp: timeStamp,
@@ -176,7 +188,7 @@ class BookingTable extends Component {
         {timeArray.map(time => {
           return (
             <tr key={time.time}>
-              <td>{time.time}</td>
+              <td className="TimeEdit">{time.time}</td>
               {users.map(user => {
                 if (time.unavailable.includes(user.id)) {
                   return <td key={user.id} className="unavailable" />;
@@ -199,10 +211,6 @@ class BookingTable extends Component {
   }
 
   render() {
-    // <div>
-    //   {/* {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)} */}
-    //
-    // </div>
     return (
       <div>
         <DayMenuDiv>
@@ -227,13 +235,14 @@ class BookingTable extends Component {
           visable={this.state.showModal}
           modalHeader="Booking Modal"
           modalFooterSubmit="Book Time"
-          modalFooterCancel="Cancel Booking"
+          modalFooterSubmit2="Close modal"
           onSubmit={() =>
             this.bookTime(
               this.state.timeStamp,
               this.state.userName,
               this.state.userId
             )}
+          onSubmit2={() => this.setState({ showModal: false })}
         >
           <div>
             <div>

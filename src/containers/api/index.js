@@ -32,6 +32,7 @@ class Api extends Component {
       showModal: false,
       showModal2: false,
       name: '',
+      date: '',
     };
   }
 
@@ -39,18 +40,25 @@ class Api extends Component {
     this.props.fetchUsers();
   }
 
+  nextDay() {
+    alert('Hello! I am an alert box!');
+  }
+
   render() {
     return (
       <div>
-        {/* {this.props.dataUsers.length > 0 && this.userList(this.props.dataUsers)} */}
-        <BookingTableHeader />
+        <BookingTableHeader
+          onClickPickDate={() => this.setState({ showModal: true })}
+          onClickNextDay={() => this.nextDay()}
+        />
         <BookingTable />
         <Modal
           visable={this.state.showModal}
           modalHeader="Date Picking Modal"
           modalFooterSubmit="Pick Date"
-          modalFooterCancel="Cancel Date Pick"
+          modalFooterSubmit2="Close modal"
           onSubmit={() => this.setState({ showModal: false })}
+          onSubmit2={() => this.setState({ showModal: false })}
         >
           <div>
             <p>Calender comes here</p>

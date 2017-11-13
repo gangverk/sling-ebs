@@ -13,14 +13,11 @@ const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     button {
-      background-color: #0085ff;
-      border: none;
+      background-color: #ffffff;
+      border: 2px solid #dadada;
       border-radius: 2px;
-      color: white;
+      color: #d2d2d2;
       padding: 10px 25px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
       font-size: 12px;
       margin: 10px;
       cursor: pointer;
@@ -33,8 +30,8 @@ export default class BookingTableHeader extends Component {
     return (
       <HeaderContainer>
         <div>
-          <button>Pick date</button>
-          <button>Next day</button>
+          <button onClick={this.props.onClickPickDate}>Pick date</button>
+          <button onClick={this.props.onClickNextDay}>Next day</button>
         </div>
       </HeaderContainer>
     );
