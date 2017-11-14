@@ -117,15 +117,23 @@ class BookingTable extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAllShifts(this.today());
+    this.props.fetchAllShifts(this.dateToString());
     this.props.fetchUsers();
   }
+  componentWillReceiveProps(nextProps) {
+    console.log('ComponenWillReciveProps');
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldComponentUpdate');
+    this.props.fetchAllShifts(this.dateToString());
+    return true;
+  }
 
-  today() {
-    let today = moment();
-    today = today.toISOString();
-    today = today.slice(0, -14);
-    return today;
+  dateToString() {
+    let returnDate = this.props.dateMain;
+    returnDate = returnDate.toISOString();
+    returnDate = returnDate.slice(0, -14);
+    return returnDate;
   }
 
   bookTime(time, user, id) {
@@ -143,18 +151,18 @@ class BookingTable extends Component {
   }
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
-  renderTableBody(shifts, users) {
-    let tomorrow = moment();
-    tomorrow.millisecond(0);
-    tomorrow.second(0);
-    tomorrow.minute(0);
-    tomorrow.hour(8);
+  renderTableBody(shifts, users, dateMain) {
+    console.log(dateMain, 'hello called renderTableBody');
+    dateMain.millisecond(0);
+    dateMain.second(0);
+    dateMain.minute(0);
+    dateMain.hour(8);
 
     const time = [];
     for (let i = 8; i <= 17; i++) {
-      const newTime = { time: tomorrow.toISOString() };
-      let display = tomorrow.hour();
-      tomorrow.add(1, 'hour');
+      const newTime = { time: dateMain.toISOString() };
+      let display = dateMain.hour();
+      dateMain.add(1, 'hour');
       newTime.display = display;
       time.push(newTime);
     }
@@ -222,7 +230,11 @@ class BookingTable extends Component {
                 })}
               </tr>
             </thead>
-            {this.renderTableBody(this.props.allShifts, this.props.dataUsers)}
+            {this.renderTableBody(
+              this.props.allShifts,
+              this.props.dataUsers,
+              this.props.dateMain
+            )}
           </DayMenu>
         </DayMenuDiv>
         <Modal
