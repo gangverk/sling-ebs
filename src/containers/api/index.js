@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 
@@ -32,7 +33,7 @@ class Api extends Component {
       showModal: false,
       showModal2: false,
       name: '',
-      date: '',
+      date: moment(),
     };
   }
 
@@ -40,8 +41,12 @@ class Api extends Component {
     this.props.fetchUsers();
   }
 
+  //TODO action when we push the next day on the bookingtableheader.
   nextDay() {
-    alert('Hello! I am an alert box!');
+    let nextDay = this.state.date.add(1, 'days');
+    nextDay = nextDay.toISOString();
+    nextDay = nextDay.slice(0, -14);
+    alert(nextDay);
   }
 
   render() {

@@ -127,12 +127,6 @@ class BookingTable extends Component {
     today = today.slice(0, -14);
     return today;
   }
-  nextDay() {
-    let nextDay = moment().add('days', 1);
-    nextDay = nextDay.toISOString();
-    nextDay = nextDay.slice(0, -14);
-    return nextDay;
-  }
 
   bookTime(time, user, id) {
     this.props.postShift(time, user, id, this.props.userInfo);
