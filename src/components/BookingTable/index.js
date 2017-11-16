@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import ReactLoading from 'react-loading';
 
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
@@ -22,6 +22,7 @@ const DayMenu = styled.table`
   height: 100%
   color: #4a4a4d;
   font: 14px/1.4 'Helvetica Neue';
+  position: relative;
   table,
   td,
   th {
@@ -73,10 +74,27 @@ const DayMenu = styled.table`
     background-color: #0085FF;
     cursor: default;
   }
+
+  .loadingSpinner {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translateX(-50%) translateY(-50%);
+  }
+`;
+const ErrorMessage = styled.p`
+  color: red;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
 `;
 
 class BookingTable extends Component {
   static propTypes = {
+    dateMain: PropTypes.shape({
+      _d: PropTypes.string.isRequired,
+    }).isRequired,
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
     dataAutentication: PropTypes.arrayOf(
@@ -97,11 +115,14 @@ class BookingTable extends Component {
     postShift: PropTypes.func.isRequired,
     fetchAllShifts: PropTypes.func.isRequired,
     allShifts: PropTypes.arrayOf(PropTypes.shape({})),
+    errorShifts: PropTypes.string,
+    loadingShifts: PropTypes.bool.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
     dataUsers: {},
     allShifts: [],
+    errorShifts: '',
   };
 
   constructor(props) {
@@ -117,31 +138,27 @@ class BookingTable extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAllShifts(this.dateToString());
-    this.props.fetchUsers();
+    this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
   }
-  componentWillReceiveProps(nextProps) {}
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-  //setja skilyrði fyrir því að updatea hérna töfluna ?
-  componentWillUpdate(nextProps, nextState) {
-    //this.props.fetchAllShifts(this.dateToString());
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.dateMain._d !== this.props.dateMain._d) {
+      this.props.fetchAllShifts(this.dateToString(nextProps.dateMain));
+    }
   }
 
-  dateToString() {
-    let returnDate = this.props.dateMain;
-    let returnDate2 = this.props.dateMain;
+  dateToString(selectedDate) {
+    let beginingOfDay = selectedDate;
+    let endOfDay = beginingOfDay;
     let seperator = '/';
-    returnDate.millisecond(0);
-    returnDate.second(0);
-    returnDate.minute(0);
-    returnDate.hour(8);
-    returnDate = returnDate.toISOString();
-    returnDate2.hour(23);
-    returnDate2 = returnDate2.toISOString();
-    returnDate = returnDate.concat(seperator, returnDate2);
-    return returnDate;
+    beginingOfDay.millisecond(0);
+    beginingOfDay.second(0);
+    beginingOfDay.minute(0);
+    beginingOfDay.hour(8);
+    beginingOfDay = beginingOfDay.toISOString();
+    endOfDay.hour(23);
+    endOfDay = endOfDay.toISOString();
+    beginingOfDay = beginingOfDay.concat(seperator, endOfDay);
+    return beginingOfDay;
   }
 
   bookTime(time, user, id) {
@@ -173,14 +190,13 @@ class BookingTable extends Component {
       newTime.display = display;
       time.push(newTime);
     }
-    const timeArray = [];
-    time.map(time => {
+
+    const timeArray = time.map(time => {
       const data = {};
       data.time = time.display;
       data.timeStamp = time.time;
       data.unavailable = users.map(user => {
-        var i = 0;
-        for (i = 0; shifts.length > i; i++) {
+        for (let i = 0; shifts.length > i; i++) {
           if (
             user.id === shifts[i].user.id &&
             time.time.slice(0, -5) === shifts[i].dtstart.slice(0, -6)
@@ -190,8 +206,9 @@ class BookingTable extends Component {
         }
         return 0;
       });
-      timeArray.push(data);
+      return data;
     });
+
     return (
       <tbody>
         {timeArray.map(time => {
@@ -222,6 +239,9 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
+        {this.props.errorShifts !== '' && (
+          <ErrorMessage>{this.props.errorShifts}</ErrorMessage>
+        )}
         <DayMenuDiv>
           <DayMenu>
             <thead>
@@ -237,10 +257,19 @@ class BookingTable extends Component {
                 })}
               </tr>
             </thead>
-            {this.renderTableBody(
-              this.props.allShifts,
-              this.props.dataUsers,
-              this.props.dateMain
+            {this.props.loadingShifts ? (
+              <ReactLoading
+                type={'spin'}
+                color={'#0085ff'}
+                delay={0}
+                className="loadingSpinner"
+              />
+            ) : (
+              this.renderTableBody(
+                this.props.allShifts,
+                this.props.dataUsers,
+                this.props.dateMain
+              )
             )}
           </DayMenu>
         </DayMenuDiv>
@@ -275,11 +304,14 @@ class BookingTable extends Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   dataUsers: state.ApiReducer.dataUsers,
   dataShift: state.ApiReducer.dataShift,
+  errorShifts: state.ApiReducer.errorShifts,
   userInfo: state.UserReducer,
   allShifts: state.ApiReducer.allShifts,
+  loadingShifts: state.ApiReducer.loadingShifts,
 });
 
 const mapDispatchToProps = dispatch =>

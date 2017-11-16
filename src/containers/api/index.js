@@ -24,7 +24,7 @@ class Api extends Component {
     postShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
-    dataUsers: {},
+    dataUsers: [],
   };
 
   constructor(props) {
@@ -41,14 +41,10 @@ class Api extends Component {
     this.props.fetchUsers();
   }
 
-  //TODO action when we push the next day on the bookingtableheader.
   nextDay() {
-    // let nextDay = this.state.date.add(1, 'days');
-    // nextDay = nextDay.toISOString();
-    // nextDay = nextDay.slice(0, -14);
-    // alert(nextDay);
-    console.log(this.state.date);
-    this.setState({ date: this.state.date.add(1, 'days') });
+    const newDate = this.state.date.clone();
+    newDate.add(1, 'days');
+    this.setState({ date: newDate });
   }
 
   render() {

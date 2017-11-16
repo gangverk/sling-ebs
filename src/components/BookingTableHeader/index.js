@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
@@ -26,12 +27,18 @@ const HeaderContainer = styled.div`
 `;
 
 export default class BookingTableHeader extends Component {
+  static propTypes = {
+    onClickPickDate: PropTypes.func.isRequired,
+    onClickNextDay: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <HeaderContainer>
         <div>
-          <button onClick={this.props.onClickPickDate}>Pick date</button>
-          <button onClick={this.props.onClickNextDay}>Next day</button>
+          <button onClick={() => this.props.onClickPickDate()}>
+            Pick date
+          </button>
+          <button onClick={() => this.props.onClickNextDay()}>Next day</button>
         </div>
       </HeaderContainer>
     );

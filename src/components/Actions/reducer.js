@@ -6,6 +6,9 @@ const initialState = {
   dataSession: null,
   dataAutentication: null,
   dataUsers: [],
+  allShifts: [],
+  loadingShifts: false,
+  errorShifts: '',
 };
 
 export default (state = initialState, action) => {
@@ -66,15 +69,21 @@ export default (state = initialState, action) => {
     case actionTypes.FETCH_ALL_SHIFTS:
       return {
         ...state,
+        loadingShifts: true,
+        allShifts: [],
+        errorShifts: '',
       };
     case actionTypes.FETCH_ALL_SHIFTS_SUCCESS:
       return {
         ...state,
+        loadingShifts: false,
         allShifts: action.payload,
       };
     case actionTypes.FETCH_ALL_SHIFTS_FAILURE:
       return {
         ...state,
+        loadingShifts: false,
+        errorShifts: 'Failed to fetch shifts for selected date',
       };
     case actionTypes.POST_SHIFT:
       return {

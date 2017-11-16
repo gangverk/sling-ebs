@@ -71,10 +71,14 @@ export default class Modal extends Component {
 Modal.propTypes = {
   visable: PropTypes.bool.isRequired,
   modalHeader: PropTypes.string,
-  length: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  children: PropTypes.shape.isRequired,
+  onSubmit2: PropTypes.func.isRequired,
+  children: PropTypes.shape({}).isRequired,
+  modalFooterSubmit: PropTypes.string,
+  modalFooterSubmit2: PropTypes.string,
 };
 Modal.defaultProps = {
   modalHeader: '',
+  modalFooterSubmit: '',
+  modalFooterSubmit2: '',
 };
