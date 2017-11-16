@@ -120,19 +120,27 @@ class BookingTable extends Component {
     this.props.fetchAllShifts(this.dateToString());
     this.props.fetchUsers();
   }
-  componentWillReceiveProps(nextProps) {
-    console.log('ComponenWillReciveProps');
-  }
+  componentWillReceiveProps(nextProps) {}
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('shouldComponentUpdate');
-    this.props.fetchAllShifts(this.dateToString());
     return true;
+  }
+  //setja skilyrði fyrir því að updatea hérna töfluna ?
+  componentWillUpdate(nextProps, nextState) {
+    //this.props.fetchAllShifts(this.dateToString());
   }
 
   dateToString() {
     let returnDate = this.props.dateMain;
+    let returnDate2 = this.props.dateMain;
+    let seperator = '/';
+    returnDate.millisecond(0);
+    returnDate.second(0);
+    returnDate.minute(0);
+    returnDate.hour(8);
     returnDate = returnDate.toISOString();
-    returnDate = returnDate.slice(0, -14);
+    returnDate2.hour(23);
+    returnDate2 = returnDate2.toISOString();
+    returnDate = returnDate.concat(seperator, returnDate2);
     return returnDate;
   }
 
@@ -152,7 +160,6 @@ class BookingTable extends Component {
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users, dateMain) {
-    console.log(dateMain, 'hello called renderTableBody');
     dateMain.millisecond(0);
     dateMain.second(0);
     dateMain.minute(0);
