@@ -73,6 +73,8 @@ const DayMenu = styled.table`
   .unavailable{
     background-color: #0085FF;
     cursor: default;
+    text-align: center;
+    	color: #FFFFFF;
   }
 
   .loadingSpinner {
@@ -217,7 +219,11 @@ class BookingTable extends Component {
               <td className="TimeEdit">{time.time}</td>
               {users.map(user => {
                 if (time.unavailable.includes(user.id)) {
-                  return <td key={user.id} className="unavailable" />;
+                  return (
+                    <td key={user.id} className="unavailable">
+                      Booked
+                    </td>
+                  );
                 } else
                   return (
                     <td
