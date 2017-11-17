@@ -5,35 +5,36 @@ it('should return default state if no state and action is provided', () => {
   const initalState = Reducer(undefined, {});
   expect(initalState.allShifts).toEqual([]);
   expect(initalState.loadingShifts).toBeFalsy();
-  expect(initalState.errorShifts).toEqual('');
+  expect(initalState.errorLoadingShifts).toEqual('');
+  expect(initalState.postingShift).toBeFalsy();
+  expect(initalState.errorPostingShift).toEqual('');
 });
 
-it('should set loading state', () => {
+it('should set loading state when fetch all shifts i called', () => {
   const initialState = {
-    dataCar: null,
     dataSession: null,
     dataAutentication: null,
     dataUsers: [],
     allShifts: [{ name: 'hreinn' }],
     loadingShifts: false,
-    errorShifts: 'hallo',
+    errorLoadingShifts: 'hallo',
   };
   const testState = Reducer(initialState, {
     type: actionTypes.FETCH_ALL_SHIFTS,
   });
   expect(testState.loadingShifts).toBeTruthy();
   expect(testState.allShifts).toEqual([]);
-  expect(testState.errorShifts).toEqual('');
+  expect(testState.errorLoadingShifts).toEqual('');
 });
+
 it('should set fetch all shifts', () => {
   const initialState = {
-    dataCar: null,
     dataSession: null,
     dataAutentication: null,
     dataUsers: [],
     allShifts: [],
     loadingShifts: true,
-    errorShifts: '',
+    errorLoadingShifts: '',
   };
   const action = {
     type: actionTypes.FETCH_ALL_SHIFTS_SUCCESS,
@@ -46,13 +47,12 @@ it('should set fetch all shifts', () => {
 
 it('should set error state', () => {
   const initialState = {
-    dataCar: null,
     dataSession: null,
     dataAutentication: null,
     dataUsers: [],
     allShifts: [],
     loadingShifts: true,
-    errorShifts: '',
+    errorLoadingShifts: '',
   };
   const action = {
     type: actionTypes.FETCH_ALL_SHIFTS_FAILURE,
@@ -61,7 +61,43 @@ it('should set error state', () => {
   const testState = Reducer(initialState, action);
   expect(testState.allShifts).toEqual([]);
   expect(testState.loadingShifts).toEqual(false);
-  expect(testState.errorShifts).toEqual(
+  expect(testState.errorLoadingShifts).toEqual(
     'Failed to fetch shifts for selected date'
+  );
+});
+
+it('should set posting state', () => {
+  const initialState = {
+    postingShift: false,
+    errorPostingShift: '',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.POST_SHIFT,
+  });
+  expect(testState.postingShift).toBeTruthy();
+  expect(testState.errorPostingShift).toEqual('');
+});
+
+it('should post shift and set postingShift false', () => {
+  const initialState = {
+    postingShift: true,
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.POST_SHIFT_SUCCESS,
+  });
+  expect(testState.postingShift).toBeFalsy();
+});
+
+it('should set posting error', () => {
+  const initialState = {
+    postingShift: true,
+    errorPostingShift: '',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.POST_SHIFT_FAILURE,
+  });
+  expect(testState.postingShift).toBeFalsy();
+  expect(testState.errorPostingShift).toEqual(
+    'Failed to post shift for selected time'
   );
 });

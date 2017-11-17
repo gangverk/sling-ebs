@@ -110,43 +110,55 @@ export const fetchAllShifts = today => {
   };
 };
 
-export const postShift = (time, user, id, userInfo) => {
-  const endTime = moment(time)
-    .add(1, 'hour')
-    .toISOString();
-  const summary = `
-    Klipping fyrir ${userInfo.name} - ${userInfo.email}
-    Bóka tíma hjá: ${user}
-  `;
-  return {
-    [CALL_API]: {
-      types: [
-        actionTypes.POST_SHIFT,
-        actionTypes.POST_SHIFT_SUCCESS,
-        actionTypes.POST_SHIFT_FAILURE,
-      ],
-      endpoint: `${process.env.REACT_APP_API}${'shifts'}`,
-      method: 'POST',
-      headers: {
-        authorization: `${Cookie.get('auth')}`,
-        'Content-Type': 'application/json',
+export const postShift = (time, user, id, userInfo, fetchDate) => {
+  return dispatch => {
+    const endTime = moment(time)
+      .add(1, 'hour')
+      .toISOString();
+    const summary = `
+      Klipping fyrir ${userInfo.name} - ${userInfo.email}
+      Bóka tíma hjá: ${user}
+    `;
+    return dispatch({
+      [CALL_API]: {
+        types: [
+          actionTypes.POST_SHIFT,
+          {
+            type: actionTypes.POST_SHIFT_SUCCESS,
+            payload: (action, state, res) => {
+              dispatch(fetchAllShifts(fetchDate));
+              const contentType = res.headers.get('Content-Type');
+              if (contentType && ~contentType.indexOf('json')) {
+                // Just making sure res.json() does not raise an error
+                return res.json();
+              }
+            },
+          },
+          actionTypes.POST_SHIFT_FAILURE,
+        ],
+        endpoint: `${process.env.REACT_APP_API}${'shifts'}`,
+        method: 'POST',
+        headers: {
+          authorization: `${Cookie.get('auth')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          available: false,
+          breakDuration: 0,
+          dtend: endTime,
+          dtstart: time,
+          location: {
+            id: 37130,
+          },
+          position: {
+            id: 36722,
+          },
+          summary,
+          user: {
+            id: id,
+          },
+        }),
       },
-      body: JSON.stringify({
-        available: false,
-        breakDuration: 0,
-        dtend: endTime,
-        dtstart: time,
-        location: {
-          id: 37130,
-        },
-        position: {
-          id: 36722,
-        },
-        summary,
-        user: {
-          id: id,
-        },
-      }),
-    },
+    });
   };
 };

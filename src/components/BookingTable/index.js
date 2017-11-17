@@ -10,6 +10,7 @@ import Modal from '../../components/Modal';
 import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
+import plus from './plus.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -70,11 +71,31 @@ const DayMenu = styled.table`
     display: inline-block;
     white-space: nowrap;
   }
-  .unavailable{
+  .unavailable {
+    border-right: 1px solid #cecfd5;
     background-color: #0085FF;
+    position: relative;
+    padding: 1px;
+  }
+  .unavailable > div{
     cursor: default;
     text-align: center;
-    	color: #FFFFFF;
+    color: #FFFFFF;
+    height: 100%;
+  }
+  .available:hover {
+    position: relative;
+    margin: 5px;
+    border 1px solid grey;
+    & div{
+      position: absolute;
+      background-image: url(${plus});
+      width: 30px;
+      height: 30px;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
   }
 
   .loadingSpinner {
@@ -117,14 +138,14 @@ class BookingTable extends Component {
     postShift: PropTypes.func.isRequired,
     fetchAllShifts: PropTypes.func.isRequired,
     allShifts: PropTypes.arrayOf(PropTypes.shape({})),
-    errorShifts: PropTypes.string,
+    errorLoadingShifts: PropTypes.string,
     loadingShifts: PropTypes.bool.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
     dataUsers: {},
     allShifts: [],
-    errorShifts: '',
+    errorLoadingShifts: '',
   };
 
   constructor(props) {
@@ -164,7 +185,13 @@ class BookingTable extends Component {
   }
 
   bookTime(time, user, id) {
-    this.props.postShift(time, user, id, this.props.userInfo);
+    this.props.postShift(
+      time,
+      user,
+      id,
+      this.props.userInfo,
+      this.dateToString(this.props.dateMain)
+    );
     this.setState({ showModal: false });
   }
 
@@ -221,18 +248,21 @@ class BookingTable extends Component {
                 if (time.unavailable.includes(user.id)) {
                   return (
                     <td key={user.id} className="unavailable">
-                      Booked
+                      <div>Booked</div>
                     </td>
                   );
                 } else
                   return (
                     <td
                       key={user.id}
+                      className="available"
                       onClick={() => {
                         this.modalInfo(time.timeStamp, user.name, user.id);
                         this.setState({ showModal: true });
                       }}
-                    />
+                    >
+                      <div />
+                    </td>
                   );
               })}
             </tr>
@@ -245,8 +275,8 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
-        {this.props.errorShifts !== '' && (
-          <ErrorMessage>{this.props.errorShifts}</ErrorMessage>
+        {this.props.errorLoadingShifts !== '' && (
+          <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
         <DayMenuDiv>
           <DayMenu>
@@ -314,7 +344,7 @@ class BookingTable extends Component {
 const mapStateToProps = state => ({
   dataUsers: state.ApiReducer.dataUsers,
   dataShift: state.ApiReducer.dataShift,
-  errorShifts: state.ApiReducer.errorShifts,
+  errorLoadingShifts: state.ApiReducer.errorLoadingShifts,
   userInfo: state.UserReducer,
   allShifts: state.ApiReducer.allShifts,
   loadingShifts: state.ApiReducer.loadingShifts,

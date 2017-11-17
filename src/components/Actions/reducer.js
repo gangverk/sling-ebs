@@ -2,13 +2,14 @@ import Cookie from 'js-cookie';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-  dataCar: null,
   dataSession: null,
   dataAutentication: null,
   dataUsers: [],
   allShifts: [],
   loadingShifts: false,
-  errorShifts: '',
+  errorLoadingShifts: '',
+  postingShift: false,
+  errorPostingShift: '',
 };
 
 export default (state = initialState, action) => {
@@ -71,7 +72,7 @@ export default (state = initialState, action) => {
         ...state,
         loadingShifts: true,
         allShifts: [],
-        errorShifts: '',
+        errorLoadingShifts: '',
       };
     case actionTypes.FETCH_ALL_SHIFTS_SUCCESS:
       return {
@@ -83,19 +84,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loadingShifts: false,
-        errorShifts: 'Failed to fetch shifts for selected date',
+        errorLoadingShifts: 'Failed to fetch shifts for selected date',
       };
     case actionTypes.POST_SHIFT:
       return {
         ...state,
+        postingShift: true,
+        errorPostingShift: '',
       };
     case actionTypes.POST_SHIFT_SUCCESS:
       return {
         ...state,
+        postingShift: false,
       };
     case actionTypes.POST_SHIFT_FAILURE:
       return {
         ...state,
+        postingShift: false,
+        errorPostingShift: 'Failed to post shift for selected time',
       };
     default:
       return state;
