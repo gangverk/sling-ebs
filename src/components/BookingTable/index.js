@@ -116,7 +116,7 @@ const ErrorMessage = styled.p`
 class BookingTable extends Component {
   static propTypes = {
     dateMain: PropTypes.shape({
-      _d: PropTypes.string.isRequired,
+      _d: PropTypes.date,
     }).isRequired,
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
@@ -260,9 +260,7 @@ class BookingTable extends Component {
                         this.modalInfo(time.timeStamp, user.name, user.id);
                         this.setState({ showModal: true });
                       }}
-                    >
-                      <div />
-                    </td>
+                    />
                   );
               })}
             </tr>
