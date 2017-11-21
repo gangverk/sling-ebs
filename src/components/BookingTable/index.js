@@ -260,7 +260,9 @@ class BookingTable extends Component {
                         this.modalInfo(time.timeStamp, user.name, user.id);
                         this.setState({ showModal: true });
                       }}
-                    />
+                    >
+                      <div />
+                    </td>
                   );
               })}
             </tr>
