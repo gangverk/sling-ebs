@@ -71,6 +71,11 @@ class Api extends Component {
     newDate.add(1, 'days');
     this.setState({ date: newDate });
   }
+  prevDay() {
+    const newDate = this.state.date.clone();
+    newDate.subtract(1, 'days');
+    this.setState({ date: newDate });
+  }
 
   DayPickerSingleDateController_onOutsideClick() {
     this.setState({ showModal3: false });
@@ -90,6 +95,7 @@ class Api extends Component {
         <BookingTableHeader
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
+          onClickPrevDay={() => this.prevDay()}
         />
         <BookingTable dateMain={this.state.date} />
         {this.state.showModal3 === true && (

@@ -110,15 +110,19 @@ export const fetchAllShifts = today => {
   };
 };
 
-export const postShift = (time, user, id, userInfo, fetchDate) => {
+export const postShift = (
+  time,
+  user,
+  id,
+  userInfo,
+  fetchDate,
+  bookTimeText
+) => {
   return dispatch => {
     const endTime = moment(time)
       .add(1, 'hour')
       .toISOString();
-    const summary = `
-      Klipping fyrir ${userInfo.name} - ${userInfo.email}
-      Bóka tíma hjá: ${user}
-    `;
+    const summary = `${bookTimeText}`;
     return dispatch({
       [CALL_API]: {
         types: [
