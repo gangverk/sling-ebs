@@ -187,7 +187,6 @@ class BookingTable extends Component {
   }
 
   bookTime(time, user, id, bookTimeText) {
-    console.log(bookTimeText, ' booking time  bokokkokokokkok');
     this.props.postShift(
       time,
       user,
@@ -210,7 +209,6 @@ class BookingTable extends Component {
 
   handleChange(event) {
     this.setState({ bookTimeText: event.target.value });
-    console.log(this.state.bookTimeText, 'bookong text state');
   }
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
