@@ -116,7 +116,7 @@ const ErrorMessage = styled.p`
 class BookingTable extends Component {
   static propTypes = {
     dateMain: PropTypes.shape({
-      _d: PropTypes.string.isRequired,
+      _d: PropTypes.date,
     }).isRequired,
     fetchAuthenticationData: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
@@ -157,7 +157,9 @@ class BookingTable extends Component {
       timeStamp: '',
       userId: '',
       userName: '',
+      bookTimeText: '',
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
@@ -184,13 +186,14 @@ class BookingTable extends Component {
     return beginingOfDay;
   }
 
-  bookTime(time, user, id) {
+  bookTime(time, user, id, bookTimeText) {
     this.props.postShift(
       time,
       user,
       id,
       this.props.userInfo,
-      this.dateToString(this.props.dateMain)
+      this.dateToString(this.props.dateMain),
+      bookTimeText
     );
     this.setState({ showModal: false });
   }
@@ -202,6 +205,10 @@ class BookingTable extends Component {
       userId: userId,
       showModal: true,
     });
+  }
+
+  handleChange(event) {
+    this.setState({ bookTimeText: event.target.value });
   }
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
@@ -318,21 +325,28 @@ class BookingTable extends Component {
             this.bookTime(
               this.state.timeStamp,
               this.state.userName,
-              this.state.userId
+              this.state.userId,
+              this.state.bookTimeText
             )}
           onSubmit2={() => this.setState({ showModal: false })}
         >
           <div>
             <div>
               Start <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.timeStamp}
+              {this.state.timeStamp.slice(11, 16)}
             </div>
             <div>
               End<img alt="Red clock icon" src={timeRed} />
+              {this.state.timeStamp.slice(12, 16)}
             </div>
             <div>
               Note<img alt="Grey note icon" src={noteGray} />
-              <input type="text" placeholder="optional" />
+              <input
+                type="text"
+                placeholder="optional"
+                value={this.state.bookTimeText}
+                onChange={this.handleChange}
+              />
             </div>
           </div>
         </Modal>

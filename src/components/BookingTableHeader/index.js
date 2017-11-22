@@ -30,11 +30,13 @@ export default class BookingTableHeader extends Component {
   static propTypes = {
     onClickPickDate: PropTypes.func.isRequired,
     onClickNextDay: PropTypes.func.isRequired,
+    onClickPrevDay: PropTypes.func.isRequired,
   };
   render() {
     return (
       <HeaderContainer>
         <div>
+          <button onClick={() => this.props.onClickPrevDay()}>Prev day</button>
           <button onClick={() => this.props.onClickPickDate()}>
             Pick date
           </button>
