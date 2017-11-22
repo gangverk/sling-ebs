@@ -56,7 +56,6 @@ class Api extends Component {
       date: moment(),
       date2: moment(),
       numberOfMonths: 1,
-      hideKeyboardShortcutsPanel: true,
       keepOpenOnDateSelect: true,
       focused: true,
     };
@@ -101,6 +100,7 @@ class Api extends Component {
         {this.state.showModal3 === true && (
           <DayPickerWrapper>
             <DayPickerSingleDateController
+              hideKeyboardShortcutsPanel={true}
               date={this.state.date} // momentPropTypes.momentObj or null
               onDateChange={date => this.clickDay(date)}
               numberOfMonths={this.state.numberOfMonths}
