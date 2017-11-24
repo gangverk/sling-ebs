@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
+import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
@@ -199,6 +200,7 @@ class BookingTable extends Component {
   }
 
   modalInfo(timeStamp, userName, userId) {
+    console.log(timeStamp, ' ', userName, ' ', userId);
     this.setState({
       timeStamp: timeStamp,
       userName: userName,
@@ -211,22 +213,47 @@ class BookingTable extends Component {
     this.setState({ bookTimeText: event.target.value });
   }
 
+  // breyta svo það gerist bara einu sinni ekki alltaf þegar renderað töfluna...
+  changeShiftsToMoment(shifts) {
+    const data = [];
+    var i;
+    for (i = 0; i < shifts.length; i++) {
+      let startDate = shifts[i].dtstart;
+      let endDate = shifts[i].dtend;
+      startDate = moment(startDate);
+      endDate = moment(endDate);
+      while (endDate.toISOString() !== startDate.toISOString()) {
+        var object = {
+          start: startDate.toISOString(),
+          id: shifts[i].user.id,
+        };
+        data.push(object);
+        startDate = startDate.add(15, 'm');
+      }
+    }
+    return data;
+  }
+
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users, dateMain) {
+    shifts = this.changeShiftsToMoment(shifts);
     dateMain.millisecond(0);
     dateMain.second(0);
     dateMain.minute(0);
     dateMain.hour(8);
 
     const time = [];
-    for (let i = 8; i <= 17; i++) {
+    for (let i = 8; i <= 44; i++) {
       const newTime = { time: dateMain.toISOString() };
-      let display = dateMain.hour();
-      dateMain.add(1, 'hour');
+      let hour = dateMain.hour().toString();
+      let minute = dateMain.minute().toString();
+      let seperator = ':';
+      hour = hour.concat(seperator);
+      let display = hour.concat(minute);
+      dateMain.add(15, 'm');
       newTime.display = display;
       time.push(newTime);
     }
-
     const timeArray = time.map(time => {
       const data = {};
       data.time = time.display;
@@ -234,8 +261,8 @@ class BookingTable extends Component {
       data.unavailable = users.map(user => {
         for (let i = 0; shifts.length > i; i++) {
           if (
-            user.id === shifts[i].user.id &&
-            time.time.slice(0, -5) === shifts[i].dtstart.slice(0, -6)
+            user.id === shifts[i].id &&
+            time.time.slice(0, -8) === shifts[i].start.slice(0, -8)
           ) {
             return user.id;
           }
@@ -244,7 +271,7 @@ class BookingTable extends Component {
       });
       return data;
     });
-
+    console.log(timeArray, 'timeArra');
     return (
       <tbody>
         {timeArray.map(time => {
