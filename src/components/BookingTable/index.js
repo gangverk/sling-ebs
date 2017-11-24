@@ -8,6 +8,7 @@ import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
+import DropDown from '../../components/DropDown';
 import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
@@ -147,6 +148,7 @@ class BookingTable extends Component {
     dataUsers: {},
     allShifts: [],
     errorLoadingShifts: '',
+    range: [],
   };
 
   constructor(props) {
@@ -159,12 +161,14 @@ class BookingTable extends Component {
       userId: '',
       userName: '',
       bookTimeText: '',
+      range: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
     this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
+    this.rangeForDropDown(this.props.dateMain);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.dateMain._d !== this.props.dateMain._d) {
@@ -241,7 +245,6 @@ class BookingTable extends Component {
     dateMain.second(0);
     dateMain.minute(0);
     dateMain.hour(8);
-
     const time = [];
     for (let i = 8; i <= 44; i++) {
       const newTime = { time: dateMain.toISOString() };
@@ -271,7 +274,6 @@ class BookingTable extends Component {
       });
       return data;
     });
-    console.log(timeArray, 'timeArra');
     return (
       <tbody>
         {timeArray.map(time => {
@@ -306,9 +308,38 @@ class BookingTable extends Component {
     );
   }
 
+  rangeForDropDown(dateMain) {
+    var time = [];
+    dateMain.millisecond(0);
+    dateMain.second(0);
+    dateMain.minute(0);
+    dateMain.hour(8);
+    for (let i = 8; i <= 44; i++) {
+      const newTime = { time: dateMain.toISOString() };
+      let hour = dateMain.hour().toString();
+      let minute = dateMain.minute().toString();
+      let seperator = ':';
+      hour = hour.concat(seperator);
+      let display = hour.concat(minute);
+      dateMain.add(15, 'm');
+      newTime.display = display;
+      time.push(newTime);
+    }
+    console.log(time);
+    this.setState({ range: time }, () => {
+      console.log(this.state);
+    });
+  }
+
   render() {
     return (
       <div>
+        {this.state.range.length > 0 && (
+          <DropDown
+            range={this.state.range}
+            bookTime={time => console.log(time)}
+          />
+        )}
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
@@ -364,7 +395,6 @@ class BookingTable extends Component {
             </div>
             <div>
               End<img alt="Red clock icon" src={timeRed} />
-              {this.state.timeStamp.slice(12, 16)}
             </div>
             <div>
               Note<img alt="Grey note icon" src={noteGray} />

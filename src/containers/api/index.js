@@ -58,6 +58,7 @@ class Api extends Component {
       numberOfMonths: 1,
       keepOpenOnDateSelect: true,
       focused: true,
+      range: [],
     };
   }
 
