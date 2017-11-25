@@ -162,6 +162,8 @@ class BookingTable extends Component {
       userName: '',
       bookTimeText: '',
       range: [],
+      startTime: '',
+      endTime: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -191,14 +193,17 @@ class BookingTable extends Component {
     return beginingOfDay;
   }
 
-  bookTime(time, user, id, bookTimeText) {
+  bookTime(time, user, id, bookTimeText, startTime, endTime) {
+    console.log('time ', time);
     this.props.postShift(
       time,
       user,
       id,
       this.props.userInfo,
       this.dateToString(this.props.dateMain),
-      bookTimeText
+      bookTimeText,
+      startTime,
+      endTime
     );
     this.setState({ showModal: false });
   }
@@ -334,12 +339,6 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
-        {this.state.range.length > 0 && (
-          <DropDown
-            range={this.state.range}
-            bookTime={time => console.log(time)}
-          />
-        )}
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
@@ -384,17 +383,33 @@ class BookingTable extends Component {
               this.state.timeStamp,
               this.state.userName,
               this.state.userId,
-              this.state.bookTimeText
+              this.state.bookTimeText,
+              this.state.startTime,
+              this.state.endTime
             )}
           onSubmit2={() => this.setState({ showModal: false })}
         >
           <div>
             <div>
               Start <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.timeStamp.slice(11, 16)}
+              {this.state.range.length > 0 && (
+                <DropDown
+                  range={this.state.range}
+                  onChange={date => this.setState({ startTime: date })}
+                />
+              )}
             </div>
             <div>
               End<img alt="Red clock icon" src={timeRed} />
+              {this.state.range.length > 0 && (
+                <DropDown
+                  range={this.state.range}
+                  onChange={date => {
+                    this.setState({ endTime: date });
+                    console.log(this.state.endTime);
+                  }}
+                />
+              )}
             </div>
             <div>
               Note<img alt="Grey note icon" src={noteGray} />

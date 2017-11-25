@@ -62,6 +62,7 @@ class DropDown extends Component {
     super(props);
     this.state = {
       menuHidden: true,
+      buttonText: 'Time',
     };
   }
   render() {
@@ -74,18 +75,21 @@ class DropDown extends Component {
               menuHidden: !this.state.menuHidden,
             })}
         >
-          Start
+          {this.state.buttonText}
         </button>
         <div className="dropdown-content">
-          {/* Tekur við array af objectum og renderar lista af tökkum sem kalla í prop fall sem sér um að bóka tíma eða what ever */}
-          {/* classname booking button væri með engum bakgrunn */}
-          {/* dropdown-content væri með css sem setur maxheight í ? 300px ? og overflow-y: scroll svo að hægt sé að skrolla inní því */}
           {this.props.range.map(item => {
             return (
               <button
                 className="bookingButton"
                 key={item.time}
-                onClick={() =>thos.props.bookTime(iitem.time, userid) console.log(item.time)}
+                onClick={() => {
+                  this.setState({
+                    menuHidden: !this.state.menuHidden,
+                    buttonText: item.display,
+                  });
+                  this.props.onChange(item.time);
+                }}
               >
                 {item.display}
               </button>
