@@ -95,22 +95,6 @@ class DropDown extends Component {
               </button>
             );
           })}
-          {/* <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button>
-          <button className="bookingButton">8:00</button> */}
         </div>
       </DropDownWrapper>
     );

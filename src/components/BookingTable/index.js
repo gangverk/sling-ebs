@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
 import moment from 'moment';
+import LocalizedStrings from 'react-localization';
 
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
@@ -13,6 +14,7 @@ import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
+import locale from '../../locale';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -164,6 +166,7 @@ class BookingTable extends Component {
       range: [],
       startTime: '',
       endTime: '',
+      languageChange: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -289,7 +292,7 @@ class BookingTable extends Component {
                 if (time.unavailable.includes(user.id)) {
                   return (
                     <td key={user.id} className="unavailable">
-                      <div>Booked</div>
+                      <div>{locale.booked}</div>
                     </td>
                   );
                 } else
@@ -330,15 +333,17 @@ class BookingTable extends Component {
       newTime.display = display;
       time.push(newTime);
     }
-    console.log(time);
-    this.setState({ range: time }, () => {
-      console.log(this.state);
-    });
+    this.setState({ range: time }, () => {});
+  }
+  _onSetLanguageToItalian() {
+    locale.setLanguage('is');
+    this.setState({ languageChange: true });
   }
 
   render() {
     return (
       <div>
+        <button onClick={() => this._onSetLanguageToItalian}>íslenska</button>
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
