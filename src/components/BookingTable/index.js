@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
 import moment from 'moment';
-import LocalizedStrings from 'react-localization';
 
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
@@ -335,15 +334,10 @@ class BookingTable extends Component {
     }
     this.setState({ range: time }, () => {});
   }
-  _onSetLanguageToItalian() {
-    locale.setLanguage('is');
-    this.setState({ languageChange: true });
-  }
 
   render() {
     return (
       <div>
-        <button onClick={() => this._onSetLanguageToItalian}>íslenska</button>
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}

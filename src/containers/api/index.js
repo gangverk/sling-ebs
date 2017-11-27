@@ -13,6 +13,7 @@ import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
 import BookingTable from '../../components/BookingTable';
 import BookingTableHeader from '../../components/BookingTableHeader';
+import locale from '../../locale';
 
 const DayPickerWrapper = styled.div`
   position: fixed; /* Stay in place */
@@ -99,6 +100,22 @@ class Api extends Component {
   render() {
     return (
       <div>
+        <button
+          onClick={() => {
+            locale.setLanguage('is');
+            this.setState({ languageChange: true });
+          }}
+        >
+          íslenska
+        </button>
+        <button
+          onClick={() => {
+            locale.setLanguage('en');
+            this.setState({ languageChange: true });
+          }}
+        >
+          Enska
+        </button>
         <BookingTableHeader
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}

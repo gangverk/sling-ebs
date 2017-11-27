@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import locale from '../../locale';
+
 const HeaderContainer = styled.div`
   height: 100%;
   width: 90%;
@@ -36,11 +38,15 @@ export default class BookingTableHeader extends Component {
     return (
       <HeaderContainer>
         <div>
-          <button onClick={() => this.props.onClickPrevDay()}>Prev day</button>
-          <button onClick={() => this.props.onClickPickDate()}>
-            Pick date
+          <button onClick={() => this.props.onClickPrevDay()}>
+            {locale.prevDay}
           </button>
-          <button onClick={() => this.props.onClickNextDay()}>Next day</button>
+          <button onClick={() => this.props.onClickPickDate()}>
+            {locale.pickDate}
+          </button>
+          <button onClick={() => this.props.onClickNextDay()}>
+            {locale.nextDay}
+          </button>
         </div>
       </HeaderContainer>
     );
