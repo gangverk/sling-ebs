@@ -395,7 +395,7 @@ class BookingTable extends Component {
           <DayMenu>
             <thead>
               <tr>
-                <th className="TimeEdit">Time</th>
+                <th className="TimeEdit">{this.props.locale.time}</th>
                 {this.props.dataUsers.map(user => {
                   return (
                     <th key={'tableHead' + user.id}>
