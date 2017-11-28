@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import slingLogo from './logo@2x.png';
 import ebsLogo from './ebslogo2.png';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as LocaleActions from '../../redux/locale/actions';
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -34,12 +38,13 @@ const UserInfo = styled.div`
   }
 `;
 
-export default class Header extends Component {
+class Header extends Component {
   static propTypes = {
     userData: PropTypes.shape({
       name: PropTypes.string,
       picture: PropTypes.string,
     }),
+    setLanguage: PropTypes.func.isRequired,
   };
   static defaultProps = {
     userData: null,
@@ -55,7 +60,19 @@ export default class Header extends Component {
             <p>{this.props.userData.name}</p>
           </UserInfo>
         )}
+        <button onClick={() => this.props.setLanguage('is')}>is</button>
+        <button onClick={() => this.props.setLanguage('en')}>en</button>
       </HeaderWrapper>
     );
   }
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...LocaleActions,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(Header);

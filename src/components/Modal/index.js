@@ -46,6 +46,14 @@ const ModalHead = styled.div`
 const ModalFooter = styled.div``;
 
 export default class Modal extends Component {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.visable) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }
+
   render() {
     return (
       <ModalWrapper visable={this.props.visable}>

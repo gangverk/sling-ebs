@@ -4,13 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'react-dates/initialize';
-import { DayPicker, DayPickerSingleDateController } from 'react-dates';
+import { DayPickerSingleDateController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import styled from 'styled-components';
 
 import * as ApiActions from '../../components/Actions/actions';
 
-import Modal from '../../components/Modal';
 import BookingTable from '../../components/BookingTable';
 import BookingTableHeader from '../../components/BookingTableHeader';
 
@@ -58,13 +57,21 @@ class Api extends Component {
       numberOfMonths: 1,
       keepOpenOnDateSelect: true,
       focused: true,
+      range: [],
     };
   }
 
   componentWillMount() {
     this.props.fetchUsers();
   }
-
+  //nota til að stoppa scroll þegar daypicker er í gangi
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showModal3) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }
   nextDay() {
     const newDate = this.state.date.clone();
     newDate.add(1, 'days');
@@ -115,18 +122,6 @@ class Api extends Component {
             />
           </DayPickerWrapper>
         )}
-        <Modal
-          visable={this.state.showModal}
-          modalHeader="Date Picking Modal"
-          modalFooterSubmit="Pick Date"
-          modalFooterSubmit2="Close modal"
-          onSubmit={() => this.setState({ showModal: false })}
-          onSubmit2={() => this.setState({ showModal: false })}
-        >
-          <div>
-            <DayPicker />
-          </div>
-        </Modal>
       </div>
     );
   }

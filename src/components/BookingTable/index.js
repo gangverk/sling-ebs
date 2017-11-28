@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
+import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
+import DropDown from '../../components/DropDown';
 import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
@@ -83,6 +85,18 @@ const DayMenu = styled.table`
     color: #FFFFFF;
     height: 100%;
   }
+  .leave {
+    border-right: 1px solid #cecfd5;
+    background-color: #A9A9A9	;
+    position: relative;
+    padding: 1px;
+  }
+  .leave > div{
+    cursor: default;
+    text-align: center;
+    color: #FFFFFF;
+    height: 100%;
+  }
   .available:hover {
     position: relative;
     margin: 5px;
@@ -115,6 +129,10 @@ const ErrorMessage = styled.p`
 
 class BookingTable extends Component {
   static propTypes = {
+    locale: PropTypes.shape({
+      booked: PropTypes.string,
+      leave: PropTypes.string,
+    }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
     }).isRequired,
@@ -146,6 +164,7 @@ class BookingTable extends Component {
     dataUsers: {},
     allShifts: [],
     errorLoadingShifts: '',
+    range: [],
   };
 
   constructor(props) {
@@ -158,13 +177,19 @@ class BookingTable extends Component {
       userId: '',
       userName: '',
       bookTimeText: '',
+      range: [],
+      startTime: '',
+      endTime: '',
+      languageChange: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
     this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
+    this.rangeForDropDown(this.props.dateMain);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.dateMain._d !== this.props.dateMain._d) {
       this.props.fetchAllShifts(this.dateToString(nextProps.dateMain));
@@ -186,14 +211,16 @@ class BookingTable extends Component {
     return beginingOfDay;
   }
 
-  bookTime(time, user, id, bookTimeText) {
+  bookTime(time, user, id, bookTimeText, startTime, endTime) {
     this.props.postShift(
       time,
       user,
       id,
       this.props.userInfo,
       this.dateToString(this.props.dateMain),
-      bookTimeText
+      bookTimeText,
+      startTime,
+      endTime
     );
     this.setState({ showModal: false });
   }
@@ -211,22 +238,62 @@ class BookingTable extends Component {
     this.setState({ bookTimeText: event.target.value });
   }
 
+  changeShiftsToMoment(shifts) {
+    const data = [];
+    var i;
+    for (i = 0; i < shifts.length; i++) {
+      let startDate = shifts[i].dtstart;
+      let endDate = shifts[i].dtend;
+      startDate = moment(startDate);
+      endDate = moment(endDate);
+      if (shifts[i].type !== 'leave') {
+        while (endDate.toISOString() !== startDate.toISOString()) {
+          var object = {
+            start: startDate.toISOString(),
+            id: shifts[i].user.id,
+            leave: false,
+          };
+          data.push(object);
+          startDate = startDate.add(15, 'm');
+        }
+      } else {
+        startDate.millisecond(0);
+        startDate.second(0);
+        startDate.minute(0);
+        startDate.hour(8);
+        for (let j = 8; j <= 44; j++) {
+          var object2 = {
+            start: startDate.toISOString(),
+            id: shifts[i].user.id,
+            leave: true,
+          };
+          data.push(object2);
+          startDate = startDate.add(15, 'm');
+        }
+      }
+    }
+    return data;
+  }
+
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users, dateMain) {
+    shifts = this.changeShiftsToMoment(shifts);
     dateMain.millisecond(0);
     dateMain.second(0);
     dateMain.minute(0);
     dateMain.hour(8);
-
     const time = [];
-    for (let i = 8; i <= 17; i++) {
+    for (let i = 8; i <= 44; i++) {
       const newTime = { time: dateMain.toISOString() };
-      let display = dateMain.hour();
-      dateMain.add(1, 'hour');
+      let hour = dateMain.hour().toString();
+      let minute = dateMain.minute().toString();
+      let seperator = ':';
+      hour = hour.concat(seperator);
+      let display = hour.concat(minute);
+      dateMain.add(15, 'm');
       newTime.display = display;
       time.push(newTime);
     }
-
     const timeArray = time.map(time => {
       const data = {};
       data.time = time.display;
@@ -234,17 +301,30 @@ class BookingTable extends Component {
       data.unavailable = users.map(user => {
         for (let i = 0; shifts.length > i; i++) {
           if (
-            user.id === shifts[i].user.id &&
-            time.time.slice(0, -5) === shifts[i].dtstart.slice(0, -6)
+            user.id === shifts[i].id &&
+            time.time.slice(0, -8) === shifts[i].start.slice(0, -8) &&
+            shifts[i].leave === false
           ) {
             return user.id;
           }
         }
         return 0;
       });
+      data.leave = users.map(user => {
+        for (let j = 0; shifts.length > j; j++) {
+          if (
+            user.id === shifts[j].id &&
+            time.time.slice(0, -8) === shifts[j].start.slice(0, -8) &&
+            shifts[j].leave === true
+          ) {
+            return user.id;
+          }
+        }
+        return 0;
+      });
+
       return data;
     });
-
     return (
       <tbody>
         {timeArray.map(time => {
@@ -255,7 +335,13 @@ class BookingTable extends Component {
                 if (time.unavailable.includes(user.id)) {
                   return (
                     <td key={user.id} className="unavailable">
-                      <div>Booked</div>
+                      <div>{this.props.locale.booked}</div>
+                    </td>
+                  );
+                } else if (time.leave.includes(user.id)) {
+                  return (
+                    <td key={user.id} className="leave">
+                      <div>{this.props.locale.leave}</div>
                     </td>
                   );
                 } else
@@ -277,6 +363,26 @@ class BookingTable extends Component {
         })}
       </tbody>
     );
+  }
+
+  rangeForDropDown(dateMain) {
+    var time = [];
+    dateMain.millisecond(0);
+    dateMain.second(0);
+    dateMain.minute(0);
+    dateMain.hour(8);
+    for (let i = 8; i <= 44; i++) {
+      const newTime = { time: dateMain.toISOString() };
+      let hour = dateMain.hour().toString();
+      let minute = dateMain.minute().toString();
+      let seperator = ':';
+      hour = hour.concat(seperator);
+      let display = hour.concat(minute);
+      dateMain.add(15, 'm');
+      newTime.display = display;
+      time.push(newTime);
+    }
+    this.setState({ range: time }, () => {});
   }
 
   render() {
@@ -326,18 +432,32 @@ class BookingTable extends Component {
               this.state.timeStamp,
               this.state.userName,
               this.state.userId,
-              this.state.bookTimeText
+              this.state.bookTimeText,
+              this.state.startTime,
+              this.state.endTime
             )}
           onSubmit2={() => this.setState({ showModal: false })}
         >
           <div>
             <div>
               Start <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.timeStamp.slice(11, 16)}
+              {this.state.range.length > 0 && (
+                <DropDown
+                  range={this.state.range}
+                  onChange={date => this.setState({ startTime: date })}
+                />
+              )}
             </div>
             <div>
               End<img alt="Red clock icon" src={timeRed} />
-              {this.state.timeStamp.slice(12, 16)}
+              {this.state.range.length > 0 && (
+                <DropDown
+                  range={this.state.range}
+                  onChange={date => {
+                    this.setState({ endTime: date });
+                  }}
+                />
+              )}
             </div>
             <div>
               Note<img alt="Grey note icon" src={noteGray} />
@@ -362,6 +482,7 @@ const mapStateToProps = state => ({
   userInfo: state.UserReducer,
   allShifts: state.ApiReducer.allShifts,
   loadingShifts: state.ApiReducer.loadingShifts,
+  locale: state.LocaleReducer,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const HeaderContainer = styled.div`
   height: 100%;
@@ -26,8 +27,13 @@ const HeaderContainer = styled.div`
   }
 `;
 
-export default class BookingTableHeader extends Component {
+class BookingTableHeader extends Component {
   static propTypes = {
+    locale: PropTypes.shape({
+      prevDay: PropTypes.string,
+      pickDate: PropTypes.string,
+      nextDay: PropTypes.string,
+    }).isRequired,
     onClickPickDate: PropTypes.func.isRequired,
     onClickNextDay: PropTypes.func.isRequired,
     onClickPrevDay: PropTypes.func.isRequired,
@@ -36,13 +42,21 @@ export default class BookingTableHeader extends Component {
     return (
       <HeaderContainer>
         <div>
-          <button onClick={() => this.props.onClickPrevDay()}>Prev day</button>
-          <button onClick={() => this.props.onClickPickDate()}>
-            Pick date
+          <button onClick={() => this.props.onClickPrevDay()}>
+            {this.props.locale.prevDay}
           </button>
-          <button onClick={() => this.props.onClickNextDay()}>Next day</button>
+          <button onClick={() => this.props.onClickPickDate()}>
+            {this.props.locale.pickDate}
+          </button>
+          <button onClick={() => this.props.onClickNextDay()}>
+            {this.props.locale.nextDay}
+          </button>
         </div>
       </HeaderContainer>
     );
   }
 }
+const mapStateToProps = state => ({
+  locale: state.LocaleReducer,
+});
+export default connect(mapStateToProps)(BookingTableHeader);
