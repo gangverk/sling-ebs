@@ -13,6 +13,7 @@ import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
+import notValid from './notValid.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -132,6 +133,13 @@ class BookingTable extends Component {
     locale: PropTypes.shape({
       booked: PropTypes.string,
       leave: PropTypes.string,
+      time: PropTypes.string,
+      bookTime: PropTypes.string,
+      closeModal: PropTypes.string,
+      start: PropTypes.string,
+      end: PropTypes.string,
+      note: PropTypes.string,
+      optional: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -180,7 +188,7 @@ class BookingTable extends Component {
       range: [],
       startTime: '',
       endTime: '',
-      languageChange: false,
+      valid: true,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -376,6 +384,30 @@ class BookingTable extends Component {
     this.setState({ range: time }, () => {});
   }
 
+  validateDate() {
+    if (this.state.endTime === '') {
+      return;
+    }
+    let startHour = this.state.startTime.slice(11, -11);
+    let endHour = this.state.endTime.slice(11, -11);
+    let startMin = this.state.startTime.slice(14, -8);
+    let endMin = this.state.endTime.slice(14, -8);
+    let hourTimeStart = Number(startHour);
+    let hourTimeEnd = Number(endHour);
+    let minTimeStart = Number(startMin);
+    let minTimeEnd = Number(endMin);
+    if (hourTimeStart > hourTimeEnd) {
+      this.setState({ valid: false });
+    } else if (
+      (hourTimeStart === hourTimeEnd && minTimeStart > minTimeEnd) ||
+      (hourTimeStart === hourTimeEnd && minTimeStart === minTimeEnd)
+    ) {
+      this.setState({ valid: false });
+    } else {
+      this.setState({ valid: true });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -418,6 +450,7 @@ class BookingTable extends Component {
           modalHeader="Booking Modal"
           modalFooterSubmit={this.props.locale.bookTime}
           modalFooterSubmit2={this.props.locale.closeModal}
+          valid={this.state.valid}
           onSubmit={() =>
             this.bookTime(
               this.state.timeStamp,
@@ -431,13 +464,20 @@ class BookingTable extends Component {
         >
           <div>
             <div>
-              {this.props.locale.start}{' '}
+              {this.props.locale.start}
               <img alt="Blue clock icon" src={timeBlue} />
               {this.state.range.length > 0 && (
                 <DropDown
                   range={this.state.range}
-                  onChange={date => this.setState({ startTime: date })}
+                  onChange={date => {
+                    this.setState({ startTime: date }, () => {
+                      this.validateDate();
+                    });
+                  }}
                 />
+              )}
+              {this.state.valid === false && (
+                <img alt="NotValidIcon" src={notValid} />
               )}
             </div>
             <div>
@@ -447,7 +487,9 @@ class BookingTable extends Component {
                 <DropDown
                   range={this.state.range}
                   onChange={date => {
-                    this.setState({ endTime: date });
+                    this.setState({ endTime: date }, () => {
+                      this.validateDate();
+                    });
                   }}
                 />
               )}
