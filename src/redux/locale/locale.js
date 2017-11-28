@@ -7,6 +7,7 @@ const strings = new LocalizedStrings({
     nextDay: 'Next Day',
     pickDate: 'Pick date',
     booked: 'Booked',
+    leave: 'Leave',
   },
   is: {
     time: 'Tími',
@@ -14,6 +15,7 @@ const strings = new LocalizedStrings({
     nextDay: 'Næsti Dagur',
     pickDate: 'Velja  Dag',
     booked: ' Bókað',
+    leave: 'Frí',
   },
 });
 

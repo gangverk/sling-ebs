@@ -13,7 +13,6 @@ import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
-import locale from '../../locale';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -86,6 +85,18 @@ const DayMenu = styled.table`
     color: #FFFFFF;
     height: 100%;
   }
+  .leave {
+    border-right: 1px solid #cecfd5;
+    background-color: #A9A9A9	;
+    position: relative;
+    padding: 1px;
+  }
+  .leave > div{
+    cursor: default;
+    text-align: center;
+    color: #FFFFFF;
+    height: 100%;
+  }
   .available:hover {
     position: relative;
     margin: 5px;
@@ -118,6 +129,10 @@ const ErrorMessage = styled.p`
 
 class BookingTable extends Component {
   static propTypes = {
+    locale: PropTypes.shape({
+      booked: PropTypes.string,
+      leave: PropTypes.string,
+    }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
     }).isRequired,
@@ -174,6 +189,7 @@ class BookingTable extends Component {
     this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
     this.rangeForDropDown(this.props.dateMain);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.dateMain._d !== this.props.dateMain._d) {
       this.props.fetchAllShifts(this.dateToString(nextProps.dateMain));
@@ -196,7 +212,6 @@ class BookingTable extends Component {
   }
 
   bookTime(time, user, id, bookTimeText, startTime, endTime) {
-    console.log('time ', time);
     this.props.postShift(
       time,
       user,
@@ -211,7 +226,6 @@ class BookingTable extends Component {
   }
 
   modalInfo(timeStamp, userName, userId) {
-    console.log(timeStamp, ' ', userName, ' ', userId);
     this.setState({
       timeStamp: timeStamp,
       userName: userName,
@@ -224,7 +238,6 @@ class BookingTable extends Component {
     this.setState({ bookTimeText: event.target.value });
   }
 
-  // breyta svo það gerist bara einu sinni ekki alltaf þegar renderað töfluna...
   changeShiftsToMoment(shifts) {
     const data = [];
     var i;
@@ -233,13 +246,30 @@ class BookingTable extends Component {
       let endDate = shifts[i].dtend;
       startDate = moment(startDate);
       endDate = moment(endDate);
-      while (endDate.toISOString() !== startDate.toISOString()) {
-        var object = {
-          start: startDate.toISOString(),
-          id: shifts[i].user.id,
-        };
-        data.push(object);
-        startDate = startDate.add(15, 'm');
+      if (shifts[i].type !== 'leave') {
+        while (endDate.toISOString() !== startDate.toISOString()) {
+          var object = {
+            start: startDate.toISOString(),
+            id: shifts[i].user.id,
+            leave: false,
+          };
+          data.push(object);
+          startDate = startDate.add(15, 'm');
+        }
+      } else {
+        startDate.millisecond(0);
+        startDate.second(0);
+        startDate.minute(0);
+        startDate.hour(8);
+        for (let j = 8; j <= 44; j++) {
+          var object2 = {
+            start: startDate.toISOString(),
+            id: shifts[i].user.id,
+            leave: true,
+          };
+          data.push(object2);
+          startDate = startDate.add(15, 'm');
+        }
       }
     }
     return data;
@@ -272,13 +302,27 @@ class BookingTable extends Component {
         for (let i = 0; shifts.length > i; i++) {
           if (
             user.id === shifts[i].id &&
-            time.time.slice(0, -8) === shifts[i].start.slice(0, -8)
+            time.time.slice(0, -8) === shifts[i].start.slice(0, -8) &&
+            shifts[i].leave === false
           ) {
             return user.id;
           }
         }
         return 0;
       });
+      data.leave = users.map(user => {
+        for (let j = 0; shifts.length > j; j++) {
+          if (
+            user.id === shifts[j].id &&
+            time.time.slice(0, -8) === shifts[j].start.slice(0, -8) &&
+            shifts[j].leave === true
+          ) {
+            return user.id;
+          }
+        }
+        return 0;
+      });
+
       return data;
     });
     return (
@@ -291,7 +335,13 @@ class BookingTable extends Component {
                 if (time.unavailable.includes(user.id)) {
                   return (
                     <td key={user.id} className="unavailable">
-                      <div>{locale.booked}</div>
+                      <div>{this.props.locale.booked}</div>
+                    </td>
+                  );
+                } else if (time.leave.includes(user.id)) {
+                  return (
+                    <td key={user.id} className="leave">
+                      <div>{this.props.locale.leave}</div>
                     </td>
                   );
                 } else
@@ -405,7 +455,6 @@ class BookingTable extends Component {
                   range={this.state.range}
                   onChange={date => {
                     this.setState({ endTime: date });
-                    console.log(this.state.endTime);
                   }}
                 />
               )}
@@ -433,6 +482,7 @@ const mapStateToProps = state => ({
   userInfo: state.UserReducer,
   allShifts: state.ApiReducer.allShifts,
   loadingShifts: state.ApiReducer.loadingShifts,
+  locale: state.LocaleReducer,
 });
 
 const mapDispatchToProps = dispatch =>

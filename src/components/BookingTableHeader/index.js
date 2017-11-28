@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-import locale from '../../locale';
+import { connect } from 'react-redux';
 
 const HeaderContainer = styled.div`
   height: 100%;
@@ -28,7 +27,7 @@ const HeaderContainer = styled.div`
   }
 `;
 
-export default class BookingTableHeader extends Component {
+class BookingTableHeader extends Component {
   static propTypes = {
     onClickPickDate: PropTypes.func.isRequired,
     onClickNextDay: PropTypes.func.isRequired,
@@ -39,16 +38,20 @@ export default class BookingTableHeader extends Component {
       <HeaderContainer>
         <div>
           <button onClick={() => this.props.onClickPrevDay()}>
-            {locale.prevDay}
+            {this.props.locale.prevDay}
           </button>
           <button onClick={() => this.props.onClickPickDate()}>
-            {locale.pickDate}
+            {this.props.locale.pickDate}
           </button>
           <button onClick={() => this.props.onClickNextDay()}>
-            {locale.nextDay}
+            {this.props.locale.nextDay}
           </button>
         </div>
       </HeaderContainer>
     );
   }
 }
+const mapStateToProps = state => ({
+  locale: state.LocaleReducer,
+});
+export default connect(mapStateToProps)(BookingTableHeader);
