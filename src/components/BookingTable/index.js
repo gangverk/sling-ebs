@@ -460,7 +460,11 @@ class BookingTable extends Component {
               this.state.startTime,
               this.state.endTime
             )}
-          onSubmit2={() => this.setState({ showModal: false })}
+          onSubmit2={() => {
+            this.setState({
+              showModal: false,
+            });
+          }}
         >
           <div>
             <div>

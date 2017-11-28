@@ -13,8 +13,17 @@ const HeaderWrapper = styled.header`
   justify-content: center;
   padding: 7px;
   background-color: #0085ff;
+  button {
+    height: 25px;
+    border-radius: 2px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    background: #3498db;
+    padding: 2px 2px 2px 2px;
+    text-decoration: none;
+  }
 `;
-
 const ImageLogo = styled.div`
   background-image: url(${props => props.src});
   background-repeat: no-repeat;

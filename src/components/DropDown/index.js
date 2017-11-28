@@ -72,6 +72,7 @@ class DropDown extends Component {
       buttonText: 'Time',
     };
   }
+
   render() {
     return (
       <DropDownWrapper className="dropdown" menuHidden={this.state.menuHidden}>
