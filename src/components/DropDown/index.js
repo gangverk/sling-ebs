@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -58,6 +59,12 @@ const DropDownWrapper = styled.div`
 `;
 
 class DropDown extends Component {
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    range: PropTypes.shape({
+      map: PropTypes.func,
+    }).isRequired,
+  };
   constructor(props) {
     super(props);
     this.state = {

@@ -29,6 +29,11 @@ const HeaderContainer = styled.div`
 
 class BookingTableHeader extends Component {
   static propTypes = {
+    locale: PropTypes.shape({
+      prevDay: PropTypes.string,
+      pickDate: PropTypes.string,
+      nextDay: PropTypes.string,
+    }).isRequired,
     onClickPickDate: PropTypes.func.isRequired,
     onClickNextDay: PropTypes.func.isRequired,
     onClickPrevDay: PropTypes.func.isRequired,

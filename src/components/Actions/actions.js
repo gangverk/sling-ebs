@@ -1,6 +1,5 @@
 import { CALL_API } from 'redux-api-middleware';
 import * as Cookie from 'js-cookie';
-import moment from 'moment';
 
 import * as actionTypes from './actionTypes';
 
@@ -121,9 +120,6 @@ export const postShift = (
   endTime
 ) => {
   return dispatch => {
-    // const endTime = moment(time)
-    //   .add(1, 'hour')
-    //   .toISOString();
     const summary = `${bookTimeText}`;
     return dispatch({
       [CALL_API]: {
