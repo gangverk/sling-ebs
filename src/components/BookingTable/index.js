@@ -285,15 +285,12 @@ class BookingTable extends Component {
     const time = [];
     for (let i = 8; i <= 44; i++) {
       const newTime = { time: dateMain.toISOString() };
-      let hour = dateMain.hour().toString();
-      let minute = dateMain.minute().toString();
-      let seperator = ':';
-      hour = hour.concat(seperator);
-      let display = hour.concat(minute);
+      let display = dateMain.toISOString().slice(11, -8);
       dateMain.add(15, 'm');
       newTime.display = display;
       time.push(newTime);
     }
+    console.log(time);
     const timeArray = time.map(time => {
       const data = {};
       data.time = time.display;
