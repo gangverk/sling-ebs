@@ -416,8 +416,8 @@ class BookingTable extends Component {
         <Modal
           visable={this.state.showModal}
           modalHeader="Booking Modal"
-          modalFooterSubmit="Book Time"
-          modalFooterSubmit2="Close modal"
+          modalFooterSubmit={this.props.locale.bookTime}
+          modalFooterSubmit2={this.props.locale.closeModal}
           onSubmit={() =>
             this.bookTime(
               this.state.timeStamp,
@@ -431,7 +431,8 @@ class BookingTable extends Component {
         >
           <div>
             <div>
-              Start <img alt="Blue clock icon" src={timeBlue} />
+              {this.props.locale.start}{' '}
+              <img alt="Blue clock icon" src={timeBlue} />
               {this.state.range.length > 0 && (
                 <DropDown
                   range={this.state.range}
@@ -440,7 +441,8 @@ class BookingTable extends Component {
               )}
             </div>
             <div>
-              End<img alt="Red clock icon" src={timeRed} />
+              {this.props.locale.end}
+              <img alt="Red clock icon" src={timeRed} />
               {this.state.range.length > 0 && (
                 <DropDown
                   range={this.state.range}
@@ -451,10 +453,11 @@ class BookingTable extends Component {
               )}
             </div>
             <div>
-              Note<img alt="Grey note icon" src={noteGray} />
+              {this.props.locale.note}
+              <img alt="Grey note icon" src={noteGray} />
               <input
                 type="text"
-                placeholder="optional"
+                placeholder={this.props.locale.optional}
                 value={this.state.bookTimeText}
                 onChange={this.handleChange}
               />
