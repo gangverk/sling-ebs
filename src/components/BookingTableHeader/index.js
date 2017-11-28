@@ -37,14 +37,17 @@ class BookingTableHeader extends Component {
     onClickPickDate: PropTypes.func.isRequired,
     onClickNextDay: PropTypes.func.isRequired,
     onClickPrevDay: PropTypes.func.isRequired,
+    prevDay: PropTypes.bool.isRequired,
   };
   render() {
     return (
       <HeaderContainer>
         <div>
-          <button onClick={() => this.props.onClickPrevDay()}>
-            {this.props.locale.prevDay}
-          </button>
+          {this.props.prevDay === true && (
+            <button onClick={() => this.props.onClickPrevDay()}>
+              {this.props.locale.prevDay}
+            </button>
+          )}
           <button onClick={() => this.props.onClickPickDate()}>
             {this.props.locale.pickDate}
           </button>

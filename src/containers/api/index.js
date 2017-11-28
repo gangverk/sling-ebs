@@ -86,7 +86,7 @@ class Api extends Component {
   DayPickerSingleDateController_onOutsideClick() {
     this.setState({ showModal3: false });
   }
-  // Hér að lita reitinn eða eitthvað ?
+
   clickDay(bla) {
     const newDate = bla.clone();
     this.setState({
@@ -99,6 +99,7 @@ class Api extends Component {
     return (
       <div>
         <BookingTableHeader
+          prevDay={this.state.date.isAfter(moment())}
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
           onClickPrevDay={() => this.prevDay()}
