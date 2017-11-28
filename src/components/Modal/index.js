@@ -33,6 +33,9 @@ const ModalContainer = styled.div`
   border-radius: 8px;
   background-color: #f4f5f9;
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.5);
+  img {
+    height: 15px;
+  }
 `;
 
 const ModalHead = styled.div`

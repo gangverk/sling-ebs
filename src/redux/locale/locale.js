@@ -8,6 +8,12 @@ const strings = new LocalizedStrings({
     pickDate: 'Pick date',
     booked: 'Booked',
     leave: 'Leave',
+    start: 'Start',
+    end: 'End',
+    note: 'Note',
+    optional: 'Optional',
+    bookTime: 'Book Time',
+    closeModal: 'Close Modal',
   },
   is: {
     time: 'Tími',
@@ -16,6 +22,12 @@ const strings = new LocalizedStrings({
     pickDate: 'Velja  Dag',
     booked: ' Bókað',
     leave: 'Frí',
+    start: 'Byrjar',
+    end: 'Endar',
+    note: 'Athugasemd',
+    optional: 'valfrjálst',
+    bookTime: 'Bóka Tíma',
+    closeModal: 'Loka Modal',
   },
 });
 

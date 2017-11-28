@@ -13,6 +13,7 @@ import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
+import notValid from './notValid.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -132,6 +133,13 @@ class BookingTable extends Component {
     locale: PropTypes.shape({
       booked: PropTypes.string,
       leave: PropTypes.string,
+      time: PropTypes.string,
+      bookTime: PropTypes.string,
+      closeModal: PropTypes.string,
+      start: PropTypes.string,
+      end: PropTypes.string,
+      note: PropTypes.string,
+      optional: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -180,7 +188,7 @@ class BookingTable extends Component {
       range: [],
       startTime: '',
       endTime: '',
-      languageChange: false,
+      valid: true,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -285,11 +293,7 @@ class BookingTable extends Component {
     const time = [];
     for (let i = 8; i <= 44; i++) {
       const newTime = { time: dateMain.toISOString() };
-      let hour = dateMain.hour().toString();
-      let minute = dateMain.minute().toString();
-      let seperator = ':';
-      hour = hour.concat(seperator);
-      let display = hour.concat(minute);
+      let display = dateMain.toISOString().slice(11, -8);
       dateMain.add(15, 'm');
       newTime.display = display;
       time.push(newTime);
@@ -322,7 +326,6 @@ class BookingTable extends Component {
         }
         return 0;
       });
-
       return data;
     });
     return (
@@ -373,16 +376,36 @@ class BookingTable extends Component {
     dateMain.hour(8);
     for (let i = 8; i <= 44; i++) {
       const newTime = { time: dateMain.toISOString() };
-      let hour = dateMain.hour().toString();
-      let minute = dateMain.minute().toString();
-      let seperator = ':';
-      hour = hour.concat(seperator);
-      let display = hour.concat(minute);
+      let display = dateMain.toISOString().slice(11, -8);
       dateMain.add(15, 'm');
       newTime.display = display;
       time.push(newTime);
     }
     this.setState({ range: time }, () => {});
+  }
+
+  validateDate() {
+    if (this.state.endTime === '') {
+      return;
+    }
+    let startHour = this.state.startTime.slice(11, -11);
+    let endHour = this.state.endTime.slice(11, -11);
+    let startMin = this.state.startTime.slice(14, -8);
+    let endMin = this.state.endTime.slice(14, -8);
+    let hourTimeStart = Number(startHour);
+    let hourTimeEnd = Number(endHour);
+    let minTimeStart = Number(startMin);
+    let minTimeEnd = Number(endMin);
+    if (hourTimeStart > hourTimeEnd) {
+      this.setState({ valid: false });
+    } else if (
+      (hourTimeStart === hourTimeEnd && minTimeStart > minTimeEnd) ||
+      (hourTimeStart === hourTimeEnd && minTimeStart === minTimeEnd)
+    ) {
+      this.setState({ valid: false });
+    } else {
+      this.setState({ valid: true });
+    }
   }
 
   render() {
@@ -395,7 +418,7 @@ class BookingTable extends Component {
           <DayMenu>
             <thead>
               <tr>
-                <th className="TimeEdit">Time</th>
+                <th className="TimeEdit">{this.props.locale.time}</th>
                 {this.props.dataUsers.map(user => {
                   return (
                     <th key={'tableHead' + user.id}>
@@ -425,8 +448,9 @@ class BookingTable extends Component {
         <Modal
           visable={this.state.showModal}
           modalHeader="Booking Modal"
-          modalFooterSubmit="Book Time"
-          modalFooterSubmit2="Close modal"
+          modalFooterSubmit={this.props.locale.bookTime}
+          modalFooterSubmit2={this.props.locale.closeModal}
+          valid={this.state.valid}
           onSubmit={() =>
             this.bookTime(
               this.state.timeStamp,
@@ -440,30 +464,42 @@ class BookingTable extends Component {
         >
           <div>
             <div>
-              Start <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => this.setState({ startTime: date })}
-                />
-              )}
-            </div>
-            <div>
-              End<img alt="Red clock icon" src={timeRed} />
+              {this.props.locale.start}
+              <img alt="Blue clock icon" src={timeBlue} />
               {this.state.range.length > 0 && (
                 <DropDown
                   range={this.state.range}
                   onChange={date => {
-                    this.setState({ endTime: date });
+                    this.setState({ startTime: date }, () => {
+                      this.validateDate();
+                    });
+                  }}
+                />
+              )}
+              {this.state.valid === false && (
+                <img alt="NotValidIcon" src={notValid} />
+              )}
+            </div>
+            <div>
+              {this.props.locale.end}
+              <img alt="Red clock icon" src={timeRed} />
+              {this.state.range.length > 0 && (
+                <DropDown
+                  range={this.state.range}
+                  onChange={date => {
+                    this.setState({ endTime: date }, () => {
+                      this.validateDate();
+                    });
                   }}
                 />
               )}
             </div>
             <div>
-              Note<img alt="Grey note icon" src={noteGray} />
+              {this.props.locale.note}
+              <img alt="Grey note icon" src={noteGray} />
               <input
                 type="text"
-                placeholder="optional"
+                placeholder={this.props.locale.optional}
                 value={this.state.bookTimeText}
                 onChange={this.handleChange}
               />
