@@ -14,24 +14,35 @@ const PageWrapperLeft = styled.div`
   height: 100%;
   min-height: 100vh;
   float: left;
+  @media (max-width: 50%) {
+    display: none;
+  }
   background-image: url(${mountainBackround});
   background-repeat: no-repeat;
-  background-position: left;
+  ${'' /* background-position: left;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; */} background-size: cover;
 `;
 
 const SignupHeader = styled.div`
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
+  text-align: right;
 
   img {
     height: 27%;
     width: 27%;
+    display: flex;
+    align-self: flex-start;
+    background-color: pink;
   }
   button {
     top: 0;
     width: 25%;
     display: flex;
-    justify-content: right;
-    align-items: flex-start;
     margin: 5px;
     padding: 5px;
     width: 100px;
@@ -42,6 +53,7 @@ const SignupHeader = styled.div`
   p {
     font-family: 'Open Sans';
     width: 25%;
+    color: white;
   }
 `;
 
@@ -53,10 +65,10 @@ const PageWrapperRight = styled.div`
 
 const SlingWrapper = styled.div`
   margin: auto;
-  font-family: 'Arial';
+  font-family: Arial;
   display: flex;
   justify-content: center;
-  color: #0085ff;
+  color: #646464;
 `;
 
 const LoginWrapper = styled.div`
@@ -131,7 +143,13 @@ class Login extends Component {
               callback={response => this.onFbCallback(response)}
             />
 
-            <p className="forgotPasswordStyle">OR</p>
+            <h1>Sling EBS</h1>
+
+            <p>Log in</p>
+
+            <p className="forgotPasswordStyle">
+              Enter your <b>email address</b> and <b>password</b>
+            </p>
 
             <input
               className="inputStyle"
@@ -149,14 +167,14 @@ class Login extends Component {
 
             <button className="buttonStyle">Next</button>
 
-            <button className="buttonStyle">Skip this step</button>
-
             <p className="forgotPasswordStyle">
               Forgot your{' '}
               <a href="/notimplemented">
                 <u>password?</u>
               </a>
             </p>
+
+            <button className="buttonStyle">Skip this step</button>
           </LoginWrapper>
         </PageWrapperRight>
       </div>
