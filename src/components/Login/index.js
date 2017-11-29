@@ -37,7 +37,6 @@ const SignupHeader = styled.div`
     width: 27%;
     display: flex;
     align-self: flex-start;
-    background-color: pink;
   }
   button {
     top: 0;
@@ -68,7 +67,7 @@ const SlingWrapper = styled.div`
   font-family: Arial;
   display: flex;
   justify-content: center;
-  color: #646464;
+  color: #0085ff;
 `;
 
 const LoginWrapper = styled.div`
@@ -96,6 +95,10 @@ const LoginWrapper = styled.div`
     margin: 5px;
     padding: 5px;
     color: white;
+  }
+
+  .or {
+    color: #a4a4a4;
   }
 `;
 
@@ -143,7 +146,7 @@ class Login extends Component {
               callback={response => this.onFbCallback(response)}
             />
 
-            <h1>Sling EBS</h1>
+            {/* <h1>Sling EBS</h1>
 
             <p>Log in</p>
 
@@ -172,8 +175,8 @@ class Login extends Component {
               <a href="/notimplemented">
                 <u>password?</u>
               </a>
-            </p>
-
+            </p> */}
+            <p className="or">OR</p>
             <button className="buttonStyle">Skip this step</button>
           </LoginWrapper>
         </PageWrapperRight>
