@@ -125,11 +125,11 @@ class Login extends Component {
           <SignupHeader>
             <img alt="logo of the website" src={ebsLogo} />
 
-            <p>Don´t have an account?</p>
+            {/* <p>Don´t have an account?</p>
 
             <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
-            </button>
+            </button> */}
           </SignupHeader>
         </PageWrapperLeft>
 
