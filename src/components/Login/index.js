@@ -15,30 +15,29 @@ const PageWrapperLeft = styled.div`
   min-height: 100vh;
   float: left;
   @media (max-width: 50%) {
-    display: none;
+    ${'' /* display: none; */};
   }
   background-image: url(${mountainBackround});
-  background-repeat: no-repeat;
+  background-size: cover;
   ${'' /* background-position: left;
   -webkit-background-size: cover;
   -moz-background-size: cover;
-  -o-background-size: cover; */} background-size: cover;
+  -o-background-size: cover; */};
 `;
 
-const SignupHeader = styled.div`
-  display: flex;
+const LogoHeader = styled.div`
+  ${'' /* display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: baseline;
-  text-align: right;
-
-  img {
+  text-align: right; */} img {
     height: 27%;
     width: 27%;
     display: flex;
-    align-self: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
-  button {
+  ${'' /* button {
     top: 0;
     width: 25%;
     display: flex;
@@ -53,31 +52,32 @@ const SignupHeader = styled.div`
     font-family: 'Open Sans';
     width: 25%;
     color: white;
-  }
+  } */};
 `;
 
 const PageWrapperRight = styled.div`
   height: 100%;
   width: 40%;
   float: left;
+  ${'' /* justify-content: center;
+  align-items: center; */};
 `;
 
-const SlingWrapper = styled.div`
-  margin: auto;
-  font-family: Arial;
-  display: flex;
-  justify-content: center;
-  color: #0085ff;
-`;
+// const SlingWrapper = styled.div`
+//   font-family: Arial;
+//   color: #0085ff;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const LoginWrapper = styled.div`
   margin: auto;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  font-family: Arial;
   color: #0085ff;
+  height: 604px;
   .inputStyle {
     width: 250px;
     border: none;
@@ -96,9 +96,13 @@ const LoginWrapper = styled.div`
     padding: 5px;
     color: white;
   }
-
   .or {
     color: #a4a4a4;
+  }
+  h1 {
+    font-family: Trebuchet MS;
+    color: #0085ff;
+    margin-right: 115px;
   }
 `;
 
@@ -122,7 +126,7 @@ class Login extends Component {
     return (
       <div>
         <PageWrapperLeft>
-          <SignupHeader>
+          <LogoHeader>
             <img alt="logo of the website" src={ebsLogo} />
 
             {/* <p>Don´t have an account?</p>
@@ -130,15 +134,16 @@ class Login extends Component {
             <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
             </button> */}
-          </SignupHeader>
+          </LogoHeader>
         </PageWrapperLeft>
 
         <PageWrapperRight>
-          <SlingWrapper>
+          {/* <SlingWrapper>
             <h1>Sling EBS</h1>
-          </SlingWrapper>
+          </SlingWrapper> */}
 
           <LoginWrapper>
+            <h1>Sling EBS</h1>
             <FacebookLogin
               appId={process.env.REACT_APP_FACEBOOK}
               autoLoad={false}
