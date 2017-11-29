@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import slingLogo from './logo@2x.png';
-import ebsLogo from './ebslogo2.png';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -52,8 +50,6 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <ImageLogo src={slingLogo} />
-        <ImageLogo src={ebsLogo} />
         {this.props.userData != null && (
           <UserInfo>
             <img alt="/" src={this.props.userData.picture} />
