@@ -8,6 +8,7 @@ import mountainBackround from './mountain1.png';
 import ebsLogo from './logo.png';
 
 import * as actions from './actions';
+import * as ApiActions from '../Actions/actions';
 
 const PageWrapperLeft = styled.div`
   width: 60%;
@@ -109,12 +110,17 @@ const LoginWrapper = styled.div`
 class Login extends Component {
   static propTypes = {
     setUserData: PropTypes.func.isRequired,
+    fetchAuthenticationData: PropTypes.func.isRequired,
   };
   constructor(props) {
     super(props);
     this.state = {
       facebook: null,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchAuthenticationData();
   }
   onFbCallback(data) {
     if (data) {
@@ -197,6 +203,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      ...ApiActions,
       ...actions,
     },
     dispatch
