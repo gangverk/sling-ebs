@@ -53,10 +53,10 @@ const PageWrapperRight = styled.div`
 
 const SlingWrapper = styled.div`
   margin: auto;
-  font-family: Arial;
+  font-family: 'Arial';
   display: flex;
   justify-content: center;
-  color: #646464;
+  color: #0085ff;
 `;
 
 const LoginWrapper = styled.div`
@@ -110,11 +110,11 @@ class Login extends Component {
           <SignupHeader>
             <img alt="logo of the website" src={ebsLogo} />
 
+            <p>Don´t have an account?</p>
+
             <button className="signUpStyle">
               <a href="./SignUp">Sign up</a>
             </button>
-
-            <p>Don´t have an account?</p>
           </SignupHeader>
         </PageWrapperLeft>
 
@@ -131,13 +131,7 @@ class Login extends Component {
               callback={response => this.onFbCallback(response)}
             />
 
-            <h1>Sling EBS</h1>
-
-            <p>Log in</p>
-
-            <p className="forgotPasswordStyle">
-              Enter your <b>email address</b> and <b>password</b>
-            </p>
+            <p className="forgotPasswordStyle">OR</p>
 
             <input
               className="inputStyle"
@@ -155,14 +149,14 @@ class Login extends Component {
 
             <button className="buttonStyle">Next</button>
 
+            <button className="buttonStyle">Skip this step</button>
+
             <p className="forgotPasswordStyle">
               Forgot your{' '}
               <a href="/notimplemented">
                 <u>password?</u>
               </a>
             </p>
-
-            <button className="buttonStyle">Skip this step</button>
           </LoginWrapper>
         </PageWrapperRight>
       </div>
