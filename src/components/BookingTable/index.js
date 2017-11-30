@@ -9,6 +9,7 @@ import moment from 'moment';
 import * as ApiActions from '../../components/Actions/actions';
 import Modal from '../../components/Modal';
 import DropDown from '../../components/DropDown';
+import EmployeesMenu from '../../components/EmployeesMenu';
 import timeBlue from './timeblue.svg';
 import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
@@ -189,6 +190,8 @@ class BookingTable extends Component {
       startTime: '',
       endTime: '',
       valid: true,
+      showUser: false,
+      selectedUserId: {},
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -415,13 +418,26 @@ class BookingTable extends Component {
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
         <DayMenuDiv>
+          {this.state.showUser === true && (
+            <EmployeesMenu
+              userId={this.state.selectedUserId}
+              close={() => this.setState({ showUser: false })}
+            />
+          )}
           <DayMenu>
             <thead>
               <tr>
                 <th className="TimeEdit">{this.props.locale.time}</th>
                 {this.props.dataUsers.map(user => {
                   return (
-                    <th key={'tableHead' + user.id}>
+                    <th
+                      onClick={() =>
+                        this.setState({
+                          selectedUserId: user.id,
+                          showUser: true,
+                        })}
+                      key={'tableHead' + user.id}
+                    >
                       <img alt="avatar" src={user.avatar} />
                       <p>{user.name}</p>
                     </th>

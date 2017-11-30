@@ -11,19 +11,23 @@ const HeaderContainer = styled.div`
   box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
   margin: auto;
   margin-top: 20px;
-  div {
-    display: flex;
-    justify-content: space-between;
-    button {
-      background-color: #ffffff;
-      border: 2px solid #dadada;
-      border-radius: 2px;
-      color: #d2d2d2;
-      padding: 10px 25px;
-      font-size: 12px;
-      margin: 10px;
-      cursor: pointer;
-    }
+  display: flex;
+  justify-content: space-between;
+  button {
+    background-color: #ffffff;
+    border: 2px solid #dadada;
+    border-radius: 2px;
+    color: #d2d2d2;
+    padding: 10px 25px;
+    font-size: 12px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .date {
+    font-weight: 700;
+    color: #0085ff;
+    margin: auto 10px auto 10px;
+    letter-spacing: 2px;
   }
 `;
 
@@ -42,19 +46,18 @@ class BookingTableHeader extends Component {
   render() {
     return (
       <HeaderContainer>
-        <div>
-          {this.props.prevDay === true && (
-            <button onClick={() => this.props.onClickPrevDay()}>
-              {this.props.locale.prevDay}
-            </button>
-          )}
-          <button onClick={() => this.props.onClickPickDate()}>
-            {this.props.locale.pickDate}
+        {this.props.prevDay === true && (
+          <button onClick={() => this.props.onClickPrevDay()}>
+            {this.props.locale.prevDay}
           </button>
-          <button onClick={() => this.props.onClickNextDay()}>
-            {this.props.locale.nextDay}
-          </button>
-        </div>
+        )}
+        <div className="date">{this.props.date.format('DD.MMM.YYYY')}</div>
+        <button onClick={() => this.props.onClickPickDate()}>
+          {this.props.locale.pickDate}
+        </button>
+        <button onClick={() => this.props.onClickNextDay()}>
+          {this.props.locale.nextDay}
+        </button>
       </HeaderContainer>
     );
   }

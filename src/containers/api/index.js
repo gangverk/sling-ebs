@@ -12,7 +12,6 @@ import * as ApiActions from '../../components/Actions/actions';
 
 import BookingTable from '../../components/BookingTable';
 import BookingTableHeader from '../../components/BookingTableHeader';
-import EmployeesMenu from '../../components/EmployeesMenu';
 
 const DayPickerWrapper = styled.div`
   position: fixed; /* Stay in place */
@@ -100,8 +99,8 @@ class Api extends Component {
   render() {
     return (
       <div>
-        <EmployeesMenu />
         <BookingTableHeader
+          date={this.state.date}
           prevDay={this.state.date.isAfter(moment())}
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
