@@ -13,7 +13,6 @@ const ModalWrapper = styled.div`
       return css`
         position: fixed; /* Stay in place */
         z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
         left: 0;
         top: 0;
         width: 100%; /* Full width */
@@ -27,24 +26,33 @@ const ModalWrapper = styled.div`
 `;
 const ModalContainer = styled.div`
   background-color: #fefefe;
-  margin: auto;
   border: 1px solid #888;
-  width: 50%;
+  width: 32%;
+  height: 44%;
+  min-width: 200px;
+  min-height: 200px;
   border-radius: 8px;
   background-color: #f4f5f9;
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.5);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
   img {
-    height: 15px;
+    height: 30px;
   }
 `;
 
 const ModalHead = styled.div`
   margin-top: 0;
-  height: 30px;
+  height: 20px;
   background-color: #ffffff;
   border-radius: 8px 8px 0 0;
   width: 100%;
-  padding: 10px 0;
+  padding: 22px 0;
+  font-family: Trebuchet MS;
+  font-size: 20px;
+  color: #0085ff;
 `;
 const ModalFooter = styled.div``;
 

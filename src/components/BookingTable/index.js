@@ -447,7 +447,7 @@ class BookingTable extends Component {
         </DayMenuDiv>
         <Modal
           visable={this.state.showModal}
-          modalHeader="Booking Modal"
+          modalHeader="Book appointment"
           modalFooterSubmit={this.props.locale.bookTime}
           modalFooterSubmit2={this.props.locale.closeModal}
           valid={this.state.valid}
