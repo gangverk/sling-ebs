@@ -14,6 +14,7 @@ const strings = new LocalizedStrings({
     optional: 'Optional',
     bookTime: 'Book Time',
     closeModal: 'Close Modal',
+    employee: 'Employee',
   },
   is: {
     time: 'Tími',
@@ -28,6 +29,7 @@ const strings = new LocalizedStrings({
     optional: 'valfrjálst',
     bookTime: 'Bóka Tíma',
     closeModal: 'Loka Modal',
+    employee: 'Starfsmaður',
   },
 });
 

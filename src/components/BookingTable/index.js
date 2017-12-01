@@ -141,6 +141,7 @@ class BookingTable extends Component {
       end: PropTypes.string,
       note: PropTypes.string,
       optional: PropTypes.string,
+      employee: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -192,16 +193,19 @@ class BookingTable extends Component {
       valid: true,
       showUser: false,
       selectedUserId: {},
+      timeArray: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
+    console.log(' Hér er kallað i component will mount');
     this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
     this.rangeForDropDown(this.props.dateMain);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps, ' Component will recive props');
     if (nextProps.dateMain._d !== this.props.dateMain._d) {
       this.props.fetchAllShifts(this.dateToString(nextProps.dateMain));
     }
@@ -489,7 +493,9 @@ class BookingTable extends Component {
           }}
         >
           <div>
-            <div> Employee {this.state.userName}</div>
+            <div>
+              {this.props.locale.employee} {this.state.userName}
+            </div>
             <div>
               {this.props.locale.start}
               <img alt="Blue clock icon" src={timeBlue} />
