@@ -411,9 +411,15 @@ class BookingTable extends Component {
     }
   }
 
+  nextAvailableDay() {
+    console.log(this.props);
+    console.log(this.state);
+  }
+
   render() {
     return (
       <div>
+        <button onClick={() => this.nextAvailableDay()}>Next time</button>
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
@@ -483,6 +489,7 @@ class BookingTable extends Component {
           }}
         >
           <div>
+            <div> Employee {this.state.userName}</div>
             <div>
               {this.props.locale.start}
               <img alt="Blue clock icon" src={timeBlue} />

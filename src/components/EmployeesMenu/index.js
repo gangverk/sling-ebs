@@ -13,9 +13,9 @@ const EmployeesWrapper = styled.div`
   max-width: 50%;
   min-height: 110px;
   margin: 20px auto;
-  border-radius: 10px;
+  border-radius: 4px;
   background-color: white;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
   &:hover {
     background-color: #f7f7f7;
   }
@@ -59,6 +59,8 @@ class EmployeesMenu extends Component {
         phone: PropTypes.string,
       })
     ).isRequired,
+    close: PropTypes.func.isRequired,
+    userId: PropTypes.number.isRequired,
   };
   static defaultProps = {};
 
@@ -73,7 +75,6 @@ class EmployeesMenu extends Component {
     const userInfo = this.props.userAlldata.find(
       user => user.id === this.props.userId
     );
-    console.log(userInfo);
     return userInfo ? (
       <EmployeesWrapper>
         <img src={userInfo.avatar} alt="UserPic" />

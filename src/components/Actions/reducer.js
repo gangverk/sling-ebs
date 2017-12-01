@@ -44,13 +44,11 @@ export default (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_ALL_USER_INFO:
-      console.log('kalla í fetch all user info ');
       return {
         ...state,
         fetchingAllInfo: true,
       };
     case actionTypes.FETCH_ALL_USER_INFO_SUCCESS:
-      console.log(' great success', action.payload.users);
       return {
         ...state,
         dataAllUsers: action.payload.users,
