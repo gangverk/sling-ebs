@@ -87,21 +87,24 @@ class DropDown extends Component {
         </button>
         <div className="dropdown-content">
           {this.props.range.map(item => {
-            return (
-              <button
-                className="bookingButton"
-                key={item.time}
-                onClick={() => {
-                  this.setState({
-                    menuHidden: !this.state.menuHidden,
-                    buttonText: item.display,
-                  });
-                  this.props.onChange(item.time);
-                }}
-              >
-                {item.display}
-              </button>
-            );
+            if (item.available === false) {
+              return null;
+            } else
+              return (
+                <button
+                  className="bookingButton"
+                  key={item.time}
+                  onClick={() => {
+                    this.setState({
+                      menuHidden: !this.state.menuHidden,
+                      buttonText: item.display,
+                    });
+                    this.props.onChange(item.time);
+                  }}
+                >
+                  {item.display}
+                </button>
+              );
           })}
         </div>
       </DropDownWrapper>

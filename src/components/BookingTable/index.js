@@ -7,6 +7,7 @@ import ReactLoading from 'react-loading';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
+import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
 import DropDown from '../../components/DropDown';
 import EmployeesMenu from '../../components/EmployeesMenu';
@@ -194,21 +195,39 @@ class BookingTable extends Component {
       showUser: false,
       selectedUserId: {},
       timeArray: [],
+      allTimes: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
-    console.log(' Hér er kallað i component will mount');
     this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
     this.rangeForDropDown(this.props.dateMain);
+    this.constructAllTimesArray(this.props.dateMain);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, ' Component will recive props');
     if (nextProps.dateMain._d !== this.props.dateMain._d) {
       this.props.fetchAllShifts(this.dateToString(nextProps.dateMain));
+      this.constructAllTimesArray(nextProps.dateMain);
     }
+  }
+
+  constructAllTimesArray(dateMain) {
+    // Construct new all times array that is stored in the state
+    dateMain.millisecond(0);
+    dateMain.second(0);
+    dateMain.minute(0);
+    dateMain.hour(8);
+    const newAllTimes = [];
+    for (let i = 8; i <= 44; i++) {
+      const newTime = { time: dateMain.toISOString() };
+      let display = dateMain.toISOString().slice(11, -8);
+      dateMain.add(15, 'm');
+      newTime.display = display;
+      newAllTimes.push(newTime);
+    }
+    this.setState({ allTimes: newAllTimes });
   }
 
   dateToString(selectedDate) {
@@ -291,21 +310,9 @@ class BookingTable extends Component {
   }
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
-  renderTableBody(shifts, users, dateMain) {
+  renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
-    dateMain.millisecond(0);
-    dateMain.second(0);
-    dateMain.minute(0);
-    dateMain.hour(8);
-    const time = [];
-    for (let i = 8; i <= 44; i++) {
-      const newTime = { time: dateMain.toISOString() };
-      let display = dateMain.toISOString().slice(11, -8);
-      dateMain.add(15, 'm');
-      newTime.display = display;
-      time.push(newTime);
-    }
-    const timeArray = time.map(time => {
+    const timeArray = this.state.allTimes.map(time => {
       const data = {};
       data.time = time.display;
       data.timeStamp = time.time;
@@ -415,10 +422,7 @@ class BookingTable extends Component {
     }
   }
 
-  nextAvailableDay() {
-    console.log(this.props);
-    console.log(this.state);
-  }
+  nextAvailableDay() {}
 
   render() {
     return (
@@ -463,11 +467,7 @@ class BookingTable extends Component {
                 className="loadingSpinner"
               />
             ) : (
-              this.renderTableBody(
-                this.props.allShifts,
-                this.props.dataUsers,
-                this.props.dateMain
-              )
+              this.renderTableBody(this.props.allShifts, this.props.dataUsers)
             )}
           </DayMenu>
         </DayMenuDiv>
@@ -496,37 +496,23 @@ class BookingTable extends Component {
             <div>
               {this.props.locale.employee} {this.state.userName}
             </div>
-            <div>
-              {this.props.locale.start}
-              <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => {
-                    this.setState({ startTime: date }, () => {
-                      this.validateDate();
-                    });
-                  }}
-                />
-              )}
-              {this.state.valid === false && (
-                <img alt="NotValidIcon" src={notValid} />
-              )}
-            </div>
-            <div>
-              {this.props.locale.end}
-              <img alt="Red clock icon" src={timeRed} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => {
-                    this.setState({ endTime: date }, () => {
-                      this.validateDate();
-                    });
-                  }}
-                />
-              )}
-            </div>
+            <TimeSelector
+              startText={this.props.locale.start}
+              endText={this.props.locale.end}
+              timeArray={this.state.allTimes}
+              userId={this.state.userId}
+              shifts={this.props.allShifts}
+              startOnChange={date => {
+                this.setState({ startTime: date }, () => {
+                  this.validateDate();
+                });
+              }}
+              endOnChange={date => {
+                this.setState({ endTime: date }, () => {
+                  this.validateDate();
+                });
+              }}
+            />
             <div>
               {this.props.locale.note}
               <img alt="Grey note icon" src={noteGray} />
