@@ -10,7 +10,7 @@ const DropDownWrapper = styled.div`
   position: relative;
   display: inline-block;
   .dropbtn {
-    width: 350px;
+    width: 280px;
     height: 36px;
     color: white;
     font-size: 16px;
@@ -19,6 +19,7 @@ const DropDownWrapper = styled.div`
     cursor: pointer;
     outline: none !important;
     color: #5f7183;
+    text-align: initial;
   }
   ${props => {
     if (props.menuHidden) {

@@ -149,10 +149,11 @@ const ModalWrapper = styled.div`
     margin-bottom: 10px;
   }
   .textArea {
-    width: 350px;
+    width: 278px;
     height: 93px;
     border-radius: 2px;
     border: none;
+    text-align: initial;
   }
 `;
 

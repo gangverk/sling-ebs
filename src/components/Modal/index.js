@@ -62,7 +62,7 @@ const ModalHead = styled.div`
   button {
     border: none;
     background-color: Transparent;
-    margin-left: 50%;
+    margin-left: 39%;
     cursor: pointer;
   }
 `;
