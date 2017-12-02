@@ -13,9 +13,9 @@ const HeaderWrapper = styled.header`
   justify-content: center;
   padding: 7px;
   background-color: #0085ff;
-  img {
+  button {
     border: none;
-    background-color: red;
+    background-color: Transparent;
   }
 `;
 
