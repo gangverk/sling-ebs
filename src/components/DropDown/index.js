@@ -10,8 +10,8 @@ const DropDownWrapper = styled.div`
   position: relative;
   display: inline-block;
   .dropbtn {
-    width: 90px;
-    height: 30px;
+    width: 350px;
+    height: 36px;
     color: white;
     font-size: 16px;
     border: none;

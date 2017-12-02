@@ -11,9 +11,9 @@ const strings = new LocalizedStrings({
     start: 'Start',
     end: 'End',
     note: 'Note',
-    optional: 'Optional',
-    bookTime: 'Book Time',
-    closeModal: 'Close Modal',
+    optional: '(Optional)',
+    bookTime: 'Book',
+    closeModal: 'Close Window',
   },
   is: {
     time: 'Tími',
@@ -25,9 +25,9 @@ const strings = new LocalizedStrings({
     start: 'Byrjar',
     end: 'Endar',
     note: 'Athugasemd',
-    optional: 'valfrjálst',
-    bookTime: 'Bóka Tíma',
-    closeModal: 'Loka Modal',
+    optional: '(Valfrjálst)',
+    bookTime: 'Bóka',
+    closeModal: 'Loka Glugga',
   },
 });
 

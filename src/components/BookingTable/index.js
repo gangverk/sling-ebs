@@ -128,6 +128,34 @@ const ErrorMessage = styled.p`
   text-align: center;
 `;
 
+const ModalWrapper = styled.div`
+  .startTime {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+  }
+  .endTime {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  .textInput {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  .textArea {
+    width: 350px;
+    height: 93px;
+    border-radius: 2px;
+    border: none;
+  }
+`;
+
 class BookingTable extends Component {
   static propTypes = {
     locale: PropTypes.shape({
@@ -445,67 +473,71 @@ class BookingTable extends Component {
             )}
           </DayMenu>
         </DayMenuDiv>
-        <Modal
-          visable={this.state.showModal}
-          modalHeader="Booking Modal"
-          modalFooterSubmit={this.props.locale.bookTime}
-          modalFooterSubmit2={this.props.locale.closeModal}
-          valid={this.state.valid}
-          onSubmit={() =>
-            this.bookTime(
-              this.state.timeStamp,
-              this.state.userName,
-              this.state.userId,
-              this.state.bookTimeText,
-              this.state.startTime,
-              this.state.endTime
-            )}
-          onSubmit2={() => this.setState({ showModal: false })}
-        >
-          <div>
+        <ModalWrapper>
+          <Modal
+            visable={this.state.showModal}
+            modalHeader="Book appointment"
+            modalFooterSubmit={this.props.locale.bookTime}
+            modalFooterSubmit2={this.props.locale.closeModal}
+            valid={this.state.valid}
+            onSubmit={() =>
+              this.bookTime(
+                this.state.timeStamp,
+                this.state.userName,
+                this.state.userId,
+                this.state.bookTimeText,
+                this.state.startTime,
+                this.state.endTime
+              )}
+            onSubmit2={() => this.setState({ showModal: false })}
+          >
             <div>
-              {this.props.locale.start}
-              <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => {
-                    this.setState({ startTime: date }, () => {
-                      this.validateDate();
-                    });
-                  }}
+              <div className="startTime">
+                {this.props.locale.start}
+                <img alt="Blue clock icon" src={timeBlue} />
+                {this.state.range.length > 0 && (
+                  <DropDown
+                    className="dropDown"
+                    range={this.state.range}
+                    onChange={date => {
+                      this.setState({ startTime: date }, () => {
+                        this.validateDate();
+                      });
+                    }}
+                  />
+                )}
+                {this.state.valid === false && (
+                  <img alt="NotValidIcon" src={notValid} />
+                )}
+              </div>
+              <div className="endTime">
+                {this.props.locale.end}
+                <img alt="Red clock icon" src={timeRed} />
+                {this.state.range.length > 0 && (
+                  <DropDown
+                    range={this.state.range}
+                    onChange={date => {
+                      this.setState({ endTime: date }, () => {
+                        this.validateDate();
+                      });
+                    }}
+                  />
+                )}
+              </div>
+              <div className="textInput">
+                {this.props.locale.note}
+                <img alt="Grey note icon" src={noteGray} />
+                <input
+                  className="textArea"
+                  type="text"
+                  placeholder={this.props.locale.optional}
+                  value={this.state.bookTimeText}
+                  onChange={this.handleChange}
                 />
-              )}
-              {this.state.valid === false && (
-                <img alt="NotValidIcon" src={notValid} />
-              )}
+              </div>
             </div>
-            <div>
-              {this.props.locale.end}
-              <img alt="Red clock icon" src={timeRed} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => {
-                    this.setState({ endTime: date }, () => {
-                      this.validateDate();
-                    });
-                  }}
-                />
-              )}
-            </div>
-            <div>
-              {this.props.locale.note}
-              <img alt="Grey note icon" src={noteGray} />
-              <input
-                type="text"
-                placeholder={this.props.locale.optional}
-                value={this.state.bookTimeText}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-        </Modal>
+          </Modal>
+        </ModalWrapper>
       </div>
     );
   }

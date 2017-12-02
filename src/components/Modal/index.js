@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import timeBlue from '../BookingTable/timeblue.svg';
+import closeX from '../BookingTable/x.png';
 
 const ModalWrapper = styled.div`
   ${props => {
@@ -13,7 +15,6 @@ const ModalWrapper = styled.div`
       return css`
         position: fixed; /* Stay in place */
         z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
         left: 0;
         top: 0;
         width: 100%; /* Full width */
@@ -27,26 +28,64 @@ const ModalWrapper = styled.div`
 `;
 const ModalContainer = styled.div`
   background-color: #fefefe;
-  margin: auto;
   border: 1px solid #888;
-  width: 50%;
+  width: 32%;
+  height: 44%;
+  min-width: 461px;
+  min-height: 343px;
   border-radius: 8px;
   background-color: #f4f5f9;
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.5);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  font-family: Trebuchet MS;
+  font-size: 14px;
+  color: #738190;
   img {
-    height: 15px;
+    height: 30px;
+    padding: 0px 10px;
   }
 `;
 
 const ModalHead = styled.div`
-  margin-top: 0;
-  height: 30px;
+  display: flex;
+  height: 5%;
+  width: 100%;
   background-color: #ffffff;
   border-radius: 8px 8px 0 0;
-  width: 100%;
-  padding: 10px 0;
+  padding: 27px 0;
+  font-family: Trebuchet MS;
+  font-size: 20px;
+  color: #0085ff;
+  button {
+    border: none;
+    background-color: Transparent;
+    margin-left: 50%;
+    cursor: pointer;
+  }
 `;
-const ModalFooter = styled.div``;
+
+const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  button {
+    background-color: #0085ff;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    padding: 10px 54px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    font-family: Trebuchet MS;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+`;
 
 export default class Modal extends Component {
   componentDidUpdate(prevProps, prevState) {
@@ -62,15 +101,18 @@ export default class Modal extends Component {
       <ModalWrapper visable={this.props.visable}>
         <ModalContainer>
           {this.props.modalHeader.length > 0 && (
-            <ModalHead>{this.props.modalHeader}</ModalHead>
+            <ModalHead>
+              <img alt="Blue clock icon" src={timeBlue} />
+              {this.props.modalHeader}
+              <button onClick={() => this.props.onSubmit2()}>
+                <img alt="X button" src={closeX} />
+              </button>
+            </ModalHead>
           )}
           {this.props.children}
           <ModalFooter>
             <button onClick={() => this.props.onSubmit()}>
               {this.props.modalFooterSubmit}
-            </button>
-            <button onClick={() => this.props.onSubmit2()}>
-              {this.props.modalFooterSubmit2}
             </button>
           </ModalFooter>
         </ModalContainer>
