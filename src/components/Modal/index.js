@@ -50,6 +50,7 @@ const ModalContainer = styled.div`
 `;
 
 const ModalHead = styled.div`
+  display: flex;
   height: 5%;
   width: 100%;
   background-color: #ffffff;
@@ -61,20 +62,28 @@ const ModalHead = styled.div`
   button {
     border: none;
     background-color: Transparent;
+    margin-left: 50%;
+    cursor: pointer;
   }
 `;
 
 const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
   button {
     background-color: #0085ff;
     border: none;
+    border-radius: 2px;
     color: white;
     padding: 10px 54px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 13px;
     font-family: Trebuchet MS;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 20px;
   }
 `;
 
