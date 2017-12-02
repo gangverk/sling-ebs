@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import usaFlag from './usaflag.png';
+import iceFlag from './iceflag.png';
 
 import * as LocaleActions from '../../redux/locale/actions';
 
@@ -11,6 +13,10 @@ const HeaderWrapper = styled.header`
   justify-content: center;
   padding: 7px;
   background-color: #0085ff;
+  img {
+    border: none;
+    background-color: red;
+  }
 `;
 
 const ImageLogo = styled.div`
@@ -56,8 +62,14 @@ class Header extends Component {
             <p>{this.props.userData.name}</p>
           </UserInfo>
         )}
-        <button onClick={() => this.props.setLanguage('is')}>is</button>
-        <button onClick={() => this.props.setLanguage('en')}>en</button>
+        <button onClick={() => this.props.setLanguage('is')}>
+          {' '}
+          <img alt="Icelandic" src={iceFlag} />
+        </button>
+        <button onClick={() => this.props.setLanguage('en')}>
+          {' '}
+          <img alt="English" src={usaFlag} />
+        </button>
       </HeaderWrapper>
     );
   }

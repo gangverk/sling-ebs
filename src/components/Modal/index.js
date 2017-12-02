@@ -29,8 +29,8 @@ const ModalWrapper = styled.div`
 const ModalContainer = styled.div`
   background-color: #fefefe;
   border: 1px solid #888;
-  width: 32%;
-  height: 44%;
+  width: 461px;
+  height: 343px;
   min-width: 461px;
   min-height: 343px;
   border-radius: 8px;

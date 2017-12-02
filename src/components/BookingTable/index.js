@@ -528,7 +528,7 @@ class BookingTable extends Component {
               <div className="textInput">
                 {this.props.locale.note}
                 <img alt="Grey note icon" src={noteGray} />
-                <input
+                <textarea
                   className="textArea"
                   type="text"
                   placeholder={this.props.locale.optional}
