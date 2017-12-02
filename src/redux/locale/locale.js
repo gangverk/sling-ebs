@@ -12,7 +12,7 @@ const strings = new LocalizedStrings({
     end: 'End',
     note: 'Note',
     optional: 'Optional',
-    bookTime: 'Book Time',
+    bookTime: 'Book',
     closeModal: 'Close Modal',
   },
   is: {
@@ -26,7 +26,7 @@ const strings = new LocalizedStrings({
     end: 'Endar',
     note: 'Athugasemd',
     optional: 'valfrjálst',
-    bookTime: 'Bóka Tíma',
+    bookTime: 'Bóka',
     closeModal: 'Loka Modal',
   },
 });
