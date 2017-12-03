@@ -9,27 +9,28 @@ import iceFlag from './iceflag.png';
 import * as LocaleActions from '../../redux/locale/actions';
 
 const HeaderWrapper = styled.header`
-  display: flex;
-  justify-content: center;
   padding: 7px;
   background-color: #0085ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FlagWrapper = styled.div`
+  background-color: pink;
+  display: flex;
+  justify-content: flex-end;
   button {
     border: none;
     background-color: Transparent;
     margin: 37px 1px;
+    outline: none;
   }
 `;
 
-const ImageLogo = styled.div`
-  background-image: url(${props => props.src});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 200px;
-  height: 50px;
-`;
 const UserInfo = styled.div`
   position: relative;
+  background-color: red;
   height: 100%;
   display: flex;
   img {
@@ -63,14 +64,16 @@ class Header extends Component {
             <p>{this.props.userData.name}</p>
           </UserInfo>
         )}
-        <button onClick={() => this.props.setLanguage('is')}>
-          {' '}
-          <img alt="Icelandic" src={iceFlag} />
-        </button>
-        <button onClick={() => this.props.setLanguage('en')}>
-          {' '}
-          <img alt="English" src={usaFlag} />
-        </button>
+        <FlagWrapper>
+          <button onClick={() => this.props.setLanguage('is')}>
+            {' '}
+            <img alt="Icelandic" src={iceFlag} />
+          </button>
+          <button onClick={() => this.props.setLanguage('en')}>
+            {' '}
+            <img alt="English" src={usaFlag} />
+          </button>
+        </FlagWrapper>
       </HeaderWrapper>
     );
   }

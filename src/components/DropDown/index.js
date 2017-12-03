@@ -8,8 +8,7 @@ import * as ApiActions from '../../components/Actions/actions';
 
 const DropDownWrapper = styled.div`
   position: relative;
-  display: inline-block;
-  .dropbtn {
+  ${'' /* display: inline-block; */} .dropbtn {
     width: 280px;
     height: 36px;
     color: white;
@@ -43,7 +42,9 @@ const DropDownWrapper = styled.div`
     }
   }};
   .bookingButton {
-    width: 90px;
+    width: -webkit-fill-available;
+    display: inline-flex;
+    justify-content: flex-start;
     height: 30px;
     color: white;
     font-size: 16px;

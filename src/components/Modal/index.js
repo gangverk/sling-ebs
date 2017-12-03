@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import timeBlue from '../BookingTable/timeblue.svg';
-import closeX from '../BookingTable/x.png';
+import closeX from './x.png';
 
 const ModalWrapper = styled.div`
   ${props => {
@@ -64,6 +64,8 @@ const ModalHead = styled.div`
     background-color: Transparent;
     margin-left: 39%;
     cursor: pointer;
+    padding: 0;
+    outline: none;
   }
 `;
 
