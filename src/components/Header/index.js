@@ -16,6 +16,7 @@ const HeaderWrapper = styled.header`
   button {
     border: none;
     background-color: Transparent;
+    margin: 37px 1px;
   }
 `;
 
