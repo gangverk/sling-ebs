@@ -28,7 +28,7 @@ const FlagWrapper = styled.div`
 `;
 const LogoHeader = styled.div`
   img {
-    width: 45%;
+    width: 200px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -37,6 +37,7 @@ const LogoHeader = styled.div`
 
 const UserInfo = styled.div`
   margin-right: 160px;
+  display: flex;
   img {
     border-radius: 50%;
     margin-right: 10px;

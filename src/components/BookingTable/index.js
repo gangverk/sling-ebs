@@ -151,6 +151,7 @@ const ModalWrapper = styled.div`
   .textArea {
     width: 278px;
     height: 93px;
+    resize: none;
     border-radius: 2px;
     border: none;
     text-align: initial;
