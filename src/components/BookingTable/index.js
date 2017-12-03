@@ -72,6 +72,18 @@ const DayMenu = styled.table`
     display: inline-block;
     white-space: nowrap;
   }
+  .facebook{
+    border-right: 1px solid #cecfd5;
+    background-color: pink;
+    position: relative;
+    padding: 1px;
+  }
+  .facebook > div{
+    cursor: default;
+    text-align: center;
+    color: #FFFFFF;
+    height: 100%;
+  }
   .unavailable {
     border-right: 1px solid #cecfd5;
     background-color: #0085FF;
@@ -272,6 +284,7 @@ class BookingTable extends Component {
   }
 
   changeShiftsToMoment(shifts) {
+    console.log(this.props);
     const data = [];
     var i;
     for (i = 0; i < shifts.length; i++) {
@@ -285,6 +298,7 @@ class BookingTable extends Component {
             start: startDate.toISOString(),
             id: shifts[i].user.id,
             leave: false,
+            facebookId: shifts[i].summary.includes(this.props.userInfo.id),
           };
           data.push(object);
           startDate = startDate.add(15, 'm');
@@ -311,6 +325,7 @@ class BookingTable extends Component {
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
+    console.log(shifts);
     const timeArray = this.state.allTimes.map(time => {
       const data = {};
       data.time = time.display;
@@ -339,6 +354,18 @@ class BookingTable extends Component {
         }
         return 0;
       });
+      data.facebookId = users.map(user => {
+        for (let k = 0; shifts.length > k; k++) {
+          if (
+            user.id === shifts[k].id &&
+            time.time.slice(0, -8) === shifts[k].start.slice(0, -8) &&
+            shifts[k].facebookId === true
+          ) {
+            return user.id;
+          }
+        }
+        return 0;
+      });
       return data;
     });
     return (
@@ -348,7 +375,13 @@ class BookingTable extends Component {
             <tr key={time.time}>
               <td className="TimeEdit">{time.time}</td>
               {users.map(user => {
-                if (time.unavailable.includes(user.id)) {
+                if (time.facebookId.includes(user.id)) {
+                  return (
+                    <td key={user.id} className="facebook">
+                      <div>{this.props.locale.booked}</div>
+                    </td>
+                  );
+                } else if (time.unavailable.includes(user.id)) {
                   return (
                     <td key={user.id} className="unavailable">
                       <div>{this.props.locale.booked}</div>

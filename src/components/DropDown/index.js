@@ -61,11 +61,14 @@ const DropDownWrapper = styled.div`
 class DropDown extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
-    range: PropTypes.shape({
-      map: PropTypes.func,
-    }).isRequired,
+    range: PropTypes.arrayOf(
+      PropTypes.shape({
+        map: PropTypes.func,
+      })
+    ).isRequired,
     buttonText: PropTypes.string.isRequired,
   };
+
   constructor(props) {
     super(props);
     this.state = {

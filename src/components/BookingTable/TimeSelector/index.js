@@ -112,7 +112,6 @@ export default class TimeSelector extends Component {
   }
 
   render() {
-    console.log(this.props, ' her er time selector ');
     return (
       <div>
         <div>
