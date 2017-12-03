@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import usaFlag from './usaflag.png';
 import iceFlag from './iceflag.png';
+import ebsLogo from './logo.png';
 
 import * as LocaleActions from '../../redux/locale/actions';
 
@@ -12,35 +13,40 @@ const HeaderWrapper = styled.header`
   padding: 7px;
   background-color: #0085ff;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const FlagWrapper = styled.div`
-  background-color: pink;
-  display: flex;
-  justify-content: flex-end;
+  margin-right: 64px;
+
   button {
     border: none;
     background-color: Transparent;
-    margin: 37px 1px;
     outline: none;
+  }
+`;
+const LogoHeader = styled.div`
+  img {
+    width: 45%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 `;
 
 const UserInfo = styled.div`
-  position: relative;
-  background-color: red;
-  height: 100%;
-  display: flex;
+  margin-right: 160px;
   img {
     border-radius: 50%;
     margin-right: 10px;
+    width: 20%;
   }
   p {
     color: white;
     display: inline-block;
     white-space: nowrap;
+    font-family: 'Trebuchet MS';
   }
 `;
 
@@ -58,6 +64,9 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
+        <LogoHeader>
+          <img alt="logo of the website" src={ebsLogo} />
+        </LogoHeader>
         {this.props.userData != null && (
           <UserInfo>
             <img alt="/" src={this.props.userData.picture} />
