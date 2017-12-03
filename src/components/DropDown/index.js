@@ -64,12 +64,12 @@ class DropDown extends Component {
     range: PropTypes.shape({
       map: PropTypes.func,
     }).isRequired,
+    buttonText: PropTypes.string.isRequired,
   };
   constructor(props) {
     super(props);
     this.state = {
       menuHidden: true,
-      buttonText: 'Time',
     };
   }
 
@@ -83,13 +83,13 @@ class DropDown extends Component {
               menuHidden: !this.state.menuHidden,
             })}
         >
-          {this.state.buttonText}
+          {this.props.buttonText}
         </button>
         <div className="dropdown-content">
           {this.props.range.map(item => {
             if (item.available === false) {
               return null;
-            } else
+            } else {
               return (
                 <button
                   className="bookingButton"
@@ -105,6 +105,7 @@ class DropDown extends Component {
                   {item.display}
                 </button>
               );
+            }
           })}
         </div>
       </DropDownWrapper>

@@ -20,21 +20,27 @@ export default class TimeSelector extends Component {
     timeArray: [],
     shifts: [],
     range: [],
+    rangeForEndTime: [],
   };
   constructor(props) {
     super(props);
     this.state = {
       range: [],
+      rangeForEndTime: [],
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.userId !== this.props.userId) {
-      this.setState({ range: this.range(nextProps.shifts, nextProps.userId) });
+      this.setState(
+        { range: this.range(nextProps.shifts, nextProps.userId) },
+        () => {
+          this.rangeForEndTime(this.state.range, this.props.startDefult);
+        }
+      );
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {}
   range(shifts, id) {
     let userShifts = shifts.filter(shift => shift.user.id === id);
     const range = this.props.timeArray.map(time => {
@@ -60,6 +66,27 @@ export default class TimeSelector extends Component {
     return range;
   }
 
+  rangeForEndTime(rangeOld, date) {
+    let bool = true;
+    const rangeNew = rangeOld.filter(time => moment(time.time).isAfter(date));
+
+    const range = rangeNew.map(time => {
+      if (time.available && bool === true) {
+        return { ...time, range };
+      } else if (!time.available && bool === true) {
+        bool = false;
+        return {
+          time: time.time,
+          display: time.display,
+          available: true,
+        };
+      } else {
+        return { available: false };
+      }
+    });
+    this.setState({ rangeForEndTime: range });
+  }
+
   validateDate() {
     if (this.state.endTime === '') {
       return;
@@ -83,7 +110,9 @@ export default class TimeSelector extends Component {
       this.setState({ valid: true });
     }
   }
+
   render() {
+    console.log(this.props, ' her er time selector ');
     return (
       <div>
         <div>
@@ -92,8 +121,10 @@ export default class TimeSelector extends Component {
           {this.props.timeArray.length > 0 && (
             <DropDown
               range={this.state.range}
+              buttonText={this.props.startDefult.slice(11, -8)}
               onChange={date => {
                 this.props.startOnChange(date);
+                this.rangeForEndTime(this.state.range, date);
               }}
             />
           )}
@@ -106,7 +137,12 @@ export default class TimeSelector extends Component {
           <img alt="Red clock icon" src={timeRed} />
           {this.props.timeArray.length > 0 && (
             <DropDown
-              range={this.state.range}
+              range={this.state.rangeForEndTime}
+              buttonText={
+                this.props.endTime === 'Time'
+                  ? 'Time'
+                  : this.props.endTime.slice(11, -8)
+              }
               onChange={date => this.props.endOnChange(date)}
             />
           )}

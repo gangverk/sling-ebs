@@ -9,13 +9,9 @@ import moment from 'moment';
 import * as ApiActions from '../../components/Actions/actions';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
-import DropDown from '../../components/DropDown';
 import EmployeesMenu from '../../components/EmployeesMenu';
-import timeBlue from './timeblue.svg';
-import timeRed from './timered.svg';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
-import notValid from './notValid.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -190,7 +186,7 @@ class BookingTable extends Component {
       bookTimeText: '',
       range: [],
       startTime: '',
-      endTime: '',
+      endTime: 'Time',
       valid: true,
       showUser: false,
       selectedUserId: {},
@@ -254,7 +250,8 @@ class BookingTable extends Component {
       this.dateToString(this.props.dateMain),
       bookTimeText,
       startTime,
-      endTime
+      endTime,
+      this.props.userInfo.id
     );
     this.setState({ showModal: false });
   }
@@ -265,6 +262,8 @@ class BookingTable extends Component {
       userName: userName,
       userId: userId,
       showModal: true,
+      startTime: timeStamp,
+      endTime: 'Time',
     });
   }
 
@@ -399,7 +398,7 @@ class BookingTable extends Component {
   }
 
   validateDate() {
-    if (this.state.endTime === '') {
+    if (this.state.endTime === '' || this.state.endTime === 'Time') {
       return;
     }
     let startHour = this.state.startTime.slice(11, -11);
@@ -502,6 +501,8 @@ class BookingTable extends Component {
               timeArray={this.state.allTimes}
               userId={this.state.userId}
               shifts={this.props.allShifts}
+              startDefult={this.state.startTime}
+              endTime={this.state.endTime}
               startOnChange={date => {
                 this.setState({ startTime: date }, () => {
                   this.validateDate();

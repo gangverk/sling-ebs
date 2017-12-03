@@ -106,7 +106,10 @@ class Api extends Component {
           onClickNextDay={() => this.nextDay()}
           onClickPrevDay={() => this.prevDay()}
         />
-        <BookingTable dateMain={this.state.date} />
+        <BookingTable
+          dateMain={this.state.date}
+          userInfo={this.props.userInfo}
+        />
         {this.state.showModal3 === true && (
           <DayPickerWrapper>
             <DayPickerSingleDateController

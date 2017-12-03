@@ -132,10 +132,11 @@ export const postShift = (
   fetchDate,
   bookTimeText,
   startTime,
-  endTime
+  endTime,
+  userFacebookId
 ) => {
   return dispatch => {
-    const summary = `${bookTimeText}`;
+    const summary = `${bookTimeText}\nFacebookId dotn edid -> ${userFacebookId}`;
     return dispatch({
       [CALL_API]: {
         types: [
