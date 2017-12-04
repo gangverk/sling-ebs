@@ -40,6 +40,7 @@ class Api extends Component {
     ),
     userInfo: PropTypes.shape({}).isRequired,
     postShift: PropTypes.func.isRequired,
+    fetchAllUserInfo: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataUsers: [],
@@ -63,6 +64,7 @@ class Api extends Component {
 
   componentWillMount() {
     this.props.fetchUsers();
+    this.props.fetchAllUserInfo();
   }
   //nota til að stoppa scroll þegar daypicker er í gangi
   componentDidUpdate(prevProps, prevState) {
@@ -86,7 +88,7 @@ class Api extends Component {
   DayPickerSingleDateController_onOutsideClick() {
     this.setState({ showModal3: false });
   }
-  // Hér að lita reitinn eða eitthvað ?
+
   clickDay(bla) {
     const newDate = bla.clone();
     this.setState({
@@ -99,11 +101,16 @@ class Api extends Component {
     return (
       <div>
         <BookingTableHeader
+          date={this.state.date}
+          prevDay={this.state.date.isAfter(moment())}
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
           onClickPrevDay={() => this.prevDay()}
         />
-        <BookingTable dateMain={this.state.date} />
+        <BookingTable
+          dateMain={this.state.date}
+          userInfo={this.props.userInfo}
+        />
         {this.state.showModal3 === true && (
           <DayPickerWrapper>
             <DayPickerSingleDateController

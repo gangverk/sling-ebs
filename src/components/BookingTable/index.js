@@ -7,13 +7,11 @@ import ReactLoading from 'react-loading';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
+import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
-import DropDown from '../../components/DropDown';
-import timeBlue from './timeblue.svg';
-import timeRed from './timered.svg';
+import EmployeesMenu from '../../components/EmployeesMenu';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
-import notValid from './notValid.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
@@ -73,6 +71,18 @@ const DayMenu = styled.table`
   p {
     display: inline-block;
     white-space: nowrap;
+  }
+  .facebook{
+    border-right: 1px solid #cecfd5;
+    background-color: pink;
+    position: relative;
+    padding: 1px;
+  }
+  .facebook > div{
+    cursor: default;
+    text-align: center;
+    color: #FFFFFF;
+    height: 100%;
   }
   .unavailable {
     border-right: 1px solid #cecfd5;
@@ -140,6 +150,7 @@ class BookingTable extends Component {
       end: PropTypes.string,
       note: PropTypes.string,
       optional: PropTypes.string,
+      employee: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -160,7 +171,9 @@ class BookingTable extends Component {
       })
     ),
     fetchUserShift: PropTypes.func.isRequired,
-    userInfo: PropTypes.shape({}).isRequired,
+    userInfo: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
     postShift: PropTypes.func.isRequired,
     fetchAllShifts: PropTypes.func.isRequired,
     allShifts: PropTypes.arrayOf(PropTypes.shape({})),
@@ -187,8 +200,12 @@ class BookingTable extends Component {
       bookTimeText: '',
       range: [],
       startTime: '',
-      endTime: '',
+      endTime: 'Time',
       valid: true,
+      showUser: false,
+      selectedUserId: {},
+      timeArray: [],
+      allTimes: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -196,12 +213,31 @@ class BookingTable extends Component {
   componentWillMount() {
     this.props.fetchAllShifts(this.dateToString(this.props.dateMain));
     this.rangeForDropDown(this.props.dateMain);
+    this.constructAllTimesArray(this.props.dateMain);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.dateMain._d !== this.props.dateMain._d) {
       this.props.fetchAllShifts(this.dateToString(nextProps.dateMain));
+      this.constructAllTimesArray(nextProps.dateMain);
     }
+  }
+
+  constructAllTimesArray(dateMain) {
+    // Construct new all times array that is stored in the state
+    dateMain.millisecond(0);
+    dateMain.second(0);
+    dateMain.minute(0);
+    dateMain.hour(8);
+    const newAllTimes = [];
+    for (let i = 8; i <= 44; i++) {
+      const newTime = { time: dateMain.toISOString() };
+      let display = dateMain.toISOString().slice(11, -8);
+      dateMain.add(15, 'm');
+      newTime.display = display;
+      newAllTimes.push(newTime);
+    }
+    this.setState({ allTimes: newAllTimes });
   }
 
   dateToString(selectedDate) {
@@ -228,7 +264,8 @@ class BookingTable extends Component {
       this.dateToString(this.props.dateMain),
       bookTimeText,
       startTime,
-      endTime
+      endTime,
+      this.props.userInfo.id
     );
     this.setState({ showModal: false });
   }
@@ -239,6 +276,8 @@ class BookingTable extends Component {
       userName: userName,
       userId: userId,
       showModal: true,
+      startTime: timeStamp,
+      endTime: 'Time',
     });
   }
 
@@ -260,6 +299,7 @@ class BookingTable extends Component {
             start: startDate.toISOString(),
             id: shifts[i].user.id,
             leave: false,
+            facebookId: shifts[i].summary.includes(this.props.userInfo.id),
           };
           data.push(object);
           startDate = startDate.add(15, 'm');
@@ -284,21 +324,9 @@ class BookingTable extends Component {
   }
 
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
-  renderTableBody(shifts, users, dateMain) {
+  renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
-    dateMain.millisecond(0);
-    dateMain.second(0);
-    dateMain.minute(0);
-    dateMain.hour(8);
-    const time = [];
-    for (let i = 8; i <= 44; i++) {
-      const newTime = { time: dateMain.toISOString() };
-      let display = dateMain.toISOString().slice(11, -8);
-      dateMain.add(15, 'm');
-      newTime.display = display;
-      time.push(newTime);
-    }
-    const timeArray = time.map(time => {
+    const timeArray = this.state.allTimes.map(time => {
       const data = {};
       data.time = time.display;
       data.timeStamp = time.time;
@@ -326,6 +354,18 @@ class BookingTable extends Component {
         }
         return 0;
       });
+      data.facebookId = users.map(user => {
+        for (let k = 0; shifts.length > k; k++) {
+          if (
+            user.id === shifts[k].id &&
+            time.time.slice(0, -8) === shifts[k].start.slice(0, -8) &&
+            shifts[k].facebookId === true
+          ) {
+            return user.id;
+          }
+        }
+        return 0;
+      });
       return data;
     });
     return (
@@ -335,7 +375,13 @@ class BookingTable extends Component {
             <tr key={time.time}>
               <td className="TimeEdit">{time.time}</td>
               {users.map(user => {
-                if (time.unavailable.includes(user.id)) {
+                if (time.facebookId.includes(user.id)) {
+                  return (
+                    <td key={user.id} className="facebook">
+                      <div>{this.props.locale.booked}</div>
+                    </td>
+                  );
+                } else if (time.unavailable.includes(user.id)) {
                   return (
                     <td key={user.id} className="unavailable">
                       <div>{this.props.locale.booked}</div>
@@ -385,7 +431,7 @@ class BookingTable extends Component {
   }
 
   validateDate() {
-    if (this.state.endTime === '') {
+    if (this.state.endTime === '' || this.state.endTime === 'Time') {
       return;
     }
     let startHour = this.state.startTime.slice(11, -11);
@@ -408,20 +454,36 @@ class BookingTable extends Component {
     }
   }
 
+  nextAvailableDay() {}
+
   render() {
     return (
       <div>
+        <button onClick={() => this.nextAvailableDay()}>Next time</button>
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
         <DayMenuDiv>
+          {this.state.showUser === true && (
+            <EmployeesMenu
+              userId={this.state.selectedUserId}
+              close={() => this.setState({ showUser: false })}
+            />
+          )}
           <DayMenu>
             <thead>
               <tr>
                 <th className="TimeEdit">{this.props.locale.time}</th>
                 {this.props.dataUsers.map(user => {
                   return (
-                    <th key={'tableHead' + user.id}>
+                    <th
+                      onClick={() =>
+                        this.setState({
+                          selectedUserId: user.id,
+                          showUser: true,
+                        })}
+                      key={'tableHead' + user.id}
+                    >
                       <img alt="avatar" src={user.avatar} />
                       <p>{user.name}</p>
                     </th>
@@ -437,11 +499,7 @@ class BookingTable extends Component {
                 className="loadingSpinner"
               />
             ) : (
-              this.renderTableBody(
-                this.props.allShifts,
-                this.props.dataUsers,
-                this.props.dateMain
-              )
+              this.renderTableBody(this.props.allShifts, this.props.dataUsers)
             )}
           </DayMenu>
         </DayMenuDiv>
@@ -460,40 +518,35 @@ class BookingTable extends Component {
               this.state.startTime,
               this.state.endTime
             )}
-          onSubmit2={() => this.setState({ showModal: false })}
+          onSubmit2={() => {
+            this.setState({
+              showModal: false,
+            });
+          }}
         >
           <div>
             <div>
-              {this.props.locale.start}
-              <img alt="Blue clock icon" src={timeBlue} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => {
-                    this.setState({ startTime: date }, () => {
-                      this.validateDate();
-                    });
-                  }}
-                />
-              )}
-              {this.state.valid === false && (
-                <img alt="NotValidIcon" src={notValid} />
-              )}
+              {this.props.locale.employee} {this.state.userName}
             </div>
-            <div>
-              {this.props.locale.end}
-              <img alt="Red clock icon" src={timeRed} />
-              {this.state.range.length > 0 && (
-                <DropDown
-                  range={this.state.range}
-                  onChange={date => {
-                    this.setState({ endTime: date }, () => {
-                      this.validateDate();
-                    });
-                  }}
-                />
-              )}
-            </div>
+            <TimeSelector
+              startText={this.props.locale.start}
+              endText={this.props.locale.end}
+              timeArray={this.state.allTimes}
+              userId={this.state.userId}
+              shifts={this.props.allShifts}
+              startDefult={this.state.startTime}
+              endTime={this.state.endTime}
+              startOnChange={date => {
+                this.setState({ startTime: date }, () => {
+                  this.validateDate();
+                });
+              }}
+              endOnChange={date => {
+                this.setState({ endTime: date }, () => {
+                  this.validateDate();
+                });
+              }}
+            />
             <div>
               {this.props.locale.note}
               <img alt="Grey note icon" src={noteGray} />

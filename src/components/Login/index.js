@@ -124,7 +124,12 @@ class Login extends Component {
   }
   onFbCallback(data) {
     if (data) {
-      this.props.setUserData(data.name, data.email, data.picture.data.url);
+      this.props.setUserData(
+        data.name,
+        data.email,
+        data.picture.data.url,
+        data.id
+      );
     }
   }
 

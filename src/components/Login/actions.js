@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export const setUserData = (name, email, picture) => {
+export const setUserData = (name, email, picture, id) => {
   return dispatch => {
     dispatch({
       type: actionTypes.FACEBOOK_DATA,
@@ -8,6 +8,7 @@ export const setUserData = (name, email, picture) => {
         name,
         email,
         picture,
+        id,
       },
     });
   };

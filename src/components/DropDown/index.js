@@ -61,17 +61,21 @@ const DropDownWrapper = styled.div`
 class DropDown extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
-    range: PropTypes.shape({
-      map: PropTypes.func,
-    }).isRequired,
+    range: PropTypes.arrayOf(
+      PropTypes.shape({
+        map: PropTypes.func,
+      })
+    ).isRequired,
+    buttonText: PropTypes.string.isRequired,
   };
+
   constructor(props) {
     super(props);
     this.state = {
       menuHidden: true,
-      buttonText: 'Time',
     };
   }
+
   render() {
     return (
       <DropDownWrapper className="dropdown" menuHidden={this.state.menuHidden}>
@@ -82,25 +86,29 @@ class DropDown extends Component {
               menuHidden: !this.state.menuHidden,
             })}
         >
-          {this.state.buttonText}
+          {this.props.buttonText}
         </button>
         <div className="dropdown-content">
           {this.props.range.map(item => {
-            return (
-              <button
-                className="bookingButton"
-                key={item.time}
-                onClick={() => {
-                  this.setState({
-                    menuHidden: !this.state.menuHidden,
-                    buttonText: item.display,
-                  });
-                  this.props.onChange(item.time);
-                }}
-              >
-                {item.display}
-              </button>
-            );
+            if (item.available === false) {
+              return null;
+            } else {
+              return (
+                <button
+                  className="bookingButton"
+                  key={item.time}
+                  onClick={() => {
+                    this.setState({
+                      menuHidden: !this.state.menuHidden,
+                      buttonText: item.display,
+                    });
+                    this.props.onChange(item.time);
+                  }}
+                >
+                  {item.display}
+                </button>
+              );
+            }
           })}
         </div>
       </DropDownWrapper>

@@ -58,6 +58,21 @@ export const fetchUsers = () => {
   };
 };
 
+export const fetchAllUserInfo = () => {
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.FETCH_ALL_USER_INFO,
+        actionTypes.FETCH_ALL_USER_INFO_SUCCESS,
+        actionTypes.FETCH_ALL_USER_INFO_FAILURE,
+      ],
+      endpoint: `${process.env.REACT_APP_API}${'users/concise'}`,
+      method: 'GET',
+      headers: { authorization: `${Cookie.get('auth')}` },
+    },
+  };
+};
+
 export const fetchSessionData = () => ({
   [CALL_API]: {
     types: [
@@ -117,10 +132,11 @@ export const postShift = (
   fetchDate,
   bookTimeText,
   startTime,
-  endTime
+  endTime,
+  userFacebookId
 ) => {
   return dispatch => {
-    const summary = `${bookTimeText}`;
+    const summary = `${bookTimeText}\nFacebookId dotn edid -> ${userFacebookId}`;
     return dispatch({
       [CALL_API]: {
         types: [

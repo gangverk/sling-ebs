@@ -5,6 +5,8 @@ const initialState = {
   dataSession: null,
   dataAutentication: null,
   dataUsers: [],
+  dataAllUsers: [],
+  fetchingAllInfo: false,
   allShifts: [],
   loadingShifts: false,
   errorLoadingShifts: '',
@@ -40,6 +42,22 @@ export default (state = initialState, action) => {
     case actionTypes.FETCH_USERS_FAILURE:
       return {
         ...state,
+      };
+    case actionTypes.FETCH_ALL_USER_INFO:
+      return {
+        ...state,
+        fetchingAllInfo: true,
+      };
+    case actionTypes.FETCH_ALL_USER_INFO_SUCCESS:
+      return {
+        ...state,
+        dataAllUsers: action.payload.users,
+        fetchingAllInfo: false,
+      };
+    case actionTypes.FETCH_ALL_USER_INFO_FAILURE:
+      return {
+        ...state,
+        fetchingAllInfo: false,
       };
     case actionTypes.FETCH_SESSION:
       return {
