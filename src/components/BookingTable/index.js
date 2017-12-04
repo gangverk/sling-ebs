@@ -171,7 +171,9 @@ class BookingTable extends Component {
       })
     ),
     fetchUserShift: PropTypes.func.isRequired,
-    userInfo: PropTypes.shape({}).isRequired,
+    userInfo: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
     postShift: PropTypes.func.isRequired,
     fetchAllShifts: PropTypes.func.isRequired,
     allShifts: PropTypes.arrayOf(PropTypes.shape({})),
@@ -284,7 +286,6 @@ class BookingTable extends Component {
   }
 
   changeShiftsToMoment(shifts) {
-    console.log(this.props);
     const data = [];
     var i;
     for (i = 0; i < shifts.length; i++) {
@@ -325,7 +326,6 @@ class BookingTable extends Component {
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
-    console.log(shifts);
     const timeArray = this.state.allTimes.map(time => {
       const data = {};
       data.time = time.display;

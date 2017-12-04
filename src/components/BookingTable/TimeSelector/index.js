@@ -13,8 +13,10 @@ export default class TimeSelector extends Component {
     timeArray: PropTypes.arrayOf(PropTypes.shape({})),
     startOnChange: PropTypes.func.isRequired,
     endOnChange: PropTypes.func.isRequired,
-    userId: PropTypes.string.isRequired,
+    userId: PropTypes.number.isRequired,
     shifts: PropTypes.arrayOf(PropTypes.shape({})),
+    startDefult: PropTypes.string.isRequired,
+    endTime: PropTypes.string.isRequired,
   };
   static defaultProps = {
     timeArray: [],
