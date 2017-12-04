@@ -299,7 +299,8 @@ class BookingTable extends Component {
             start: startDate.toISOString(),
             id: shifts[i].user.id,
             leave: false,
-            facebookId: shifts[i].summary.includes(this.props.userInfo.id),
+            facebookBool: shifts[i].summary.includes(this.props.userInfo.id),
+            shiftId: shifts[i].id,
           };
           data.push(object);
           startDate = startDate.add(15, 'm');
@@ -326,6 +327,7 @@ class BookingTable extends Component {
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
+    console.log(shifts, 'hér eru shifts');
     const timeArray = this.state.allTimes.map(time => {
       const data = {};
       data.time = time.display;
@@ -354,20 +356,33 @@ class BookingTable extends Component {
         }
         return 0;
       });
-      data.facebookId = users.map(user => {
+      data.facebookBool = users.map(user => {
         for (let k = 0; shifts.length > k; k++) {
           if (
             user.id === shifts[k].id &&
             time.time.slice(0, -8) === shifts[k].start.slice(0, -8) &&
-            shifts[k].facebookId === true
+            shifts[k].facebookBool === true
           ) {
             return user.id;
           }
         }
         return 0;
       });
+      data.shiftId = users.map(user => {
+        for (let l = 0; shifts.length > l; l++) {
+          if (
+            user.id === shifts[l].id &&
+            time.time.slice(0, -8) === shifts[l].start.slice(0, -8) &&
+            shifts[l].facebookBool === true
+          ) {
+            return shifts[l].shiftId;
+          }
+        }
+        return 0;
+      });
       return data;
     });
+    console.log(timeArray, 'hér er shift id');
     return (
       <tbody>
         {timeArray.map(time => {
@@ -375,9 +390,16 @@ class BookingTable extends Component {
             <tr key={time.time}>
               <td className="TimeEdit">{time.time}</td>
               {users.map(user => {
-                if (time.facebookId.includes(user.id)) {
+                if (time.facebookBool.includes(user.id)) {
+                  let index = time.facebookBool.indexOf(user.id);
                   return (
-                    <td key={user.id} className="facebook">
+                    <td
+                      key={user.id}
+                      className="facebook"
+                      onClick={() => {
+                        console.log(time.shiftId[index]);
+                      }}
+                    >
                       <div>{this.props.locale.booked}</div>
                     </td>
                   );
@@ -454,6 +476,7 @@ class BookingTable extends Component {
     }
   }
 
+  // show modal with next available time for today
   nextAvailableDay() {}
 
   render() {

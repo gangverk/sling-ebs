@@ -42,7 +42,9 @@ class BookingTableHeader extends Component {
     onClickNextDay: PropTypes.func.isRequired,
     onClickPrevDay: PropTypes.func.isRequired,
     prevDay: PropTypes.bool.isRequired,
-    date: PropTypes.string.isRequired,
+    date: PropTypes.shape({
+      format: PropTypes.func,
+    }).isRequired,
   };
 
   static defaultProps = {

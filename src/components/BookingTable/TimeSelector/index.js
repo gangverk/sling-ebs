@@ -23,6 +23,7 @@ export default class TimeSelector extends Component {
     shifts: [],
     range: [],
     rangeForEndTime: [],
+    userId: '',
   };
   constructor(props) {
     super(props);
