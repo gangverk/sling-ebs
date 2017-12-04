@@ -11,7 +11,7 @@ import Header from '../../components/Header';
 
 const MainWrapper = styled.div`background-color: #f4f5f9;`;
 
-// const LinkWrapper = styled.div`
+// xxconst LinkWrapper = styled.div`
 //   a {
 //     margin-left: 10px;
 //   }
