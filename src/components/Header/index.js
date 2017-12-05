@@ -5,31 +5,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as LocaleActions from '../../redux/locale/actions';
-
 const HeaderWrapper = styled.header`
-  display: flex;
-  justify-content: center;
   padding: 7px;
-  background-color: #0085ff;
-  button {
-    height: 25px;
-    border-radius: 2px;
-    font-family: Arial;
-    color: #ffffff;
-    font-size: 15px;
-    background: #3498db;
-    padding: 2px 2px 2px 2px;
-    text-decoration: none;
-  }
+
+  background-color: red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
-// const ImageLogo = styled.div`
-//   background-image: url(${props => props.src});
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: contain;
-//   width: 200px;
-//   height: 50px;
-// `;
+
 const UserInfo = styled.div`
   position: relative;
   height: 100%;

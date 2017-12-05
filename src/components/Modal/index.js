@@ -27,6 +27,7 @@ const ModalWrapper = styled.div`
 `;
 const ModalContainer = styled.div`
   background-color: #fefefe;
+
   margin: auto;
   border: 1px solid #888;
   width: 50%;
