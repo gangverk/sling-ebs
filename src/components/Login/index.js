@@ -29,40 +29,40 @@ const PageWrapperLeft = styled.div`
 `;
 
 const PageWrapperRight = styled.div`
-  height: 100%;
+  height: 100vh;
   width: 40%;
   float: left;
-  @media screen and (max-width: 750px) {
-    display: flex;
-    justify-content: center;
-    float: none;
-    width: 100%;
-  }
-`;
-
-const LoginWrapper = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #0085ff;
-  height: 604px;
   .buttonStyle {
     background-color: #0085ff;
-    width: 250px;
+    width: 252px;
     border: none;
     margin: 5px;
     padding: 5px;
     color: white;
   }
+  button {
+    width: 252px;
+  }
+
   .or {
     color: #a4a4a4;
   }
   h1 {
     font-family: Trebuchet MS;
     color: #0085ff;
-    margin-right: 115px;
+    margin-right: 120px;
+  }
+  @media screen and (max-width: 750px) {
+    display: flex;
+    justify-content: center;
+    float: none;
+    width: 100%;
   }
 `;
 
@@ -100,19 +100,17 @@ class Login extends Component {
         </PageWrapperLeft>
 
         <PageWrapperRight>
-          <LoginWrapper>
-            <h1>Sling EBS</h1>
-            <FacebookLogin
-              size="medium"
-              appId={process.env.REACT_APP_FACEBOOK}
-              autoLoad={false}
-              fields="name,email,picture"
-              callback={response => this.onFbCallback(response)}
-            />
+          <h1>Sling EBS</h1>
+          <FacebookLogin
+            size="medium"
+            appId={process.env.REACT_APP_FACEBOOK}
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={response => this.onFbCallback(response)}
+          />
 
-            <p className="or">OR</p>
-            <button className="buttonStyle">Skip this step</button>
-          </LoginWrapper>
+          <p className="or">OR</p>
+          <button className="buttonStyle">Skip this step</button>
         </PageWrapperRight>
       </div>
     );

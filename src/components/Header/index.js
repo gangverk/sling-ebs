@@ -7,8 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as LocaleActions from '../../redux/locale/actions';
 const HeaderWrapper = styled.header`
   padding: 7px;
-
-  background-color: red;
+  background-color: #0085ff;
   display: flex;
   justify-content: space-between;
   align-items: center;
