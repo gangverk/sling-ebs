@@ -28,6 +28,7 @@ const PageWrapperLeft = styled.div`
   }
 `;
 const PageWrapperRight = styled.div`
+  background-color: red;
   height: 100%;
   width: 40%;
   float: left;
