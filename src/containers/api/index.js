@@ -80,8 +80,8 @@ class Api extends Component {
     this.setState({ date: newDate });
   }
   prevDay() {
-    const newDate = this.state.date.clone();
-    newDate.subtract(1, 'days');
+    let newDate = this.state.date.clone();
+    newDate = newDate.subtract(1, 'days');
     this.setState({ date: newDate });
   }
 
@@ -102,7 +102,11 @@ class Api extends Component {
       <div>
         <BookingTableHeader
           date={this.state.date}
-          prevDay={this.state.date.isAfter(moment())}
+          prevDay={this.state.date.isAfter(
+            moment()
+              .startOf()
+              .add(1, 'd')
+          )}
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
           onClickPrevDay={() => this.prevDay()}

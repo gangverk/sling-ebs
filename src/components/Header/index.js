@@ -22,14 +22,14 @@ const HeaderWrapper = styled.header`
     text-decoration: none;
   }
 `;
-const ImageLogo = styled.div`
-  background-image: url(${props => props.src});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 200px;
-  height: 50px;
-`;
+// const ImageLogo = styled.div`
+//   background-image: url(${props => props.src});
+//   background-repeat: no-repeat;
+//   background-position: center;
+//   background-size: contain;
+//   width: 200px;
+//   height: 50px;
+// `;
 const UserInfo = styled.div`
   position: relative;
   height: 100%;

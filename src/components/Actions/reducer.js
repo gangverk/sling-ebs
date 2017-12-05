@@ -121,6 +121,18 @@ export default (state = initialState, action) => {
         postingShift: false,
         errorPostingShift: 'Failed to post shift for selected time',
       };
+    case actionTypes.CANCEL_SHIFT:
+      return {
+        ...state,
+      };
+    case actionTypes.CANCEL_SHIFT_SUCCESS:
+      return {
+        ...state,
+      };
+    case actionTypes.CANCEL_SHIFT_FAILURE:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -151,6 +151,7 @@ class BookingTable extends Component {
       note: PropTypes.string,
       optional: PropTypes.string,
       employee: PropTypes.string,
+      cancel: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -179,6 +180,7 @@ class BookingTable extends Component {
     allShifts: PropTypes.arrayOf(PropTypes.shape({})),
     errorLoadingShifts: PropTypes.string,
     loadingShifts: PropTypes.bool.isRequired,
+    cancelShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
@@ -193,6 +195,7 @@ class BookingTable extends Component {
     this.state = {
       tableBody: [],
       showModal: false,
+      showModal2: false,
       name: '',
       timeStamp: '',
       userId: '',
@@ -206,6 +209,9 @@ class BookingTable extends Component {
       selectedUserId: {},
       timeArray: [],
       allTimes: [],
+      shiftId: '',
+      startOfShift: '',
+      endOfShift: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -270,15 +276,35 @@ class BookingTable extends Component {
     this.setState({ showModal: false });
   }
 
-  modalInfo(timeStamp, userName, userId) {
+  modalInfo(timeStamp, userName, userId, shiftId) {
     this.setState({
       timeStamp: timeStamp,
       userName: userName,
       userId: userId,
-      showModal: true,
       startTime: timeStamp,
       endTime: 'Time',
+      shiftId: shiftId,
     });
+  }
+
+  shiftEndStart(shiftId) {
+    if (this.props.allShifts.length > 0) {
+      this.props.allShifts.map(shift => {
+        if (shift.id === shiftId) {
+          this.setState(
+            {
+              startOfShift: shift.dtstart.slice(11, -9),
+              endOfShift: shift.dtend.slice(11, -9),
+            },
+            this.setState({
+              showModal2: true,
+            })
+          );
+          return 0;
+        }
+        return 0;
+      });
+    }
   }
 
   handleChange(event) {
@@ -299,7 +325,8 @@ class BookingTable extends Component {
             start: startDate.toISOString(),
             id: shifts[i].user.id,
             leave: false,
-            facebookId: shifts[i].summary.includes(this.props.userInfo.id),
+            facebookBool: shifts[i].summary.includes(this.props.userInfo.id),
+            shiftId: shifts[i].id,
           };
           data.push(object);
           startDate = startDate.add(15, 'm');
@@ -354,14 +381,26 @@ class BookingTable extends Component {
         }
         return 0;
       });
-      data.facebookId = users.map(user => {
+      data.facebookBool = users.map(user => {
         for (let k = 0; shifts.length > k; k++) {
           if (
             user.id === shifts[k].id &&
             time.time.slice(0, -8) === shifts[k].start.slice(0, -8) &&
-            shifts[k].facebookId === true
+            shifts[k].facebookBool === true
           ) {
             return user.id;
+          }
+        }
+        return 0;
+      });
+      data.shiftId = users.map(user => {
+        for (let l = 0; shifts.length > l; l++) {
+          if (
+            user.id === shifts[l].id &&
+            time.time.slice(0, -8) === shifts[l].start.slice(0, -8) &&
+            shifts[l].facebookBool === true
+          ) {
+            return shifts[l].shiftId;
           }
         }
         return 0;
@@ -375,10 +414,24 @@ class BookingTable extends Component {
             <tr key={time.time}>
               <td className="TimeEdit">{time.time}</td>
               {users.map(user => {
-                if (time.facebookId.includes(user.id)) {
+                if (time.facebookBool.includes(user.id)) {
+                  let index = time.facebookBool.indexOf(user.id);
+                  let shiftId = time.shiftId[index];
                   return (
-                    <td key={user.id} className="facebook">
-                      <div>{this.props.locale.booked}</div>
+                    <td
+                      key={user.id}
+                      className="facebook"
+                      onClick={() => {
+                        this.modalInfo(
+                          time.timeStamp,
+                          user.name,
+                          user.id,
+                          shiftId
+                        );
+                        this.shiftEndStart(shiftId);
+                      }}
+                    >
+                      <div>{this.props.locale.cancel}</div>
                     </td>
                   );
                 } else if (time.unavailable.includes(user.id)) {
@@ -454,6 +507,7 @@ class BookingTable extends Component {
     }
   }
 
+  // show modal with next available time for today
   nextAvailableDay() {}
 
   render() {
@@ -557,6 +611,34 @@ class BookingTable extends Component {
                 onChange={this.handleChange}
               />
             </div>
+          </div>
+        </Modal>
+        <Modal
+          visable={this.state.showModal2}
+          modalHeader="Cancel Booking"
+          modalFooterSubmit={this.props.locale.cancel}
+          modalFooterSubmit2={this.props.locale.closeModal}
+          valid={this.state.valid}
+          onSubmit={() => {
+            this.props.cancelShift(
+              this.state.shiftId,
+              this.dateToString(this.props.dateMain)
+            );
+            this.setState({ showModal2: false });
+          }}
+          onSubmit2={() => {
+            this.setState({
+              showModal2: false,
+            });
+          }}
+        >
+          <div>
+            <div>
+              {this.props.locale.employee} {this.state.userName}
+            </div>
+            <button> {this.state.startOfShift}</button>
+            <button> {this.state.endOfShift} </button>
+            <div />
           </div>
         </Modal>
       </div>
