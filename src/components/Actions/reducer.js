@@ -122,14 +122,17 @@ export default (state = initialState, action) => {
         errorPostingShift: 'Failed to post shift for selected time',
       };
     case actionTypes.CANCEL_SHIFT:
+      console.log('hér er kallað í cancel shift', action);
       return {
         ...state,
       };
     case actionTypes.CANCEL_SHIFT_SUCCESS:
+      console.log('cancel shift succes', action);
       return {
         ...state,
       };
     case actionTypes.CANCEL_SHIFT_FAILURE:
+      console.log('cancel shift fail', action);
       return {
         ...state,
       };
