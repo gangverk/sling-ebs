@@ -327,7 +327,6 @@ class BookingTable extends Component {
   //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
-    console.log(shifts, 'hér eru shifts');
     const timeArray = this.state.allTimes.map(time => {
       const data = {};
       data.time = time.display;
@@ -382,7 +381,6 @@ class BookingTable extends Component {
       });
       return data;
     });
-    console.log(timeArray, 'hér er shift id');
     return (
       <tbody>
         {timeArray.map(time => {
