@@ -7,7 +7,6 @@ import ReactLoading from 'react-loading';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
-import DropDown from '../DropDown';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
 import EmployeesMenu from '../../components/EmployeesMenu';
@@ -181,6 +180,7 @@ class BookingTable extends Component {
     allShifts: PropTypes.arrayOf(PropTypes.shape({})),
     errorLoadingShifts: PropTypes.string,
     loadingShifts: PropTypes.bool.isRequired,
+    cancelShift: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataAutentication: [],
@@ -288,8 +288,6 @@ class BookingTable extends Component {
   }
 
   shiftEndStart(shiftId) {
-    console.log(' her er kallað í startendofshit');
-    console.log(this.props.allShifts);
     if (this.props.allShifts.length > 0) {
       this.props.allShifts.map(shift => {
         if (shift.id === shiftId) {
@@ -307,7 +305,6 @@ class BookingTable extends Component {
         return 0;
       });
     }
-    console.log(this.state);
   }
 
   handleChange(event) {
