@@ -7,6 +7,7 @@ import ReactLoading from 'react-loading';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
+import DropDown from '../DropDown';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
 import EmployeesMenu from '../../components/EmployeesMenu';
@@ -151,6 +152,7 @@ class BookingTable extends Component {
       note: PropTypes.string,
       optional: PropTypes.string,
       employee: PropTypes.string,
+      cancel: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -193,6 +195,7 @@ class BookingTable extends Component {
     this.state = {
       tableBody: [],
       showModal: false,
+      showModal2: false,
       name: '',
       timeStamp: '',
       userId: '',
@@ -206,6 +209,9 @@ class BookingTable extends Component {
       selectedUserId: {},
       timeArray: [],
       allTimes: [],
+      shiftId: '',
+      startOfShift: '',
+      endOfShift: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -270,15 +276,38 @@ class BookingTable extends Component {
     this.setState({ showModal: false });
   }
 
-  modalInfo(timeStamp, userName, userId) {
+  modalInfo(timeStamp, userName, userId, shiftId) {
     this.setState({
       timeStamp: timeStamp,
       userName: userName,
       userId: userId,
-      showModal: true,
       startTime: timeStamp,
       endTime: 'Time',
+      shiftId: shiftId,
     });
+  }
+
+  shiftEndStart(shiftId) {
+    console.log(' her er kallað í startendofshit');
+    console.log(this.props.allShifts);
+    if (this.props.allShifts.length > 0) {
+      this.props.allShifts.map(shift => {
+        if (shift.id === shiftId) {
+          this.setState(
+            {
+              startOfShift: shift.dtstart.slice(11, -9),
+              endOfShift: shift.dtend.slice(11, -9),
+            },
+            this.setState({
+              showModal2: true,
+            })
+          );
+          return 0;
+        }
+        return 0;
+      });
+    }
+    console.log(this.state);
   }
 
   handleChange(event) {
@@ -390,15 +419,22 @@ class BookingTable extends Component {
               {users.map(user => {
                 if (time.facebookBool.includes(user.id)) {
                   let index = time.facebookBool.indexOf(user.id);
+                  let shiftId = time.shiftId[index];
                   return (
                     <td
                       key={user.id}
                       className="facebook"
                       onClick={() => {
-                        console.log(time.shiftId[index]);
+                        this.modalInfo(
+                          time.timeStamp,
+                          user.name,
+                          user.id,
+                          shiftId
+                        );
+                        this.shiftEndStart(shiftId);
                       }}
                     >
-                      <div>{this.props.locale.booked}</div>
+                      <div>{this.props.locale.cancel}</div>
                     </td>
                   );
                 } else if (time.unavailable.includes(user.id)) {
@@ -578,6 +614,34 @@ class BookingTable extends Component {
                 onChange={this.handleChange}
               />
             </div>
+          </div>
+        </Modal>
+        <Modal
+          visable={this.state.showModal2}
+          modalHeader="Cancel Booking"
+          modalFooterSubmit={this.props.locale.cancel}
+          modalFooterSubmit2={this.props.locale.closeModal}
+          valid={this.state.valid}
+          onSubmit={() => {
+            this.props.cancelShift(
+              this.state.shiftId,
+              this.dateToString(this.props.dateMain)
+            );
+            this.setState({ showModal2: false });
+          }}
+          onSubmit2={() => {
+            this.setState({
+              showModal2: false,
+            });
+          }}
+        >
+          <div>
+            <div>
+              {this.props.locale.employee} {this.state.userName}
+            </div>
+            <button> {this.state.startOfShift}</button>
+            <button> {this.state.endOfShift} </button>
+            <div />
           </div>
         </Modal>
       </div>
