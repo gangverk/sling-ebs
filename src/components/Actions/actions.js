@@ -182,22 +182,6 @@ export const postShift = (
 };
 
 // //https://test-api.sling.is/v1/shifts/242010
-// // shiftId er = 242010
-// export const cancelShift = shiftId => ({
-//   [CALL_API]: {
-//     types: [
-//       actionTypes.CANCEL_SHIFT,
-//       actionTypes.CANCEL_SHIFT_SUCCESS,
-//       actionTypes.CANCEL_SHIFT_FAILURE,
-//     ],
-//     endpoint: `${process.env.REACT_APP_API + 'shifts/' + shiftId}`,
-//     method: 'DELETE',
-//     headers: {
-//       authorization: `${Cookie.get('auth')}`,
-//     },
-//   },
-// });
-
 export const cancelShift = (shiftId, fetchDate) => {
   return dispatch => {
     return dispatch({
