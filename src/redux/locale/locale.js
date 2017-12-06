@@ -12,7 +12,7 @@ const strings = new LocalizedStrings({
     end: 'End',
     note: 'Note',
     optional: 'Optional',
-    bookTime: 'Book Time',
+    bookTime: 'Book',
     closeModal: 'Close Modal',
     employee: 'Employee',
     cancel: 'Cancel',

@@ -13,6 +13,7 @@ const HeaderContainer = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  font-family: 'Trebuchet MS';
   button {
     background-color: #ffffff;
     border: 2px solid #dadada;
