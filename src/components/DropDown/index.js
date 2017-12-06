@@ -20,6 +20,7 @@ const DropDownWrapper = styled.div`
     outline: none !important;
     color: #5f7183;
     text-align: initial;
+    background-color: white;
   }
   ${props => {
     if (props.menuHidden) {
@@ -43,7 +44,9 @@ const DropDownWrapper = styled.div`
     }
   }};
   .bookingButton {
-    width: 90px;
+    width: -webkit-fill-available;
+    display: inline-flex;
+    justify-content: flex-start;
     height: 30px;
     color: white;
     font-size: 16px;
