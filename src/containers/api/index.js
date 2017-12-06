@@ -41,9 +41,11 @@ class Api extends Component {
     userInfo: PropTypes.shape({}).isRequired,
     postShift: PropTypes.func.isRequired,
     fetchAllUserInfo: PropTypes.func.isRequired,
+    fetchSessionData: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataUsers: [],
+    sessionData: [],
   };
 
   constructor(props) {
@@ -59,12 +61,14 @@ class Api extends Component {
       keepOpenOnDateSelect: true,
       focused: true,
       range: [],
+      sessionData: [],
     };
   }
 
   componentWillMount() {
     this.props.fetchUsers();
     this.props.fetchAllUserInfo();
+    this.props.fetchSessionData();
   }
   //nota til að stoppa scroll þegar daypicker er í gangi
   componentDidUpdate(prevProps, prevState) {
@@ -102,11 +106,7 @@ class Api extends Component {
       <div>
         <BookingTableHeader
           date={this.state.date}
-          prevDay={this.state.date.isAfter(
-            moment()
-              .startOf()
-              .add(1, 'd')
-          )}
+          prevDay={this.state.date.set('hour', 0).isAfter(moment())}
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
           onClickPrevDay={() => this.prevDay()}
@@ -139,6 +139,7 @@ class Api extends Component {
 }
 const mapStateToProps = state => ({
   userInfo: state.UserReducer,
+  sessionData: state.ApiReducer.dataSession,
 });
 
 const mapDispatchToProps = dispatch =>
