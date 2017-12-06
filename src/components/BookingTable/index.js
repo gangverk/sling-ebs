@@ -138,6 +138,42 @@ const ErrorMessage = styled.p`
   text-align: center;
 `;
 
+const ModalWrapper = styled.div`
+  .startTime {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+  }
+  .endTime {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  .textInput {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  .textArea {
+    width: 278px;
+    height: 93px;
+    resize: none;
+    border-radius: 2px;
+    border: none;
+    text-align: initial;
+  }
+  .employeeName {
+    padding-top: 10px;
+    padding-left: 161px;
+  }
+`;
+
+const TimeSelectorWrapper = styled.div``;
+
 class BookingTable extends Component {
   static propTypes = {
     locale: PropTypes.shape({
@@ -513,7 +549,7 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.nextAvailableDay()}>Next time</button>
+        {/* <button onClick={() => this.nextAvailableDay()}>Next time</button> */}
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
         )}
@@ -557,62 +593,69 @@ class BookingTable extends Component {
             )}
           </DayMenu>
         </DayMenuDiv>
-        <Modal
-          visable={this.state.showModal}
-          modalHeader="Booking Modal"
-          modalFooterSubmit={this.props.locale.bookTime}
-          modalFooterSubmit2={this.props.locale.closeModal}
-          valid={this.state.valid}
-          onSubmit={() =>
-            this.bookTime(
-              this.state.timeStamp,
-              this.state.userName,
-              this.state.userId,
-              this.state.bookTimeText,
-              this.state.startTime,
-              this.state.endTime
-            )}
-          onSubmit2={() => {
-            this.setState({
-              showModal: false,
-            });
-          }}
-        >
-          <div>
+
+        <ModalWrapper>
+          <Modal
+            visable={this.state.showModal}
+            modalHeader="Book Appointment"
+            modalFooterSubmit={this.props.locale.bookTime}
+            modalFooterSubmit2={this.props.locale.closeModal}
+            valid={this.state.valid}
+            onSubmit={() =>
+              this.bookTime(
+                this.state.timeStamp,
+                this.state.userName,
+                this.state.userId,
+                this.state.bookTimeText,
+                this.state.startTime,
+                this.state.endTime
+              )}
+            onSubmit2={() => {
+              this.setState({
+                showModal: false,
+              });
+            }}
+          >
             <div>
-              {this.props.locale.employee} {this.state.userName}
+              <div className="employeeName">
+                {this.props.locale.employee}: {this.state.userName}
+              </div>
+              <TimeSelectorWrapper>
+                <TimeSelector
+                  startText={this.props.locale.start}
+                  endText={this.props.locale.end}
+                  timeArray={this.state.allTimes}
+                  userId={this.state.userId}
+                  shifts={this.props.allShifts}
+                  startDefult={this.state.startTime}
+                  endTime={this.state.endTime}
+                  startOnChange={date => {
+                    this.setState({ startTime: date }, () => {
+                      this.validateDate();
+                    });
+                  }}
+                  endOnChange={date => {
+                    this.setState({ endTime: date }, () => {
+                      this.validateDate();
+                    });
+                  }}
+                />
+              </TimeSelectorWrapper>
+              <div className="textInput">
+                {this.props.locale.note}
+                <img alt="Grey note icon" src={noteGray} />
+                <textarea
+                  className="textArea"
+                  type="text"
+                  placeholder={this.props.locale.optional}
+                  value={this.state.bookTimeText}
+                  onChange={this.handleChange}
+                />
+              </div>
             </div>
-            <TimeSelector
-              startText={this.props.locale.start}
-              endText={this.props.locale.end}
-              timeArray={this.state.allTimes}
-              userId={this.state.userId}
-              shifts={this.props.allShifts}
-              startDefult={this.state.startTime}
-              endTime={this.state.endTime}
-              startOnChange={date => {
-                this.setState({ startTime: date }, () => {
-                  this.validateDate();
-                });
-              }}
-              endOnChange={date => {
-                this.setState({ endTime: date }, () => {
-                  this.validateDate();
-                });
-              }}
-            />
-            <div>
-              {this.props.locale.note}
-              <img alt="Grey note icon" src={noteGray} />
-              <input
-                type="text"
-                placeholder={this.props.locale.optional}
-                value={this.state.bookTimeText}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-        </Modal>
+          </Modal>
+        </ModalWrapper>
+
         <Modal
           visable={this.state.showModal2}
           modalHeader="Cancel Booking"

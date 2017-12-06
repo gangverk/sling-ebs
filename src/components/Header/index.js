@@ -3,14 +3,37 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import usaFlag from './usaflag.png';
+import iceFlag from './iceflag.png';
+import ebsLogo from './logo.png';
 import * as LocaleActions from '../../redux/locale/actions';
+
 const HeaderWrapper = styled.header`
   padding: 7px;
   background-color: #0085ff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Trebuchet MS';
+`;
+
+const FlagWrapper = styled.div`
+  margin-right: 64px;
+
+  button {
+    border: none;
+    background-color: Transparent;
+    outline: none;
+  }
+`;
+
+const LogoHeader = styled.div`
+  img {
+    width: 200px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -42,14 +65,24 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
+        <LogoHeader>
+          <img alt="EBS logo" src={ebsLogo} />
+        </LogoHeader>
         {this.props.userData != null && (
           <UserInfo>
             <img alt="/" src={this.props.userData.picture} />
             <p>{this.props.userData.name}</p>
           </UserInfo>
         )}
-        <button onClick={() => this.props.setLanguage('is')}>is</button>
-        <button onClick={() => this.props.setLanguage('en')}>en</button>
+        <FlagWrapper>
+          <button onClick={() => this.props.setLanguage('is')}>
+            <img alt="Icelandic" src={iceFlag} />
+          </button>
+
+          <button onClick={() => this.props.setLanguage('en')}>
+            <img alt="English" src={usaFlag} />
+          </button>
+        </FlagWrapper>
       </HeaderWrapper>
     );
   }

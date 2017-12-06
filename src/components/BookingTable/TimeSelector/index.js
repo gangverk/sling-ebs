@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import styled from 'styled-components';
 
 import DropDown from '../../DropDown';
 import timeBlue from '../timeblue.svg';
 import timeRed from '../timered.svg';
 
+const DropDownWrapper = styled.div`
+  .startTime {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+  }
+  .endTime {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+`;
 export default class TimeSelector extends Component {
   static propTypes = {
     startText: PropTypes.string.isRequired,
@@ -117,38 +133,40 @@ export default class TimeSelector extends Component {
   render() {
     return (
       <div>
-        <div>
-          {this.props.startText}
-          <img alt="Blue clock icon" src={timeBlue} />
-          {this.props.timeArray.length > 0 && (
-            <DropDown
-              range={this.state.range}
-              buttonText={this.props.startDefult.slice(11, -8)}
-              onChange={date => {
-                this.props.startOnChange(date);
-                this.rangeForEndTime(this.state.range, date);
-              }}
-            />
-          )}
-          {/* {this.state.valid === false && (
+        <DropDownWrapper>
+          <div className="startTime">
+            {this.props.startText}
+            <img alt="Blue clock icon" src={timeBlue} />
+            {this.props.timeArray.length > 0 && (
+              <DropDown
+                range={this.state.range}
+                buttonText={this.props.startDefult.slice(11, -8)}
+                onChange={date => {
+                  this.props.startOnChange(date);
+                  this.rangeForEndTime(this.state.range, date);
+                }}
+              />
+            )}
+            {/* {this.state.valid === false && (
             <img alt="NotValidIcon" src={notValid} />
           )} */}
-        </div>
-        <div>
-          {this.props.endText}
-          <img alt="Red clock icon" src={timeRed} />
-          {this.props.timeArray.length > 0 && (
-            <DropDown
-              range={this.state.rangeForEndTime}
-              buttonText={
-                this.props.endTime === 'Time'
-                  ? 'Time'
-                  : this.props.endTime.slice(11, -8)
-              }
-              onChange={date => this.props.endOnChange(date)}
-            />
-          )}
-        </div>
+          </div>
+          <div className="endTime">
+            {this.props.endText}
+            <img alt="Red clock icon" src={timeRed} />
+            {this.props.timeArray.length > 0 && (
+              <DropDown
+                range={this.state.rangeForEndTime}
+                buttonText={
+                  this.props.endTime === 'Time'
+                    ? 'Time'
+                    : this.props.endTime.slice(11, -8)
+                }
+                onChange={date => this.props.endOnChange(date)}
+              />
+            )}
+          </div>
+        </DropDownWrapper>
       </div>
     );
   }
