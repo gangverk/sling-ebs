@@ -169,6 +169,7 @@ const ModalWrapper = styled.div`
   .employeeName {
     padding-top: 10px;
     padding-left: 161px;
+    font-weight: bold;
   }
 `;
 
