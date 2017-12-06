@@ -102,11 +102,7 @@ class Api extends Component {
       <div>
         <BookingTableHeader
           date={this.state.date}
-          prevDay={this.state.date.isAfter(
-            moment()
-              .startOf()
-              .add(1, 'd')
-          )}
+          prevDay={this.state.date.set('hour', 0).isAfter(moment())}
           onClickPickDate={() => this.setState({ showModal3: true })}
           onClickNextDay={() => this.nextDay()}
           onClickPrevDay={() => this.prevDay()}
