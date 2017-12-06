@@ -199,7 +199,6 @@ export const postShift = (
 // });
 
 export const cancelShift = (shiftId, fetchDate) => {
-  console.log(shiftId, fetchDate);
   return dispatch => {
     return dispatch({
       [CALL_API]: {
@@ -209,11 +208,6 @@ export const cancelShift = (shiftId, fetchDate) => {
             type: actionTypes.CANCEL_SHIFT_SUCCESS,
             payload: (action, state, res) => {
               dispatch(fetchAllShifts(fetchDate));
-              const contentType = res.headers.get('Content-Type');
-              if (contentType && ~contentType.indexOf('json')) {
-                // Just making sure res.json() does not raise an error
-                return res.json();
-              }
             },
           },
           actionTypes.CANCEL_SHIFT_FAILURE,
@@ -222,7 +216,6 @@ export const cancelShift = (shiftId, fetchDate) => {
         method: 'DELETE',
         headers: {
           authorization: `${Cookie.get('auth')}`,
-          'Content-Type': 'application/json',
         },
       },
     });
