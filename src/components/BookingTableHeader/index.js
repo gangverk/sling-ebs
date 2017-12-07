@@ -15,7 +15,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   font-family: 'Trebuchet MS';
   button {
-    background-color: pink;
+    background-color: #ffffff;
     border: 2px solid #dadada;
     border-radius: 2px;
     color: #d2d2d2;
