@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+import calender from './calender.svg';
+
 const HeaderContainer = styled.div`
   height: 100%;
   width: 90%;
@@ -18,11 +20,16 @@ const HeaderContainer = styled.div`
     background-color: #ffffff;
     border: 2px solid #dadada;
     border-radius: 2px;
-    color: #d2d2d2;
+    color: #0085ff;
     padding: 10px 25px;
     font-size: 12px;
     margin: 10px;
     cursor: pointer;
+    img {
+      width: 15px;
+      height: 15px;
+      margin-right: 4px;
+    }
   }
   .date {
     font-weight: 700;
@@ -59,9 +66,9 @@ class BookingTableHeader extends Component {
             {this.props.locale.prevDay}
           </button>
         )}
-        <div className="date">{this.props.date.format('DD.MMM.YYYY')}</div>
         <button onClick={() => this.props.onClickPickDate()}>
-          {this.props.locale.pickDate}
+          <img alt="calender" src={calender} />
+          {this.props.date.format('DD.MMM.YYYY')}{' '}
         </button>
         <button onClick={() => this.props.onClickNextDay()}>
           {this.props.locale.nextDay}
