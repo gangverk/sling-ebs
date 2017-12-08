@@ -34,6 +34,11 @@ const LogoHeader = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
   }
+  button {
+    border: none;
+    background-color: Transparent;
+    outline: none;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -66,7 +71,10 @@ class Header extends Component {
     return (
       <HeaderWrapper>
         <LogoHeader>
-          <img alt="EBS logo" src={ebsLogo} />
+          <button onClick={() => window.location.reload(0)}>
+            <img alt="EBS logo" src={ebsLogo} />
+          </button>
+          {/* <input type="button" value="Reload Page" onClick="reload"> */}
         </LogoHeader>
         {this.props.userData != null && (
           <UserInfo>
