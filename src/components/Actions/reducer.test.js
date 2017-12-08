@@ -101,3 +101,39 @@ it('should set posting error', () => {
     'Failed to post shift for selected time'
   );
 });
+
+it('should set canceling state', () => {
+  const initialState = {
+    cancelingShift: false,
+    errorCancelingShift: '',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.CANCEL_SHIFT,
+  });
+  expect(testState.cancelingShift).toBeTruthy();
+  expect(testState.errorCancelingShift).toEqual('');
+});
+
+it('should cancel shift and set cancelingShift to false', () => {
+  const initialState = {
+    cancelingShift: true,
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.CANCEL_SHIFT_SUCCESS,
+  });
+  expect(testState.cancelingShift).toBeFalsy();
+});
+
+it('should set cancel error', () => {
+  const initialState = {
+    cancelingShift: true,
+    errorCancelingShift: '',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.CANCEL_SHIFT_FAILURE,
+  });
+  expect(testState.cancelingShift).toBeFalsy();
+  expect(testState.errorCancelingShift).toEqual(
+    'Failed to cancel the selected shift'
+  );
+});

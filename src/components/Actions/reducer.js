@@ -12,6 +12,8 @@ const initialState = {
   errorLoadingShifts: '',
   postingShift: false,
   errorPostingShift: '',
+  cancelingShift: false,
+  errorCancelingShift: '',
 };
 
 export default (state = initialState, action) => {
@@ -124,14 +126,19 @@ export default (state = initialState, action) => {
     case actionTypes.CANCEL_SHIFT:
       return {
         ...state,
+        cancelingShift: true,
+        errorCancelingShift: '',
       };
     case actionTypes.CANCEL_SHIFT_SUCCESS:
       return {
         ...state,
+        cancelingShift: false,
       };
     case actionTypes.CANCEL_SHIFT_FAILURE:
       return {
         ...state,
+        cancelingShift: false,
+        errorCancelingShift: 'Failed to cancel the selected shift',
       };
     default:
       return state;
