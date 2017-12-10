@@ -3,7 +3,7 @@ import LocalizedStrings from 'react-localization';
 const strings = new LocalizedStrings({
   en: {
     time: 'Time',
-    prevDay: 'Prev Day',
+    prevDay: 'Previous Day',
     nextDay: 'Next Day',
     pickDate: 'Pick date',
     booked: 'Booked',
