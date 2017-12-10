@@ -14,18 +14,17 @@ const HeaderContainer = styled.div`
   margin: auto;
   margin-top: 20px;
   display: flex;
-  justify-content: space-between;
   font-family: 'Trebuchet MS';
   button{
     background-color: #ffffff;
     border: 2px solid #dadada;
-    border-radius: 2px;
+    border-radius: 10px;
     color: #0085ff;
     padding: 10px 25px;
-    font-size: 12px;
-    margin: 10px;
+    font-size: 13px;
+    margin: 13px;
     cursor: pointer;
-    background-color: red;
+    font-family: 'Trebuchet MS';
     img {
       width: 15px;
       height: 15px;
@@ -39,44 +38,23 @@ const HeaderContainer = styled.div`
     margin: auto 10px auto 10px;
     letter-spacing: 2px;
   }
-`;
 
-const previousWrapper = styled.div`
-  margin-top: 20px;
-  background-color: #ffffff;
-  border: 2px solid #dadada;
-  border-radius: 2px;
-  color: #0085ff;
-  padding: 10px 25px;
-  font-size: 12px;
-  margin: 10px;
-  cursor: pointer;
-`;
+  .previousButton{
+    background-color: blue;
+    display: flex;
+    justify-content: flex-start;
+  }
 
-const calendarPicker = styled.div`
-  margin-top: 20px;
-  background-color: #ffffff;
-  border: 2px solid #dadada;
-  border-radius: 2px;
-  color: #0085ff;
-  padding: 10px 25px;
-  font-size: 12px;
-  margin: 10px;
-  cursor: pointer;
-  background-color: yellow;
-`;
+  .calendarButton{
+    background-color: green;
+    display: flex;
+    justify-content: center;
+  }
 
-const nextWrapper = styled.div`
-  margin-top: 20px;
-  background-color: #ffffff;
-  border: 2px solid #dadada;
-  border-radius: 2px;
-  color: #0085ff;
-  padding: 10px 25px;
-  font-size: 12px;
-  margin: 10px;
-  cursor: pointer;
-  background-color: blue;
+  .nextButton{
+    background-color: black;
+    justify-content: flex-end;
+  }
 `;
 
 class BookingTableHeader extends Component {
@@ -101,24 +79,27 @@ class BookingTableHeader extends Component {
   render() {
     return (
       <HeaderContainer>
-        <previousWrapper>
-          {this.props.prevDay === true && (
-            <button onClick={() => this.props.onClickPrevDay()}>
-              {this.props.locale.prevDay}
-            </button>
-          )}
-        </previousWrapper>
-        <calendarPicker>
-          <button onClick={() => this.props.onClickPickDate()}>
-            <img alt="calender" src={calender} />
-            {this.props.date.format('DD.MMM.YYYY')}{' '}
+        {this.props.prevDay === true && (
+          <button
+            className="previousButton"
+            onClick={() => this.props.onClickPrevDay()}
+          >
+            {this.props.locale.prevDay}
           </button>
-        </calendarPicker>
-        <nextWrapper>
-          <button onClick={() => this.props.onClickNextDay()}>
-            {this.props.locale.nextDay}
-          </button>
-        </nextWrapper>
+        )}
+        <button
+          className="calendarButton"
+          onClick={() => this.props.onClickPickDate()}
+        >
+          <img alt="calender" src={calender} />
+          {this.props.date.format('DD.MMM.YYYY')}{' '}
+        </button>
+        <button
+          className="nextButton"
+          onClick={() => this.props.onClickNextDay()}
+        >
+          {this.props.locale.nextDay}
+        </button>
       </HeaderContainer>
     );
   }
