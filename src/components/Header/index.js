@@ -24,6 +24,7 @@ const FlagWrapper = styled.div`
     border: none;
     background-color: Transparent;
     outline: none;
+    cursor: pointer;
   }
 `;
 
@@ -33,6 +34,7 @@ const LogoHeader = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    cursor: pointer;
   }
 `;
 
@@ -66,7 +68,11 @@ class Header extends Component {
     return (
       <HeaderWrapper>
         <LogoHeader>
-          <img alt="EBS logo" src={ebsLogo} />
+          <img
+            alt="EBS logo"
+            src={ebsLogo}
+            onClick={() => window.location.reload(0)}
+          />
         </LogoHeader>
         {this.props.userData != null && (
           <UserInfo>
