@@ -2,8 +2,12 @@ import Cookie from 'js-cookie';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-  dataSession: null,
+  fetchingAuthentication: false,
+  errorFetchingAuthentication: '',
   dataAutentication: null,
+  fetchingUsers: false,
+  errorFetchingUsers: '',
+  dataSession: null,
   dataUsers: [],
   dataAllUsers: [],
   fetchingAllInfo: false,
@@ -21,29 +25,39 @@ export default (state = initialState, action) => {
     case actionTypes.FETCH_AUTENTICATION:
       return {
         ...state,
+        fetchingAuthentication: true,
+        errorFetchingAuthentication: '',
       };
     case actionTypes.FETCH_AUTENTICATION_SUCCESS:
       Cookie.set('auth', action.payload.token);
       return {
         ...state,
         dataAutentication: action.payload,
+        fetchingAuthentication: false,
       };
     case actionTypes.FETCH_AUTENTICATION_FAILURE:
       return {
         ...state,
+        fetchingAuthentication: false,
+        errorFetchingAuthentication: 'Error fetching authentication',
       };
     case actionTypes.FETCH_USERS:
       return {
         ...state,
+        fetchingUsers: true,
+        errorFetchingUsers: '',
       };
     case actionTypes.FETCH_USERS_SUCCESS:
       return {
         ...state,
         dataUsers: action.payload,
+        fetchingUsers: false,
       };
     case actionTypes.FETCH_USERS_FAILURE:
       return {
         ...state,
+        fetchingUsers: false,
+        errorFetchingUsers: 'Error fetching users',
       };
     case actionTypes.FETCH_ALL_USER_INFO:
       return {

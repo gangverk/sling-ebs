@@ -10,6 +10,77 @@ it('should return default state if no state and action is provided', () => {
   expect(initalState.errorPostingShift).toEqual('');
 });
 
+it('Should set fetching Auth', () => {
+  const initialState = {
+    fetchingAuthentication: false,
+    errorFetchingAuthentication: 'hello',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.FETCH_AUTENTICATION,
+  });
+  expect(testState.fetchingAuthentication).toBeTruthy();
+  expect(testState.errorFetchingAuthentication).toEqual('');
+});
+
+// Skil ekki hvað token say what
+// it('Should fetch authentication', () => {
+//   const initialState = {
+//     fetchingAuthentication: true,
+//   };
+//   const testState = Reducer(initialState, {
+//     type: actionTypes.FETCH_AUTENTICATION_SUCCESS,
+//   });
+//   expect(testState.fetchingAuthentication).toBeFalsy();
+// });
+
+it('Should set errorFetchingAuthentication', () => {
+  const initialState = {
+    fetchingAuthentication: true,
+    errorFetchingAuthentication: '',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.FETCH_AUTENTICATION_FAILURE,
+  });
+  expect(testState.fetchingAuthentication).toBeFalsy();
+  expect(testState.errorFetchingAuthentication).toEqual(
+    'Error fetching authentication'
+  );
+});
+
+it('Should set fetchingusers', () => {
+  const initialState = {
+    fetchingUsers: false,
+    errorFetchingUsers: 'fetchign users',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.FETCH_USERS,
+  });
+  expect(testState.fetchingUsers).toBeTruthy();
+  expect(testState.errorFetchingUsers).toEqual('');
+});
+
+it('Should fetch users', () => {
+  const initialState = {
+    fetchingUsers: true,
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.FETCH_USERS_SUCCESS,
+  });
+  expect(testState.fetchingUsers).toBeFalsy();
+});
+
+it('Should set errorFething users', () => {
+  const initialState = {
+    fetchingUsers: true,
+    errorFetchingUsers: '',
+  };
+  const testState = Reducer(initialState, {
+    type: actionTypes.FETCH_USERS_FAILURE,
+  });
+  expect(testState.fetchingUsers).toBeFalsy();
+  expect(testState.errorFetchingUsers).toEqual('Error fetching users');
+});
+
 it('should set loading state when fetch all shifts i called', () => {
   const initialState = {
     dataSession: null,
