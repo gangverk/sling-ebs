@@ -265,6 +265,13 @@ class BookingTable extends Component {
       this.constructAllTimesArray(nextProps.dateMain);
     }
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }
 
   constructAllTimesArray(dateMain) {
     // Construct new all times array that is stored in the state

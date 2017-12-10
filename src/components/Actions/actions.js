@@ -29,20 +29,6 @@ export const fetchAuthenticationData = () => {
   };
 };
 
-// get(actionTypes, url) {1
-//     return {
-//       [CALL_API]: {
-//         types: [
-//           ...actionTypes
-//         ],
-//         endpoint: `${process.env.REACT_APP_API}${url}`,
-//         method: 'GET',
-//         headers: { authorization: `${Cookie.get('auth')}` },
-//       },
-//     };
-//   };
-// }
-
 export const fetchUsers = () => {
   return {
     [CALL_API]: {
@@ -205,3 +191,17 @@ export const cancelShift = (shiftId, fetchDate) => {
     });
   };
 };
+
+// get(actionTypes, url) {1
+//     return {
+//       [CALL_API]: {
+//         types: [
+//           ...actionTypes
+//         ],
+//         endpoint: `${process.env.REACT_APP_API}${url}`,
+//         method: 'GET',
+//         headers: { authorization: `${Cookie.get('auth')}` },
+//       },
+//     };
+//   };
+// }
