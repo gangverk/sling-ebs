@@ -3,8 +3,8 @@ import LocalizedStrings from 'react-localization';
 const strings = new LocalizedStrings({
   en: {
     time: 'Time',
-    prevDay: 'Prev Day',
-    nextDay: 'Next Day',
+    prevDay: '<',
+    nextDay: '>',
     pickDate: 'Pick date',
     booked: 'Booked',
     leave: 'Leave',
@@ -19,8 +19,8 @@ const strings = new LocalizedStrings({
   },
   is: {
     time: 'Tími',
-    prevDay: 'Fyrri Dagur',
-    nextDay: 'Næsti Dagur',
+    prevDay: '<',
+    nextDay: '>',
     pickDate: 'Velja  Dag',
     booked: ' Bókað',
     leave: 'Frí',

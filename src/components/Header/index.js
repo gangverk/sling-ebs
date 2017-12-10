@@ -24,6 +24,7 @@ const FlagWrapper = styled.div`
     border: none;
     background-color: Transparent;
     outline: none;
+    cursor: pointer;
   }
 `;
 
@@ -38,6 +39,7 @@ const LogoHeader = styled.div`
     border: none;
     background-color: Transparent;
     outline: none;
+    cursor: pointer;
   }
 `;
 
