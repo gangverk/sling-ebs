@@ -11,11 +11,11 @@ import Header from '../../components/Header';
 
 const MainWrapper = styled.div`background-color: #f4f5f9;`;
 
-// xxconst LinkWrapper = styled.div`
-//   a {
-//     margin-left: 10px;
-//   }
-// `;
+const LinkWrapper = styled.div`
+  a {
+    margin-left: 10px;
+  }
+`;
 
 class Main extends Component {
   static propTypes = {
@@ -27,9 +27,9 @@ class Main extends Component {
     userData: { name: '' },
   };
   render() {
-    if (this.props.userData.name === '') {
-      return <Login />;
-    }
+    // if (this.props.userData.name === '') {
+    //   return <Login />;
+    // }
     return (
       <MainWrapper>
         <main>

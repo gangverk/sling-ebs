@@ -16,7 +16,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   font-family: 'Trebuchet MS';
-  button {
+  button{
     background-color: #ffffff;
     border: 2px solid #dadada;
     border-radius: 2px;
@@ -25,10 +25,12 @@ const HeaderContainer = styled.div`
     font-size: 12px;
     margin: 10px;
     cursor: pointer;
+    background-color: red;
     img {
       width: 15px;
       height: 15px;
       margin-right: 4px;
+      }
     }
   }
   .date {
@@ -37,6 +39,44 @@ const HeaderContainer = styled.div`
     margin: auto 10px auto 10px;
     letter-spacing: 2px;
   }
+`;
+
+const previousWrapper = styled.div`
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: 2px solid #dadada;
+  border-radius: 2px;
+  color: #0085ff;
+  padding: 10px 25px;
+  font-size: 12px;
+  margin: 10px;
+  cursor: pointer;
+`;
+
+const calendarPicker = styled.div`
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: 2px solid #dadada;
+  border-radius: 2px;
+  color: #0085ff;
+  padding: 10px 25px;
+  font-size: 12px;
+  margin: 10px;
+  cursor: pointer;
+  background-color: yellow;
+`;
+
+const nextWrapper = styled.div`
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: 2px solid #dadada;
+  border-radius: 2px;
+  color: #0085ff;
+  padding: 10px 25px;
+  font-size: 12px;
+  margin: 10px;
+  cursor: pointer;
+  background-color: blue;
 `;
 
 class BookingTableHeader extends Component {
@@ -61,18 +101,24 @@ class BookingTableHeader extends Component {
   render() {
     return (
       <HeaderContainer>
-        {this.props.prevDay === true && (
-          <button onClick={() => this.props.onClickPrevDay()}>
-            {this.props.locale.prevDay}
+        <previousWrapper>
+          {this.props.prevDay === true && (
+            <button onClick={() => this.props.onClickPrevDay()}>
+              {this.props.locale.prevDay}
+            </button>
+          )}
+        </previousWrapper>
+        <calendarPicker>
+          <button onClick={() => this.props.onClickPickDate()}>
+            <img alt="calender" src={calender} />
+            {this.props.date.format('DD.MMM.YYYY')}{' '}
           </button>
-        )}
-        <button onClick={() => this.props.onClickPickDate()}>
-          <img alt="calender" src={calender} />
-          {this.props.date.format('DD.MMM.YYYY')}{' '}
-        </button>
-        <button onClick={() => this.props.onClickNextDay()}>
-          {this.props.locale.nextDay}
-        </button>
+        </calendarPicker>
+        <nextWrapper>
+          <button onClick={() => this.props.onClickNextDay()}>
+            {this.props.locale.nextDay}
+          </button>
+        </nextWrapper>
       </HeaderContainer>
     );
   }
