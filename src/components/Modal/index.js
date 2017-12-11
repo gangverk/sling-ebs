@@ -66,7 +66,7 @@ const ModalHead = styled.div`
     background-color: Transparent;
     margin-left: 39%;
     cursor: pointer;
-    padding 0;
+    padding: 0;
     outline: none;
   }
 `;

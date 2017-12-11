@@ -9,27 +9,24 @@ import ebsLogo from './logo.png';
 import * as LocaleActions from '../../redux/locale/actions';
 
 const HeaderWrapper = styled.header`
-  padding: 7px;
+  padding: 3px;
   background-color: #0085ff;
   display: flex;
+  padding-left: 4vw;
+  padding-right: 5vw;
   justify-content: space-between;
   align-items: center;
   font-family: 'Trebuchet MS';
-`;
-
-const FlagWrapper = styled.div`
-  margin-right: 64px;
-
   button {
     border: none;
     background-color: Transparent;
     outline: none;
     cursor: pointer;
+    width: 32px;
+    margin-right: 10px;
+    margin-left: 10px;
   }
-`;
-
-const LogoHeader = styled.div`
-  img {
+  .ebsLogo {
     width: 200px;
     display: flex;
     justify-content: flex-start;
@@ -38,18 +35,32 @@ const LogoHeader = styled.div`
   }
 `;
 
+const FlagWrapper = styled.div`
+  .flags {
+    @media screen and (max-width: 750px) {
+      display: none;
+    }
+  }
+`;
+
 const UserInfo = styled.div`
   position: relative;
   height: 100%;
   display: flex;
-  img {
+  .userPhoto {
     border-radius: 50%;
     margin-right: 10px;
+    @media screen and (max-width: 600px) {
+      position: sticky;
+    }
   }
-  p {
+  .userName {
     color: white;
     display: inline-block;
     white-space: nowrap;
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
   }
 `;
 
@@ -67,25 +78,35 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <LogoHeader>
-          <img
-            alt="EBS logo"
-            src={ebsLogo}
-            onClick={() => window.location.reload(0)}
-          />
-        </LogoHeader>
+        <img
+          className="ebsLogo"
+          alt="EBS logo"
+          src={ebsLogo}
+          onClick={() => window.location.reload(0)}
+        />
+
         {this.props.userData != null && (
           <UserInfo>
-            <img alt="/" src={this.props.userData.picture} />
-            <p>{this.props.userData.name}</p>
+            <img
+              className="userPhoto"
+              alt="User Pic"
+              src={this.props.userData.picture}
+            />
+            <p className="userName">{this.props.userData.name}</p>
           </UserInfo>
         )}
         <FlagWrapper>
-          <button onClick={() => this.props.setLanguage('is')}>
+          <button
+            className="flags"
+            onClick={() => this.props.setLanguage('is')}
+          >
             <img alt="Icelandic" src={iceFlag} />
           </button>
 
-          <button onClick={() => this.props.setLanguage('en')}>
+          <button
+            className="flags"
+            onClick={() => this.props.setLanguage('en')}
+          >
             <img alt="English" src={usaFlag} />
           </button>
         </FlagWrapper>

@@ -28,6 +28,7 @@ export default class BookMenu extends Component {
         margin-top: 6px;
         margin-bottom: 16px;
         resize: vertical;
+        font-family: Trebuchet MS;
       }
       .account-info {
         padding: 20px 20px 0 20px;

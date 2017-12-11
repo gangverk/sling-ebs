@@ -22,6 +22,8 @@ const PageWrapperLeft = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    padding-left: 70px;
+    padding-top: 8px;
   }
   @media screen and (max-width: 750px) {
     display: none;

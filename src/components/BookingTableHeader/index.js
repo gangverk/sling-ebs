@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import calender from './calender.svg';
 
-const HeaderContainer = styled.div`
+const HeaderWrapper = styled.div`
   height: 100%;
   width: 90%;
   border-radius: 4px;
@@ -13,9 +13,14 @@ const HeaderContainer = styled.div`
   box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1);
   margin: auto;
   margin-top: 20px;
-  display: flex;
   font-family: 'Trebuchet MS';
-  button{
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 495px) {
+    justify-content: center;
+  }
+
+  button {
     background-color: #ffffff;
     border: 2px solid #dadada;
     border-radius: 10px;
@@ -25,35 +30,29 @@ const HeaderContainer = styled.div`
     margin: 13px;
     cursor: pointer;
     font-family: 'Trebuchet MS';
+    outline: none;
     img {
       width: 15px;
       height: 15px;
       margin-right: 4px;
-      }
     }
   }
+
   .date {
     font-weight: 700;
     color: #0085ff;
     margin: auto 10px auto 10px;
     letter-spacing: 2px;
   }
-
-  .previousButton{
-    background-color: blue;
-    display: flex;
-    justify-content: flex-start;
+  .nextButton {
+    @media screen and (max-width: 495px) {
+      display: none;
+    }
   }
-
-  .calendarButton{
-    background-color: green;
-    display: flex;
-    justify-content: center;
-  }
-
-  .nextButton{
-    background-color: black;
-    justify-content: flex-end;
+  .previousButton {
+    @media screen and (max-width: 495px) {
+      display: none;
+    }
   }
 `;
 
@@ -78,15 +77,16 @@ class BookingTableHeader extends Component {
   };
   render() {
     return (
-      <HeaderContainer>
-        {this.props.prevDay === true && (
-          <button
-            className="previousButton"
-            onClick={() => this.props.onClickPrevDay()}
-          >
-            {this.props.locale.prevDay}
-          </button>
-        )}
+      <HeaderWrapper>
+        {/* {this.props.prevDay === true && ( */}
+        <button
+          disabled={!this.props.prevDay}
+          className="previousButton"
+          onClick={() => this.props.onClickPrevDay()}
+        >
+          {this.props.locale.prevDay}
+        </button>
+
         <button
           className="calendarButton"
           onClick={() => this.props.onClickPickDate()}
@@ -100,7 +100,7 @@ class BookingTableHeader extends Component {
         >
           {this.props.locale.nextDay}
         </button>
-      </HeaderContainer>
+      </HeaderWrapper>
     );
   }
 }

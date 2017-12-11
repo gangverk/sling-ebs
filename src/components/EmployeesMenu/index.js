@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import * as ApiActions from '../../components/Actions/actions';
 
 const EmployeesWrapper = styled.div`
+  font-family: Trebuchet MS;
+  color: #738190;
   position: relative;
   display: flex;
   justify-content: space-around;
