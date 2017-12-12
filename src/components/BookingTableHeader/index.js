@@ -23,7 +23,7 @@ const HeaderWrapper = styled.div`
   button {
     background-color: #ffffff;
     border: 2px solid #dadada;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #0085ff;
     padding: 10px 25px;
     font-size: 13px;
