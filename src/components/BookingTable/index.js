@@ -20,11 +20,13 @@ const DayMenu = styled.table`
   margin-top: 10px;
   border-collapse: separate;
   border-spacing: 0;
-  width: 95%;
+  width: 90%;
   height: 100%
   color: #4a4a4d;
-  font: 14px/1.4 'Helvetica Neue';
+  font: 14px/1.4 'Trebuchet MS';
   position: relative;
+  table-layout: fixed;
+
   table,
   td,
   th {
@@ -47,6 +49,7 @@ const DayMenu = styled.table`
   th:first-child {
     border-top-left-radius: 5px;
     text-align: left;
+    padding: 30px;
   }
   th:last-child {
     border-top-right-radius: 5px;
@@ -74,11 +77,13 @@ const DayMenu = styled.table`
   }
   .facebook{
     border-right: 1px solid #cecfd5;
-    background-color: pink;
+    background-color: #f88853;
     position: relative;
     padding: 1px;
+    cursor: pointer;
   }
   .facebook > div{
+    cursor: pointer;
     text-align: center;
     color: #FFFFFF;
     height: 100%;
@@ -166,6 +171,7 @@ const ModalWrapper = styled.div`
     border-radius: 2px;
     border: none;
     text-align: initial;
+    font-family: Trebuchet MS;
   }
   .employeeName {
     padding-top: 10px;
@@ -190,6 +196,7 @@ class BookingTable extends Component {
       optional: PropTypes.string,
       employee: PropTypes.string,
       cancel: PropTypes.string,
+      bookAppointment: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -396,7 +403,6 @@ class BookingTable extends Component {
     return data;
   }
 
-  //TODO Fallið fetch all shifts fetchar bara hja þeim sem bjó til vaktirnar i planning mode need to fix!!!
   renderTableBody(shifts, users) {
     shifts = this.changeShiftsToMoment(shifts);
     const timeArray = this.state.allTimes.map(time => {
@@ -689,7 +695,7 @@ class BookingTable extends Component {
         <ModalWrapper>
           <Modal
             visable={this.state.showModal}
-            modalHeader="Book Appointment"
+            modalHeader={this.props.locale.bookAppointment}
             modalFooterSubmit={this.props.locale.bookTime}
             modalFooterSubmit2={this.props.locale.closeModal}
             valid={this.state.valid}
