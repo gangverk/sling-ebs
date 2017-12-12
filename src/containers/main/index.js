@@ -11,12 +11,6 @@ import Header from '../../components/Header';
 
 const MainWrapper = styled.div`background-color: #f4f5f9;`;
 
-// xxconst LinkWrapper = styled.div`
-//   a {
-//     margin-left: 10px;
-//   }
-// `;
-
 class Main extends Component {
   static propTypes = {
     userData: PropTypes.shape({
