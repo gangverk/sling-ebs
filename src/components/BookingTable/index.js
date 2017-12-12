@@ -33,11 +33,13 @@ const DayMenu = styled.table`
     border-bottom: 1px solid #cecfd5;
     border-collapse: collapse;
     padding: 10px 15px;
+    cursor:pointer;
   }
   th,
   td {
     padding: 10px 15px;
     vertical-align: middle;
+
   }
   td{
     cursor: pointer;
@@ -107,6 +109,7 @@ const DayMenu = styled.table`
     background-color: #A9A9A9	;
     position: relative;
     padding: 1px;
+    cursor: default;
   }
   .leave > div{
     cursor: default;
@@ -117,7 +120,7 @@ const DayMenu = styled.table`
   .available:hover {
     position: relative;
     margin: 5px;
-    border 1px solid grey;
+    border: 1px solid grey;
     & div{
       position: absolute;
       background-image: url(${plus});

@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import mountainBackround from './mountain1.png';
 import ebsLogo from './logo.png';
-
 import * as actions from './actions';
 import * as ApiActions from '../Actions/actions';
 
