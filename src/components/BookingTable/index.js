@@ -102,6 +102,7 @@ const DayMenu = styled.table`
     height: 100%;
   }
   .leave {
+    cursor: default;
     border-right: 1px solid #cecfd5;
     background-color: #A9A9A9	;
     position: relative;
@@ -213,6 +214,7 @@ class BookingTable extends Component {
         name: PropTypes.string.isRequired,
         avatar: PropTypes.string.isRequired,
         length: PropTypes.numb,
+        id: PropTypes.numb,
       })
     ),
     fetchUserShift: PropTypes.func.isRequired,
@@ -558,11 +560,93 @@ class BookingTable extends Component {
   }
 
   // show modal with next available time for today
-  nextAvailableDay() {}
-
+  // vantar timestamp userName og userId.
+  // showModal og senda inn í modal info fallið
+  nextAvailableDay() {
+    let allTime = this.state.allTimes;
+    let allShifts = this.props.allShifts;
+    const shiftsMin = [];
+    var i;
+    for (i = 0; i < allShifts.length; i++) {
+      let startDate = allShifts[i].dtstart;
+      let endDate = allShifts[i].dtend;
+      startDate = moment(startDate);
+      endDate = moment(endDate);
+      if (allShifts[i].type !== 'leave') {
+        while (endDate.toISOString() !== startDate.toISOString()) {
+          var object = {
+            start: startDate.toISOString(),
+            id: allShifts[i].user.id,
+            leave: false,
+            facebookBool: allShifts[i].summary.includes(this.props.userInfo.id),
+            shiftId: allShifts[i].id,
+          };
+          shiftsMin.push(object);
+          startDate = startDate.add(15, 'm');
+        }
+      } else {
+        startDate.millisecond(0);
+        startDate.second(0);
+        startDate.minute(0);
+        startDate.hour(8);
+        for (let j = 8; j <= 44; j++) {
+          var object2 = {
+            start: startDate.toISOString(),
+            id: allShifts[i].user.id,
+            leave: true,
+          };
+          shiftsMin.push(object2);
+          startDate = startDate.add(15, 'm');
+        }
+      }
+    }
+    let unavailable = 'unavailable';
+    let leave = 'leave';
+    let timeArray = allTime.map(time => {
+      const data = [];
+      data.push(time.time);
+      this.props.dataUsers.map(user => {
+        let userShifts = shiftsMin.filter(
+          shift => shift.id === user.id && shift.start === time.time
+        );
+        for (let i = 0; i < userShifts.length; i++) {
+          if (
+            time.time === userShifts[i].start &&
+            user.id === userShifts[i].id &&
+            userShifts[i].leave === false
+          ) {
+            return data.push(unavailable);
+          } else if (
+            time.time === userShifts[i].start &&
+            userShifts[i].leave === true
+          ) {
+            return data.push(leave);
+          }
+        }
+        return data.push(0);
+      });
+      return data;
+    });
+    for (let j = 0; j < timeArray.length; j++) {
+      if (timeArray[j].includes(0)) {
+        let index = timeArray[j].indexOf(0);
+        index = index - 1;
+        this.modalInfo(
+          timeArray[j][0],
+          this.props.dataUsers[index].name,
+          this.props.dataUsers[index].id
+        );
+        this.setState({ showModal: true });
+        break;
+      }
+    }
+  }
   render() {
     return (
       <div>
+        <button onClick={() => this.nextAvailableDay()}>
+          next available time
+        </button>
         {/* <button onClick={() => this.nextAvailableDay()}>Next time</button> */}
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
