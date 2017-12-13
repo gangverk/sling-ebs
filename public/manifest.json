@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "EBS",
+  "name": "Sling EBS",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "timeBlue.ico",
       "sizes": "192x192",
       "type": "image/png"
     }

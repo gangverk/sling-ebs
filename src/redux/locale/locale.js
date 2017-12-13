@@ -17,6 +17,9 @@ const strings = new LocalizedStrings({
     employee: 'Employee',
     cancel: 'Cancel',
     bookAppointment: 'Book Appointment',
+    confirm: 'Confirm',
+    cancelAppoint: 'Cancel Appointment',
+    cancelStartTime: 'Cancel appointment booked at',
   },
   is: {
     time: 'Tími',
@@ -34,6 +37,9 @@ const strings = new LocalizedStrings({
     employee: 'Starfsmaður',
     cancel: 'Afbóka',
     bookAppointment: 'Bókaðu Tímann',
+    confirm: 'Staðfesta',
+    cancelAppoint: 'Afbóka tíma',
+    cancelStartTime: 'Afbóka tíma bókaðann klukkan',
   },
 });
 
