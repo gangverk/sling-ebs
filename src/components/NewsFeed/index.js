@@ -73,6 +73,8 @@ class NewsFeed extends Component {
       length: PropTypes.numb,
     }),
     fetchChannelClient: PropTypes.func.isRequired,
+    visable: PropTypes.bool.isRequired,
+    hideNewsFeed: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
