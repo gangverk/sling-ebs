@@ -110,8 +110,8 @@ class Login extends Component {
             callback={response => this.onFbCallback(response)}
           />
 
-          <p className="or">OR</p>
-          <button className="buttonStyle">Skip this step</button>
+          {/* <p className="or">OR</p>
+          <button className="buttonStyle">Skip this step</button> */}
         </PageWrapperRight>
       </div>
     );

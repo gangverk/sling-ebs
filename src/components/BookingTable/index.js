@@ -328,9 +328,10 @@ class BookingTable extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.showModal) {
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
     }
+    // else {
+    //   document.body.style.overflow = 'auto';
+    // }
   }
 
   constructAllTimesArray(dateMain) {
