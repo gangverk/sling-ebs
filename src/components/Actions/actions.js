@@ -192,6 +192,38 @@ export const cancelShift = (shiftId, fetchDate) => {
   };
 };
 
+//https://test-api.sling.is/v1/channels
+export const fetchChannel = () => {
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.FETCH_CHANNEL,
+        actionTypes.FETCH_CHANNEL_SUCCESS,
+        actionTypes.FETCH_CHANNEL_FAILURE,
+      ],
+      endpoint: `${process.env.REACT_APP_API}${'channels'}`,
+      method: 'GET',
+      headers: { authorization: `${Cookie.get('auth')}` },
+    },
+  };
+};
+
+// https://test-api.sling.is/v1/channels/127
+export const fetchChannelClient = channel => {
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.FETCH_CHANNEL_CLIENT,
+        actionTypes.FETCH_CHANNEL_CLIENT_SUCCESS,
+        actionTypes.FETCH_CHANNEL_CLIENT_FAILURE,
+      ],
+      endpoint: `${process.env.REACT_APP_API}${'channels/' + channel}`,
+      method: 'GET',
+      headers: { authorization: `${Cookie.get('auth')}` },
+    },
+  };
+};
+
 // get(actionTypes, url) {1
 //     return {
 //       [CALL_API]: {

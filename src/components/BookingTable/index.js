@@ -7,6 +7,7 @@ import ReactLoading from 'react-loading';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
+import NewsFeed from '../../components/NewsFeed';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
 import EmployeesMenu from '../../components/EmployeesMenu';
@@ -644,6 +645,7 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
+        <NewsFeed />
         <button onClick={() => this.nextAvailableDay()}>
           next available time
         </button>
