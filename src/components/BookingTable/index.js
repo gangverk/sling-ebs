@@ -15,6 +15,37 @@ import plus from './plus.svg';
 
 const DayMenuDiv = styled.div`height: 100%;`;
 
+const NextAppointmentWrapper = styled.div`
+  .nextAppointmentButton {
+    background-color: #ffffff;
+    border: 2px solid #dadada;
+    border-radius: 5px;
+    color: #0085ff;
+    padding: 10px 25px;
+    font-size: 13px;
+    margin-left: 5%;
+    margin-top: 15px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS';
+    outline: none;
+
+    ${'' /* background-color: #0085ff;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    font-family: Trebuchet MS;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 5%; */};
+  }
+`;
+
 const DayMenu = styled.table`
   margin: auto;
   margin-top: 10px;
@@ -181,6 +212,19 @@ const ModalWrapper = styled.div`
     padding-left: 161px;
     font-weight: bold;
   }
+  .cancelEmployeeName {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+  }
+  p {
+    padding-left: 10px;
+  }
+  .cancelTime {
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
 `;
 
 const TimeSelectorWrapper = styled.div``;
@@ -200,6 +244,10 @@ class BookingTable extends Component {
       employee: PropTypes.string,
       cancel: PropTypes.string,
       bookAppointment: PropTypes.string,
+      cancelAppoint: PropTypes.string,
+      cancelEndTime: PropTypes.string,
+      cancelStartTime: PropTypes.string,
+      confirm: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -647,9 +695,14 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.nextAvailableDay()}>
-          next available time
-        </button>
+        <NextAppointmentWrapper>
+          <button
+            className="nextAppointmentButton"
+            onClick={() => this.nextAvailableDay()}
+          >
+            You can book the next available appointment by clicking me!
+          </button>
+        </NextAppointmentWrapper>
         {/* <button onClick={() => this.nextAvailableDay()}>Next time</button> */}
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>
@@ -755,36 +808,43 @@ class BookingTable extends Component {
               </div>
             </div>
           </Modal>
-        </ModalWrapper>
 
-        <Modal
-          visable={this.state.showModal2}
-          modalHeader="Cancel Booking"
-          modalFooterSubmit={this.props.locale.cancel}
-          modalFooterSubmit2={this.props.locale.closeModal}
-          valid={this.state.valid}
-          onSubmit={() => {
-            this.props.cancelShift(
-              this.state.shiftId,
-              this.dateToString(this.props.dateMain)
-            );
-            this.setState({ showModal2: false });
-          }}
-          onSubmit2={() => {
-            this.setState({
-              showModal2: false,
-            });
-          }}
-        >
-          <div>
+          <Modal
+            visable={this.state.showModal2}
+            modalHeader={this.props.locale.cancelAppoint}
+            modalFooterSubmit={this.props.locale.confirm}
+            modalFooterSubmit2={this.props.locale.closeModal}
+            valid={this.state.valid}
+            onSubmit={() => {
+              this.props.cancelShift(
+                this.state.shiftId,
+                this.dateToString(this.props.dateMain)
+              );
+              this.setState({ showModal2: false });
+            }}
+            onSubmit2={() => {
+              this.setState({
+                showModal2: false,
+              });
+            }}
+          >
             <div>
-              {this.props.locale.employee} {this.state.userName}
+              <div className="cancelEmployeeName">
+                {this.props.locale.employee}: {this.state.userName}
+              </div>
+              <p>
+                {this.props.locale.cancelStartTime}{' '}
+                <b>
+                  <u>
+                    {this.state.startOfShift} - {this.state.endOfShift}
+                  </u>
+                </b>
+              </p>
+
+              <div />
             </div>
-            <button> {this.state.startOfShift}</button>
-            <button> {this.state.endOfShift} </button>
-            <div />
-          </div>
-        </Modal>
+          </Modal>
+        </ModalWrapper>
       </div>
     );
   }
