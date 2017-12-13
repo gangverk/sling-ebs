@@ -9,13 +9,15 @@ import * as ApiActions from '../../components/Actions/actions';
 
 const NewsFeedWrapper = styled.div`
   article {
+    margin-top: 10px;
     border: 2px solid #dadada;
     border-radius: 5px;
+    width: 500px;
     h1 {
-      margin: auto;
+      margin: 10px;
     }
     p {
-      margin: auto;
+      margin: 10px;
     }
   }
 `;
@@ -66,7 +68,6 @@ class NewsFeed extends Component {
         </ul>
       );
     }
-    // return <p> {articles[0].content} </p>;
   }
 
   render() {
