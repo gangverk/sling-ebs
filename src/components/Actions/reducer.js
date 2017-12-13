@@ -18,6 +18,8 @@ const initialState = {
   errorPostingShift: '',
   cancelingShift: false,
   errorCancelingShift: '',
+  channels: '',
+  channelsArticles: [],
 };
 
 export default (state = initialState, action) => {
@@ -153,6 +155,32 @@ export default (state = initialState, action) => {
         ...state,
         cancelingShift: false,
         errorCancelingShift: 'Failed to cancel the selected shift',
+      };
+    case actionTypes.FETCH_CHANNEL:
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_CHANNEL_SUCCESS:
+      return {
+        ...state,
+        channels: action.payload,
+      };
+    case actionTypes.FETCH_CHANNEL_FAILURE:
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_CHANNEL_CLIENT:
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_CHANNEL_CLIENT_SUCCESS:
+      return {
+        ...state,
+        channelsArticles: action.payload.articles,
+      };
+    case actionTypes.FETCH_CHANNEL_CLIENT_FAILURE:
+      return {
+        ...state,
       };
     default:
       return state;

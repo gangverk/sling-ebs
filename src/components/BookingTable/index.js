@@ -7,6 +7,7 @@ import ReactLoading from 'react-loading';
 import moment from 'moment';
 
 import * as ApiActions from '../../components/Actions/actions';
+import NewsFeed from '../../components/NewsFeed';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
 import EmployeesMenu from '../../components/EmployeesMenu';
@@ -309,6 +310,7 @@ class BookingTable extends Component {
       shiftId: '',
       startOfShift: '',
       endOfShift: '',
+      newsFeedModal: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -326,7 +328,7 @@ class BookingTable extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.showModal) {
+    if (this.state.showModal || this.state.newsFeedModal) {
       document.body.style.overflow = 'hidden';
     }
     // else {
@@ -693,6 +695,7 @@ class BookingTable extends Component {
       }
     }
   }
+
   render() {
     return (
       <div>
@@ -704,6 +707,21 @@ class BookingTable extends Component {
             You can book the next available appointment by clicking me!
           </button>
         </NextAppointmentWrapper>
+
+        <button
+          onClick={() =>
+            this.setState({
+              newsFeedModal: true,
+            })}
+        >
+          SHowNewsFeed
+        </button>
+        <NewsFeed
+          visable={this.state.newsFeedModal}
+          hideNewsFeed={() => this.setState({ newsFeedModal: false })}
+        />
+ 
+
         {/* <button onClick={() => this.nextAvailableDay()}>Next time</button> */}
         {this.props.errorLoadingShifts !== '' && (
           <ErrorMessage>{this.props.errorLoadingShifts}</ErrorMessage>

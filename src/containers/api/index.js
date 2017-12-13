@@ -42,6 +42,7 @@ class Api extends Component {
     postShift: PropTypes.func.isRequired,
     fetchAllUserInfo: PropTypes.func.isRequired,
     fetchSessionData: PropTypes.func.isRequired,
+    fetchChannel: PropTypes.func.isRequired,
   };
   static defaultProps = {
     dataUsers: [],
@@ -69,6 +70,7 @@ class Api extends Component {
     this.props.fetchUsers();
     this.props.fetchAllUserInfo();
     this.props.fetchSessionData();
+    this.props.fetchChannel();
   }
   //nota til að stoppa scroll þegar daypicker er í gangi
   componentDidUpdate(prevProps, prevState) {
