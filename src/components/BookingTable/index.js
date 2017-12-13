@@ -13,6 +13,12 @@ import EmployeesMenu from '../../components/EmployeesMenu';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
 
+const nextAvailableButton = styled.div`
+  button {
+    background-color: red;
+  }
+`;
+
 const DayMenuDiv = styled.div`height: 100%;`;
 
 const DayMenu = styled.table`
