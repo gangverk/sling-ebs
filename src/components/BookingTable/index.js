@@ -259,6 +259,7 @@ class BookingTable extends Component {
       shiftId: '',
       startOfShift: '',
       endOfShift: '',
+      newsFeedModal: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -276,7 +277,7 @@ class BookingTable extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.showModal) {
+    if (this.state.showModal || this.state.newsFeedModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -642,10 +643,22 @@ class BookingTable extends Component {
       }
     }
   }
+
   render() {
     return (
       <div>
-        <NewsFeed />
+        <button
+          onClick={() =>
+            this.setState({
+              newsFeedModal: true,
+            })}
+        >
+          SHowNewsFeed
+        </button>
+        <NewsFeed
+          visable={this.state.newsFeedModal}
+          hideNewsFeed={() => this.setState({ newsFeedModal: false })}
+        />
         <button onClick={() => this.nextAvailableDay()}>
           next available time
         </button>
