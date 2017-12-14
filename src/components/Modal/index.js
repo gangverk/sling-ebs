@@ -64,10 +64,14 @@ const ModalHead = styled.div`
   button {
     border: none;
     background-color: Transparent;
-    margin-left: 39%;
+    margin-right: 3%;
     cursor: pointer;
     padding: 0;
     outline: none;
+  }
+  title. {
+    margin-left: -40%;
+    margin-top: 2px;
   }
 `;
 const ModalFooter = styled.div`
@@ -106,7 +110,7 @@ export default class Modal extends Component {
           {this.props.modalHeader.length > 0 && (
             <ModalHead>
               <img alt="Blue clock" src={timeBlue} />
-              {this.props.modalHeader}
+              <div className="title"> {this.props.modalHeader}</div>
               <button onClick={() => this.props.onSubmit2()}>
                 <img alt="X button" src={closeX} />
               </button>

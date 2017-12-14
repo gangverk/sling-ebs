@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import * as ApiActions from '../../components/Actions/actions';
 import closeX from '../Modal/x.png';
+import checkV from './task-green.svg';
 
 const ModalWrapper = styled.div`
   ${props => {
@@ -31,11 +32,50 @@ const ModalWrapper = styled.div`
 `;
 
 const MessageWrapper = styled.div`
-  background-color: white;
-  margin: auto;
-  border: 2px solid #dadada;
-  border-radius: 5px;
-  width: 550px;
+  border: 1px solid #888;
+  width: 461px;
+  height: 360px;
+  min-width: 461px;
+  min-height: 360px;
+  border-radius: 8px;
+  background-color: #f4f5f9;
+  box-shadow: 0 8 px 20px 0 rgba(0, 0, 0, 0.5);
+  top: 50%;
+  left:50%;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  font-family: Trebuchet MS;
+  font-size: 14px;
+  color: #738190;
+  img {
+    height 30px;
+    padding: 0px 10px;
+  }
+  p{
+    margin: 1% 0%;
+    padding: 0% 24%;
+    ${'' /* background-color: yellow; */}
+  }
+  button {
+    border: none;
+    background-color: Transparent;
+    ${'' /* background-color: red; */}
+    margin-left:89%;
+    margin-top: 2%;
+    border-radius:8px;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    }
+  .checkV{
+    ${'' /* background-color: purple; */}
+    margin: 21% 0% 6% 45%;
+    padding: 0% 0%;
+    width: 16%;
+    height: 16%;
+
+    }
+  }
 `;
 
 class MessageModal extends Component {
@@ -72,6 +112,7 @@ class MessageModal extends Component {
           <button onClick={() => this.setState({ visable: false })}>
             <img alt="X button" src={closeX} />
           </button>
+          <img className="checkV" alt="X button" src={checkV} />
           <p>{this.props.modalText}</p>
         </MessageWrapper>
       </ModalWrapper>
