@@ -18,6 +18,8 @@ import plus from './plus.svg';
 const DayMenuDiv = styled.div`height: 100%;`;
 
 const NextAppointmentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   .nextAppointmentButton {
     background-color: #ffffff;
     border: 2px solid #dadada;
@@ -30,21 +32,21 @@ const NextAppointmentWrapper = styled.div`
     cursor: pointer;
     font-family: 'Trebuchet MS';
     outline: none;
+  }
 
-    ${'' /* background-color: #0085ff;
-    border: none;
-    border-radius: 2px;
-    color: white;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+  .newsfeedButton {
+    background-color: #ffffff;
+    border: 2px solid #dadada;
+    border-radius: 5px;
+    color: #0085ff;
+    padding: 10px 25px;
     font-size: 13px;
-    font-family: Trebuchet MS;
-    font-weight: bold;
+    justify-content: flex-end;
+    margin-right: 5%;
+    margin-top: 15px;
     cursor: pointer;
-    margin-top: 10px;
-    margin-left: 5%; */};
+    font-family: 'Trebuchet MS';
+    outline: none;
   }
 `;
 
@@ -250,6 +252,8 @@ class BookingTable extends Component {
       cancelEndTime: PropTypes.string,
       cancelStartTime: PropTypes.string,
       confirm: PropTypes.string,
+      nextAppointmentButton: PropTypes.string,
+      newsFeed: PropTypes.string,
     }).isRequired,
     dateMain: PropTypes.shape({
       _d: PropTypes.date,
@@ -710,18 +714,19 @@ class BookingTable extends Component {
             className="nextAppointmentButton"
             onClick={() => this.nextAvailableDay()}
           >
-            You can book the next available appointment by clicking me!
+            {this.props.locale.nextAppointmentButton}
+          </button>
+
+          <button
+            className="newsfeedButton"
+            onClick={() =>
+              this.setState({
+                newsFeedModal: true,
+              })}
+          >
+            {this.props.locale.newsFeed}
           </button>
         </NextAppointmentWrapper>
-
-        <button
-          onClick={() =>
-            this.setState({
-              newsFeedModal: true,
-            })}
-        >
-          SHowNewsFeed
-        </button>
         <NewsFeed
           visable={this.state.newsFeedModal}
           hideNewsFeed={() => this.setState({ newsFeedModal: false })}
