@@ -37,6 +37,7 @@ class TimeSelector extends Component {
     locale: PropTypes.shape({
       time: PropTypes.string,
     }).isRequired,
+    dropDownClose: PropTypes.bool.isRequired,
   };
   static defaultProps = {
     timeArray: [],
@@ -55,6 +56,22 @@ class TimeSelector extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.userId !== this.props.userId) {
+      this.setState(
+        { range: this.range(nextProps.shifts, nextProps.userId) },
+        () => {
+          this.rangeForEndTime(this.state.range, this.props.startDefult);
+        }
+      );
+    }
+    if (this.props.shifts !== nextProps.shifts) {
+      this.setState(
+        { range: this.range(nextProps.shifts, nextProps.userId) },
+        () => {
+          this.rangeForEndTime(this.state.range, this.props.startDefult);
+        }
+      );
+    }
+    if (this.props.startDefult !== nextProps.startDefult) {
       this.setState(
         { range: this.range(nextProps.shifts, nextProps.userId) },
         () => {
@@ -143,6 +160,7 @@ class TimeSelector extends Component {
             <img alt="Blue clock icon" src={timeBlue} />
             {this.props.timeArray.length > 0 && (
               <DropDown
+                dropDownClose={this.props.dropDownClose}
                 range={this.state.range}
                 buttonText={this.props.startDefult.slice(11, -8)}
                 onChange={date => {
@@ -160,6 +178,7 @@ class TimeSelector extends Component {
             <img alt="Red clock icon" src={timeRed} />
             {this.props.timeArray.length > 0 && (
               <DropDown
+                dropDownClose={this.props.dropDownClose}
                 range={this.state.rangeForEndTime}
                 buttonText={
                   this.props.endTime === 'Time'
