@@ -63,6 +63,22 @@ class TimeSelector extends Component {
         }
       );
     }
+    if (this.props.shifts !== nextProps.shifts) {
+      this.setState(
+        { range: this.range(nextProps.shifts, nextProps.userId) },
+        () => {
+          this.rangeForEndTime(this.state.range, this.props.startDefult);
+        }
+      );
+    }
+    if (this.props.startDefult !== nextProps.startDefult) {
+      this.setState(
+        { range: this.range(nextProps.shifts, nextProps.userId) },
+        () => {
+          this.rangeForEndTime(this.state.range, this.props.startDefult);
+        }
+      );
+    }
   }
 
   range(shifts, id) {
