@@ -317,6 +317,7 @@ class BookingTable extends Component {
       endOfShift: '',
       newsFeedModal: false,
       messageModal: false,
+      dropDownClose: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -784,7 +785,7 @@ class BookingTable extends Component {
             modalFooterSubmit={this.props.locale.bookTime}
             modalFooterSubmit2={this.props.locale.closeModal}
             valid={this.state.valid}
-            onSubmit={() =>
+            onSubmit={() => {
               this.bookTime(
                 this.state.timeStamp,
                 this.state.userName,
@@ -792,12 +793,19 @@ class BookingTable extends Component {
                 this.state.bookTimeText,
                 this.state.startTime,
                 this.state.endTime
-              )}
+              );
+              this.setState({ dropDownClose: true }, () =>
+                this.setState({ dropDownClose: false })
+              );
+            }}
             onSubmit2={() => {
               this.setState({
                 showModal: false,
                 bookTimeText: '',
               });
+              this.setState({ dropDownClose: true }, () =>
+                this.setState({ dropDownClose: false })
+              );
             }}
           >
             <div>
@@ -813,6 +821,7 @@ class BookingTable extends Component {
                   shifts={this.props.allShifts}
                   startDefult={this.state.startTime}
                   endTime={this.state.endTime}
+                  dropDownClose={this.state.dropDownClose}
                   startOnChange={date => {
                     this.setState({ startTime: date }, () => {
                       this.validateDate();

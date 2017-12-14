@@ -71,6 +71,7 @@ class DropDown extends Component {
       })
     ).isRequired,
     buttonText: PropTypes.string.isRequired,
+    dropDownClose: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -78,6 +79,15 @@ class DropDown extends Component {
     this.state = {
       menuHidden: true,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.dropDownClose === true &&
+      this.props.dropDownClose === false
+    ) {
+      this.setState({ menuHidden: true });
+    }
   }
 
   render() {
