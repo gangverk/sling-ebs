@@ -15,6 +15,8 @@ const initialState = {
   loadingShifts: false,
   errorLoadingShifts: '',
   postingShift: false,
+  messageModal: false,
+  modalText: '',
   errorPostingShift: '',
   cancelingShift: false,
   errorCancelingShift: '',
@@ -126,35 +128,47 @@ export default (state = initialState, action) => {
       return {
         ...state,
         postingShift: true,
+        messageModal: false,
         errorPostingShift: '',
+        modalText: '',
       };
     case actionTypes.POST_SHIFT_SUCCESS:
       return {
         ...state,
         postingShift: false,
+        messageModal: true,
+        modalText: 'Sucessfully booked appointment',
       };
     case actionTypes.POST_SHIFT_FAILURE:
       return {
         ...state,
         postingShift: false,
         errorPostingShift: 'Failed to post shift for selected time',
+        messageModal: true,
+        modalText: 'Error booking your appointment',
       };
     case actionTypes.CANCEL_SHIFT:
       return {
         ...state,
         cancelingShift: true,
         errorCancelingShift: '',
+        messageModal: false,
+        modalText: '',
       };
     case actionTypes.CANCEL_SHIFT_SUCCESS:
       return {
         ...state,
         cancelingShift: false,
+        messageModal: true,
+        modalText: 'Sucessfully canceld your appointment',
       };
     case actionTypes.CANCEL_SHIFT_FAILURE:
       return {
         ...state,
         cancelingShift: false,
         errorCancelingShift: 'Failed to cancel the selected shift',
+        messageModal: true,
+        modalText: 'Sucessfully canceld your appointment',
       };
     case actionTypes.FETCH_CHANNEL:
       return {

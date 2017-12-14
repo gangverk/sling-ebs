@@ -10,6 +10,7 @@ import * as ApiActions from '../../components/Actions/actions';
 import NewsFeed from '../../components/NewsFeed';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
+import MessageModal from '../../components/MessageModal';
 import EmployeesMenu from '../../components/EmployeesMenu';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
@@ -311,6 +312,7 @@ class BookingTable extends Component {
       startOfShift: '',
       endOfShift: '',
       newsFeedModal: false,
+      messageModal: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -699,6 +701,7 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
+        <MessageModal />
         <NextAppointmentWrapper>
           <button
             className="nextAppointmentButton"
@@ -720,7 +723,6 @@ class BookingTable extends Component {
           visable={this.state.newsFeedModal}
           hideNewsFeed={() => this.setState({ newsFeedModal: false })}
         />
- 
 
         {/* <button onClick={() => this.nextAvailableDay()}>Next time</button> */}
         {this.props.errorLoadingShifts !== '' && (
