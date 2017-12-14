@@ -93,7 +93,7 @@ class NewsFeed extends Component {
   static propTypes = {
     locale: PropTypes.shape({
       newsFeed: PropTypes.string,
-    }),
+    }).isRequired,
     channelsArticles: PropTypes.shape({
       length: PropTypes.numb,
     }),
