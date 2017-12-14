@@ -39,7 +39,10 @@ const MessageWrapper = styled.div`
 `;
 
 class MessageModal extends Component {
-  static propTypes = {};
+  static propTypes = {
+    messageModal: PropTypes.bool.isRequired,
+    modalText: PropTypes.string.isRequired,
+  };
 
   static defaultProps = {};
 

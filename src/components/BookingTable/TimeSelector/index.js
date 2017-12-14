@@ -30,7 +30,7 @@ class TimeSelector extends Component {
     timeArray: PropTypes.arrayOf(PropTypes.shape({})),
     startOnChange: PropTypes.func.isRequired,
     endOnChange: PropTypes.func.isRequired,
-    userId: PropTypes.number.isRequired,
+    userId: PropTypes.string.isRequired,
     shifts: PropTypes.arrayOf(PropTypes.shape({})),
     startDefult: PropTypes.string.isRequired,
     endTime: PropTypes.string.isRequired,
@@ -163,7 +163,7 @@ class TimeSelector extends Component {
                 range={this.state.rangeForEndTime}
                 buttonText={
                   this.props.endTime === 'Time'
-                    ? this.props.locale.time // hér að setja Local ? gæti verið hægt ???
+                    ? this.props.locale.time
                     : this.props.endTime.slice(11, -8)
                 }
                 onChange={date => this.props.endOnChange(date)}
