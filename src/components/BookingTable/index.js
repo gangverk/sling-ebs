@@ -10,6 +10,7 @@ import * as ApiActions from '../../components/Actions/actions';
 import NewsFeed from '../../components/NewsFeed';
 import TimeSelector from './TimeSelector';
 import Modal from '../../components/Modal';
+import MessageModal from '../../components/MessageModal';
 import EmployeesMenu from '../../components/EmployeesMenu';
 import noteGray from './notesgray.svg';
 import plus from './plus.svg';
@@ -315,6 +316,7 @@ class BookingTable extends Component {
       startOfShift: '',
       endOfShift: '',
       newsFeedModal: false,
+      messageModal: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -384,7 +386,10 @@ class BookingTable extends Component {
       endTime,
       this.props.userInfo.id
     );
-    this.setState({ showModal: false });
+    this.setState({
+      showModal: false,
+      bookTimeText: '',
+    });
   }
 
   modalInfo(timeStamp, userName, userId, shiftId) {
@@ -703,6 +708,7 @@ class BookingTable extends Component {
   render() {
     return (
       <div>
+        <MessageModal />
         <NextAppointmentWrapper>
           <button
             className="nextAppointmentButton"
@@ -790,6 +796,7 @@ class BookingTable extends Component {
             onSubmit2={() => {
               this.setState({
                 showModal: false,
+                bookTimeText: '',
               });
             }}
           >

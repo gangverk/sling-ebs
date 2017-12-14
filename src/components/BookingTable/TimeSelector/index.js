@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import DropDown from '../../DropDown';
 import timeBlue from '../timeblue.svg';
@@ -22,17 +23,20 @@ const DropDownWrapper = styled.div`
     margin-bottom: 10px;
   }
 `;
-export default class TimeSelector extends Component {
+class TimeSelector extends Component {
   static propTypes = {
     startText: PropTypes.string.isRequired,
     endText: PropTypes.string.isRequired,
     timeArray: PropTypes.arrayOf(PropTypes.shape({})),
     startOnChange: PropTypes.func.isRequired,
     endOnChange: PropTypes.func.isRequired,
-    userId: PropTypes.number.isRequired,
+    userId: PropTypes.string.isRequired,
     shifts: PropTypes.arrayOf(PropTypes.shape({})),
     startDefult: PropTypes.string.isRequired,
     endTime: PropTypes.string.isRequired,
+    locale: PropTypes.shape({
+      time: PropTypes.string,
+    }).isRequired,
   };
   static defaultProps = {
     timeArray: [],
@@ -159,7 +163,7 @@ export default class TimeSelector extends Component {
                 range={this.state.rangeForEndTime}
                 buttonText={
                   this.props.endTime === 'Time'
-                    ? 'Time'
+                    ? this.props.locale.time
                     : this.props.endTime.slice(11, -8)
                 }
                 onChange={date => this.props.endOnChange(date)}
@@ -171,3 +175,8 @@ export default class TimeSelector extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  locale: state.LocaleReducer,
+});
+export default connect(mapStateToProps)(TimeSelector);
