@@ -382,7 +382,10 @@ class BookingTable extends Component {
       endTime,
       this.props.userInfo.id
     );
-    this.setState({ showModal: false });
+    this.setState({
+      showModal: false,
+      bookTimeText: '',
+    });
   }
 
   modalInfo(timeStamp, userName, userId, shiftId) {
@@ -788,6 +791,7 @@ class BookingTable extends Component {
             onSubmit2={() => {
               this.setState({
                 showModal: false,
+                bookTimeText: '',
               });
             }}
           >
