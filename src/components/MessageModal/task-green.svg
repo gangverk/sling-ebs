@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>64/task-green</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Success" transform="translate(-689.000000, -340.000000)">
+            <g id="64/task-green" transform="translate(689.000000, 340.000000)">
+                <rect id="Rectangle-11" x="0" y="0" width="64" height="64"></rect>
+                <path d="M32,2 C48.5685425,2 62,15.4314575 62,32 C62,48.5685425 48.5685425,62 32,62 C15.4314575,62 2,48.5685425 2,32 C2,15.4314575 15.4314575,2 32,2 Z" id="Path-Copy-2" stroke="#37BC5B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="Line-Copy" stroke="#37BC5B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="19 36.2692308 26.2857143 43.5 44.5 20"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
