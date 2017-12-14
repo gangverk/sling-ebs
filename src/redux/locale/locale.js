@@ -20,6 +20,9 @@ const strings = new LocalizedStrings({
     confirm: 'Confirm',
     cancelAppoint: 'Cancel Appointment',
     cancelStartTime: 'Cancel appointment booked at',
+    nextAppointmentButton:
+      'You can book the next available appointment by clicking me!',
+    newsFeed: 'News Feed',
   },
   is: {
     time: 'Tími',
@@ -40,6 +43,9 @@ const strings = new LocalizedStrings({
     confirm: 'Staðfesta',
     cancelAppoint: 'Afbóka tíma',
     cancelStartTime: 'Afbóka tíma bókaðann klukkan',
+    nextAppointmentButton:
+      'Þú getur bókað næsta lausa tíma með því að smella á mig!',
+    newsFeed: 'Fréttaveita',
   },
 });
 

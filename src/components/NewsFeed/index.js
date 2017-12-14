@@ -32,43 +32,68 @@ const ModalWrapper = styled.div`
 `;
 
 const NewsFeedWrapper = styled.div`
-  background-color: white;
+  background-color: #f4f5f9;
   margin: auto;
-  border: 2px solid #dadada;
-  border-radius: 5px;
+  border: none;
   width: 550px;
-  .header{
+
+  .header {
     display: flex;
     justify-content: space-between;
-    img{
-      height: 25px;
+    display: flex;
+    height: 5%;
+    width: 100%;
+    color: #ffffff;
+    font-family: Trebuchet MS;
+    font-size: 20px;
+    color: #0085ff;
+    background-color: #ffffff;
+    button {
+      border: none;
+      background-color: Transparent;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+      margin-right: 4%;
+    }
+    p {
+      font-family: Trebuchet MS;
+      font-size: 20px;
+      margin-left: 1em;
+    }
+    img {
+      height: 30px;
     }
   }
   .articlesDiv {
-    border: 2px solid #dadada;
-    margin 20px;
     max-height: 300px;
     overflow-y: scroll;
   }
-  h1 {
-    margin: 10px 30px 10px 40px;
-  }
   article {
     margin-top: 10px;
-    border: 2px solid #dadada;
     border-radius: 5px;
     width: 420px;
-    h1 {
-      margin: 10px;
+    ${'' /* background-color: white;
+    box-shadow: 0 4px 10px 0 rgba(50, 70, 90, 0.1); */} h1 {
+      color: #0085ff;
+      margin-bottom: -15px;
+      margin-top: 30px;
+      margin-left: 19px;
     }
     p {
-      margin: 10px;
+      font-family: Trebuchet MS;
+      font-size: 20px;
+      margin-left: 1em;
+      color: #738190;
     }
   }
 `;
 
 class NewsFeed extends Component {
   static propTypes = {
+    locale: PropTypes.shape({
+      newsFeed: PropTypes.string,
+    }),
     channelsArticles: PropTypes.shape({
       length: PropTypes.numb,
     }),
@@ -122,7 +147,7 @@ class NewsFeed extends Component {
       <ModalWrapper visable={this.props.visable}>
         <NewsFeedWrapper>
           <div className="header">
-            <h1>News Feed </h1>
+            <p>{this.props.locale.newsFeed} </p>
             <button onClick={this.props.hideNewsFeed}>
               <img alt="X button" src={closeX} />
             </button>
@@ -148,6 +173,7 @@ class NewsFeed extends Component {
 const mapStateToProps = state => ({
   channels: state.ApiReducer.channels,
   channelsArticles: state.ApiReducer.channelsArticles,
+  locale: state.LocaleReducer,
 });
 
 const mapDispatchToProps = dispatch =>
