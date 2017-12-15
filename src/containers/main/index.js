@@ -18,6 +18,7 @@ class Main extends Component {
     userData: PropTypes.shape({
       name: PropTypes.string,
     }),
+    setUserData: PropTypes.func.isRequired,
   };
   static defaultProps = {
     userData: { name: '' },
@@ -26,7 +27,6 @@ class Main extends Component {
     super(props);
     let user = localStorage.getItem('userdata');
     let parsed = JSON.parse(user);
-    console.log(parsed);
     this.state = {
       user: parsed,
     };
