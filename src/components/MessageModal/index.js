@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 
 import * as ApiActions from '../../components/Actions/actions';
 import closeX from '../Modal/x.png';
-import checkV from './task-green.svg';
 
 const ModalWrapper = styled.div`
   ${props => {
@@ -56,12 +55,10 @@ const MessageWrapper = styled.div`
     margin: 0px 0px;
     font-size: 18px;
 
-    ${'' /* background-color: yellow; */}
   }
   button {
     border: none;
     background-color: Transparent;
-    ${'' /* background-color: red; */}
     margin-left:89%;
     margin-top: 2%;
     border-radius:8px;
@@ -69,14 +66,7 @@ const MessageWrapper = styled.div`
     padding: 0;
     outline: none;
     }
-  .checkV{
-    ${'' /* background-color: purple; */}
-    margin: 15% 0% 7% 45%;
-    padding: 0% 0%;
-    width: 16%;
-    height: 16%;
 
-    }
   }
 `;
 
