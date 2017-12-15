@@ -54,6 +54,8 @@ const MessageWrapper = styled.div`
   p{
     padding: 7px 0px 0px 128px;
     margin: 0px 0px;
+    font-size: 18px;
+
     ${'' /* background-color: yellow; */}
   }
   button {
@@ -112,7 +114,7 @@ class MessageModal extends Component {
           <button onClick={() => this.setState({ visable: false })}>
             <img alt="X button" src={closeX} />
           </button>
-          <img className="checkV" alt="X button" src={checkV} />
+
           <p>{this.props.modalText}</p>
         </MessageWrapper>
       </ModalWrapper>
