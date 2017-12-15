@@ -32,10 +32,8 @@ const ModalWrapper = styled.div`
 
 const MessageWrapper = styled.div`
   border: 1px solid #888;
-  width: 461px;
-  height: 360px;
-  min-width: 461px;
-  min-height: 360px;
+  width: 530px;
+  height: 120px;
   border-radius: 8px;
   background-color: #f4f5f9;
   box-shadow: 0 8 px 20px 0 rgba(0, 0, 0, 0.5);
@@ -104,7 +102,6 @@ class MessageModal extends Component {
           <button onClick={() => this.setState({ visable: false })}>
             <img alt="X button" src={closeX} />
           </button>
-
           <p>{this.props.modalText}</p>
         </MessageWrapper>
       </ModalWrapper>
