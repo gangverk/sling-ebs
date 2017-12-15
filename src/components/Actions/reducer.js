@@ -137,7 +137,7 @@ export default (state = initialState, action) => {
         ...state,
         postingShift: false,
         messageModal: true,
-        modalText: 'Sucessfully booked appointment',
+        modalText: 'Appointment sucessfully booked',
       };
     case actionTypes.POST_SHIFT_FAILURE:
       return {
@@ -160,7 +160,7 @@ export default (state = initialState, action) => {
         ...state,
         cancelingShift: false,
         messageModal: true,
-        modalText: 'Sucessfully canceld your appointment',
+        modalText: 'Sucessfully cancelled your appointment',
       };
     case actionTypes.CANCEL_SHIFT_FAILURE:
       return {
@@ -168,7 +168,7 @@ export default (state = initialState, action) => {
         cancelingShift: false,
         errorCancelingShift: 'Failed to cancel the selected shift',
         messageModal: true,
-        modalText: 'Sucessfully canceld your appointment',
+        modalText: 'Error canceling your appointment',
       };
     case actionTypes.FETCH_CHANNEL:
       return {
