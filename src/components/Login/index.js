@@ -83,6 +83,7 @@ class Login extends Component {
     this.props.fetchAuthenticationData();
   }
   onFbCallback(data) {
+    localStorage.setItem('userdata', JSON.stringify(data));
     if (data) {
       this.props.setUserData(
         data.name,

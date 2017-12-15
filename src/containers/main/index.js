@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as actions from '../../components/Login/actions';
+import { bindActionCreators } from 'redux';
 
 import Api from '../api';
 import Login from '../../components/Login';
@@ -16,10 +18,31 @@ class Main extends Component {
     userData: PropTypes.shape({
       name: PropTypes.string,
     }),
+    setUserData: PropTypes.func.isRequired,
   };
   static defaultProps = {
     userData: { name: '' },
   };
+  constructor(props) {
+    super(props);
+    let user = localStorage.getItem('userdata');
+    let parsed = JSON.parse(user);
+    this.state = {
+      user: parsed,
+    };
+  }
+
+  componentWillMount() {
+    if (this.state.user !== null) {
+      this.props.setUserData(
+        this.state.user.name,
+        this.state.user.email,
+        this.state.user.picture.data.url,
+        this.state.user.id
+      );
+    }
+  }
+
   render() {
     if (this.props.userData.name === '') {
       return <Login />;
@@ -40,5 +63,12 @@ const mapStateToProps = state => {
     userData: state.UserReducer,
   };
 };
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, null)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
